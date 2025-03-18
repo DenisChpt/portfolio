@@ -98,7 +98,7 @@
 				<!-- Transition-group pour animer l'apparition/disparition des projets -->
 				<transition-group
 					appear
-					name="destroy"
+					name="projects"
 					tag="div"
 					id="projects-case"
 					class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 max-w-5xl mx-auto py-16 place-items-center"
@@ -314,30 +314,24 @@ input[type='checkbox']:focus {
 	- Animation pour l'apparition, disparition et repositionnement des éléments
 	===============================
   */
-.destroy-enter-active,
-.destroy-leave-active,
-.destroy-move {
-	transition: transform 0.5s ease, opacity 0.5s ease;
+.projects-enter-active,
+.projects-leave-active {
+	transition: all 0.5s ease;
 }
 
-/* Animation d'apparition : de scale(0.7) et opacité 0 à scale(1) et opacité 1 */
-.destroy-enter-from {
+.projects-enter-from {
 	opacity: 0;
 	transform: scale(0.7);
 }
-.destroy-enter-to {
-	opacity: 1;
-	transform: scale(1);
-}
 
-/* Animation de disparition : de scale(1) et opacité 1 à scale(0.7) et opacité 0 */
-.destroy-leave-from {
-	opacity: 1;
-	transform: scale(1);
-}
-.destroy-leave-to {
+.projects-leave-to {
 	opacity: 0;
 	transform: scale(0.7);
+}
+
+/* Animation pour le déplacement des éléments */
+.projects-move {
+	transition: transform 0.5s ease;
 }
 
 /*
