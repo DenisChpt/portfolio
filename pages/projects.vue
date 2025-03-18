@@ -55,7 +55,7 @@
       <!-- projects -->
       <div id="projects-case" class="grid grid-cols-1 lg:grid-cols-2 max-w-full h-full overflow-scroll lg:self-center">
         <div id="not-found"
-          class="hidden flex flex-col font-fira_retina text-menu-text my-5 h-full justify-center items-center">
+          class="hidden flex-col font-fira_retina text-menu-text my-5 h-full justify-center items-center">
           <span class="flex justify-center text-4xl pb-3">
             X__X
           </span>

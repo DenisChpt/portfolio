@@ -70,6 +70,7 @@ function handleResize() {
 	flex: 1 1 auto;
 	padding-left: 275px;
 	overflow: hidden;
+	align-items: center;
 }
 .hero {
 	width: 100%;
