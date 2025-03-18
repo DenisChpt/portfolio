@@ -25,11 +25,14 @@ dist/
 # Couverture de tests
 # ——————————————————————————————————————————————————————
 coverage/
+test/  # Suppression du dossier de tests s'il est inutile
 
 # ——————————————————————————————————————————————————————
 # Dépendances
 # ——————————————————————————————————————————————————————
 node_modules/
+package-lock.json
+yarn.lock
 
 # ——————————————————————————————————————————————————————
 # Systèmes d’exploitation et éditeurs
@@ -71,3 +74,14 @@ Thumbs.db
 cypress/screenshots/
 cypress/videos/
 cypress/reports/
+
+# ——————————————————————————————————————————————————————
+# Suppression de fichiers de configuration inutiles
+# ——————————————————————————————————————————————————————
+.editorconfig
+.prettierrc.json
+tailwind.config.js
+tsconfig.json
+app.config.ts
+nuxt.config.ts
+developer.json
