@@ -16,8 +16,10 @@
   "dependencies": {
     "@highlightjs/vue-plugin": "highlightjs/vue-plugin",
     "@nuxt/telemetry": "^2.6.5",
+    "@nuxtjs/i18n": "^9.3.2",
     "@nuxtjs/tailwindcss": "^6.13.2",
     "aos": "^2.3.4",
+    "gsap": "^3.12.7",
     "highlight.js": "^11.11.1",
     "parse-git-config": "^3.0.0"
   }

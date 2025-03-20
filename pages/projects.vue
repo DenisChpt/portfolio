@@ -102,6 +102,7 @@
 					tag="div"
 					id="projects-case"
 					class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 max-w-5xl mx-auto py-16 place-items-center"
+					leave="leave"
 				>
 					<!-- Composant project-card pour chaque projet filtré -->
 					<project-card
@@ -355,7 +356,6 @@ input[type='checkbox']:focus {
 .fade-leave-to {
 	opacity: 0;
 }
-
 /*
 	===============================
 	5) Grille des projets ("projects-case")
