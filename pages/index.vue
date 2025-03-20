@@ -1,34 +1,33 @@
 <template>
 	<main v-if="!loading" id="hello">
-		<!-- gradients -->
 		<div class="css-blurry-gradient-blue"></div>
 		<div class="css-blurry-gradient-green"></div>
-
 		<section class="hero">
 			<div class="head">
-				<span> Hi all, I am </span>
-				<h1>{{ config.name }}</h1>
+				<span>{{ t('greeting') }}</span>
+				<h1>{{ t('name') }}</h1>
 				<span class="diple flex">
 					>&nbsp;
-					<h2 class="line-1 anim-typewriter max-w-fit">{{ config.role }}</h2>
+					<h2 class="line-1 anim-typewriter max-w-fit">{{ t('role') }}</h2>
 				</span>
 			</div>
-
 			<div id="info">
-				<span class="action"> // complete the game to continue </span>
-				<span :class="{ hide: isMobile }"> // you can also see it on my Github page </span>
-				<span :class="{ hide: !isMobile }"> // find my profile on Github: </span>
+				<span class="action">{{ t('complete_the_game') }}</span>
+				<span :class="{ hide: isMobile }">{{ t('github_profile') }}</span>
+				<span :class="{ hide: !isMobile }">{{ t('github_profile') }}: </span>
 				<p class="code">
 					<span class="identifier"> const </span>
 					<span class="variable-name"> githubLink </span>
 					<span class="operator"> = </span>
-					<a class="string" :href="'https://github.com/' + config.contacts.social.github.user">
-						"https://github.com/{{ config.contacts.social.github.user }}"
+					<a
+						class="string"
+						:href="t('contacts.social.github.url') + t('contacts.social.github.user')"
+					>
+						"https://github.com/{{ t('contacts.social.github.user') }}"
 					</a>
 				</p>
 			</div>
 		</section>
-
 		<section data-aos="fade-up" class="game" v-if="!isMobile">
 			<SnakeGame />
 		</section>
@@ -37,29 +36,24 @@
 
 <script setup>
 import { ref, onMounted, onBeforeUnmount } from 'vue'
-import DevConfig from '~/developer.json'
+import { useI18n } from 'vue-i18n'
 
-const config = ref(DevConfig)
-
+const { t } = useI18n()
 const isMobile = ref(false)
 const loading = ref(false)
 
+const handleResize = () => {
+	isMobile.value = window.innerWidth <= 1024
+}
+
 onMounted(() => {
-	if (window.innerWidth <= 1024) isMobile.value = true
+	isMobile.value = window.innerWidth <= 1024
 	window.addEventListener('resize', handleResize)
 })
 
 onBeforeUnmount(() => {
 	window.removeEventListener('resize', handleResize)
 })
-
-function handleResize() {
-	if (window.innerWidth <= 1024) {
-		isMobile.value = true
-	} else {
-		isMobile.value = false
-	}
-}
 </script>
 
 <style scoped>
