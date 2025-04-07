@@ -5,7 +5,7 @@ import { useDark, useToggle } from '@vueuse/core'
 import Navigation from './components/Navigation.vue'
 import Footer from './components/Footer.vue'
 import Loader from './components/Loader.vue'
-import Background from './components/Background.vue'
+import AnimatedBackground from './components/AnimatedBackground.vue'
 
 const isDark = useDark()
 const toggleDark = useToggle(isDark)
@@ -22,7 +22,7 @@ const handleLoadingComplete = () => {
 
 	<div v-else :class="{ dark: isDark }" class="min-h-screen flex flex-col">
 		<!-- Fond animé identique au loader -->
-		<Background />
+		<AnimatedBackground />
 
 		<Navigation @toggle-theme="toggleDark()" :is-dark="isDark" />
 
@@ -39,6 +39,7 @@ const handleLoadingComplete = () => {
 </template>
 
 <style>
+/* Supprimer tous les styles de fond qui pourraient interférer */
 .page-enter-active,
 .page-leave-active {
 	transition: opacity 0.5s ease, transform 0.5s ease;
@@ -103,8 +104,17 @@ html {
 /* Mise à jour du style de fond */
 body {
 	@apply antialiased overflow-x-hidden;
-	background: radial-gradient(ellipse at bottom, #1b2735 0%, #090a0f 100%);
+	/* IMPORTANT: Supprimer tous les styles de fond ici */
+	background: transparent !important;
 	color: white;
+}
+
+/* Assurer que tous les conteneurs principaux sont transparents */
+#app,
+.min-h-screen,
+main,
+.flex-grow {
+	background: transparent !important;
 }
 
 /* Boutons futuristes globaux */
