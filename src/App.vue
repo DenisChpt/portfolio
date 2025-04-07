@@ -39,7 +39,7 @@ const handleLoadingComplete = () => {
 </template>
 
 <style>
-/* Supprimer tous les styles de fond qui pourraient interférer */
+/* Transitions de page */
 .page-enter-active,
 .page-leave-active {
 	transition: opacity 0.5s ease, transform 0.5s ease;
@@ -78,15 +78,6 @@ html {
 	background: rgba(99, 102, 241, 0.7);
 }
 
-/* Global hover effects */
-.hover-lift {
-	transition: transform 0.2s ease;
-}
-
-.hover-lift:hover {
-	transform: translateY(-2px);
-}
-
 /* Global animations */
 .animate-fade-in {
 	animation: fadeIn 0.5s ease-out;
@@ -115,56 +106,5 @@ body {
 main,
 .flex-grow {
 	background: transparent !important;
-}
-
-/* Boutons futuristes globaux */
-.btn-futuristic {
-	background: rgba(99, 102, 241, 0.2);
-	color: rgba(165, 180, 252, 1);
-	padding: 0.75rem 1.5rem;
-	border-radius: 0.375rem;
-	font-weight: 500;
-	border: 1px solid rgba(99, 102, 241, 0.4);
-	position: relative;
-	overflow: hidden;
-	transition: all 0.3s;
-	box-shadow: 0 0 10px rgba(99, 102, 241, 0.3);
-}
-
-.btn-futuristic::before {
-	content: '';
-	position: absolute;
-	top: 0;
-	left: -100%;
-	width: 100%;
-	height: 100%;
-	background: linear-gradient(90deg, transparent, rgba(99, 102, 241, 0.2), transparent);
-	transition: 0.5s;
-}
-
-.btn-futuristic:hover {
-	background: rgba(99, 102, 241, 0.3);
-	box-shadow: 0 0 20px rgba(99, 102, 241, 0.5);
-	transform: translateY(-2px);
-}
-
-.btn-futuristic:hover::before {
-	left: 100%;
-}
-
-.btn-outline-futuristic {
-	background: transparent;
-	color: rgba(165, 180, 252, 1);
-	padding: 0.75rem 1.5rem;
-	border-radius: 0.375rem;
-	font-weight: 500;
-	border: 1px solid rgba(99, 102, 241, 0.4);
-	transition: all 0.3s;
-}
-
-.btn-outline-futuristic:hover {
-	border-color: rgba(99, 102, 241, 0.8);
-	box-shadow: 0 0 15px rgba(99, 102, 241, 0.3);
-	transform: translateY(-2px);
 }
 </style>

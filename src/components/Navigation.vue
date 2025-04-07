@@ -2,11 +2,8 @@
 import { ref, computed } from 'vue'
 import { useI18n } from 'vue-i18n'
 import { useRouter, useRoute } from 'vue-router'
+import { useThemeStore } from '@/stores/themeStore'
 import LanguageSelector from './LanguageSelector.vue'
-
-defineProps<{
-	isDark: boolean
-}>()
 
 defineEmits<{
 	'toggle-theme': []
@@ -15,9 +12,18 @@ defineEmits<{
 const { t } = useI18n()
 const router = useRouter()
 const route = useRoute()
+const themeStore = useThemeStore()
 const isMenuOpen = ref(false)
 
 const currentSection = computed(() => route.name as string)
+
+const toggleMenu = () => {
+	isMenuOpen.value = !isMenuOpen.value
+}
+
+const closeMenu = () => {
+	isMenuOpen.value = false
+}
 </script>
 
 <template>
@@ -53,8 +59,9 @@ const currentSection = computed(() => route.name as string)
 					<button
 						@click="$emit('toggle-theme')"
 						class="p-2 rounded-md text-gray-400 hover:text-indigo-400 transition-all duration-200 hover:bg-indigo-500/10"
+						aria-label="Toggle theme"
 					>
-						<span v-if="isDark">🌞</span>
+						<span v-if="themeStore.isDark">🌞</span>
 						<span v-else>🌙</span>
 					</button>
 
@@ -62,10 +69,12 @@ const currentSection = computed(() => route.name as string)
 				</div>
 				<div class="flex items-center sm:hidden">
 					<button
-						@click="isMenuOpen = !isMenuOpen"
+						@click="toggleMenu"
 						class="inline-flex items-center justify-center p-2 rounded-md text-gray-400 hover:text-indigo-400 hover:bg-indigo-500/10 transition-all duration-200"
+						aria-expanded="false"
+						:aria-label="isMenuOpen ? 'Close menu' : 'Open menu'"
 					>
-						<span class="sr-only">Open main menu</span>
+						<span class="sr-only">{{ isMenuOpen ? 'Close menu' : 'Open menu' }}</span>
 						<svg class="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor">
 							<path
 								v-if="isMenuOpen"
@@ -99,7 +108,7 @@ const currentSection = computed(() => route.name as string)
 						'text-gray-300 hover:bg-indigo-900/10 hover:text-indigo-400 border-l-2 border-transparent':
 							currentSection !== route,
 					}"
-					@click="isMenuOpen = false"
+					@click="closeMenu"
 				>
 					{{ t(`nav.${route}`) }}
 				</router-link>
@@ -108,8 +117,9 @@ const currentSection = computed(() => route.name as string)
 					<button
 						@click="$emit('toggle-theme')"
 						class="p-2 rounded-md text-gray-400 hover:text-indigo-400 transition-all duration-200 hover:bg-indigo-500/10"
+						aria-label="Toggle theme"
 					>
-						<span v-if="isDark">🌞</span>
+						<span v-if="themeStore.isDark">🌞</span>
 						<span v-else>🌙</span>
 					</button>
 
@@ -134,13 +144,13 @@ const currentSection = computed(() => route.name as string)
 	height: 2px;
 	background: linear-gradient(
 		to right,
-		rgba(99, 102, 241, 0),
-		rgba(99, 102, 241, 1),
-		rgba(99, 102, 241, 0)
+		rgba(var(--color-primary), 0),
+		rgba(var(--color-primary), 1),
+		rgba(var(--color-primary), 0)
 	);
 	transform: scaleX(0);
 	transform-origin: center;
-	transition: transform 0.3s ease;
+	transition: transform var(--transition-medium) var(--transition-ease);
 }
 
 .nav-link:hover::after {
@@ -149,7 +159,7 @@ const currentSection = computed(() => route.name as string)
 
 .mobile-nav-link {
 	position: relative;
-	transition: all 0.3s ease;
+	transition: all var(--transition-medium) var(--transition-ease);
 }
 
 .mobile-nav-link::before {
@@ -161,26 +171,16 @@ const currentSection = computed(() => route.name as string)
 	width: 2px;
 	background: linear-gradient(
 		to bottom,
-		rgba(99, 102, 241, 0),
-		rgba(99, 102, 241, 1),
-		rgba(99, 102, 241, 0)
+		rgba(var(--color-primary), 0),
+		rgba(var(--color-primary), 1),
+		rgba(var(--color-primary), 0)
 	);
 	transform: scaleY(0);
-	transition: transform 0.3s ease;
+	transition: transform var(--transition-medium) var(--transition-ease);
 }
 
 .mobile-nav-link:hover::before {
 	transform: scaleY(1);
-}
-
-@keyframes blink {
-	0%,
-	100% {
-		opacity: 1;
-	}
-	50% {
-		opacity: 0;
-	}
 }
 
 .blink {

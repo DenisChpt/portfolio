@@ -1,26 +1,24 @@
 <script setup lang="ts">
 import { useI18n } from 'vue-i18n'
-import { onMounted } from 'vue'
-import { gsap } from 'gsap'
-import ContentPanel from '../components/ContentPanel.vue'
+import { usePageAnimation } from '@/composables/useAnimation'
+import { EXPERIENCES, EDUCATION, SKILLS } from '@/constants/experience'
+import Card from '@/components/Card.vue'
 
 const { t } = useI18n()
 
-onMounted(() => {
-	gsap.from('.about-window', {
-		y: 50,
-		opacity: 0,
-		duration: 1,
-		ease: 'expo.out',
-		delay: 0.2,
-	})
-})
+// Use our animation composable
+usePageAnimation('.about-window', 0.2)
+
+// Get the data from our constants
+const experiences = EXPERIENCES
+const education = EDUCATION
+const skills = SKILLS
 </script>
 
 <template>
 	<div class="section flex items-center justify-center pt-24">
 		<div class="about-window max-w-4xl w-full mx-auto">
-			<ContentPanel title="About Me">
+			<Card title="About Me" variant="panel">
 				<div class="grid grid-cols-1 md:grid-cols-2 gap-8">
 					<div>
 						<div class="space-y-4 text-indigo-100">
@@ -41,12 +39,28 @@ onMounted(() => {
 						<div class="mt-8">
 							<h2 class="text-xl font-semibold text-indigo-400 mb-4">Technologies</h2>
 							<div class="flex flex-wrap gap-2">
-								<span class="tech-badge">Vue.js</span>
-								<span class="tech-badge">TypeScript</span>
-								<span class="tech-badge">Node.js</span>
-								<span class="tech-badge">Express</span>
-								<span class="tech-badge">MongoDB</span>
-								<span class="tech-badge">TailwindCSS</span>
+								<span v-for="skill in skills.slice(0, 6)" :key="skill.name" class="tech-badge">
+									{{ skill.name }}
+								</span>
+							</div>
+						</div>
+
+						<!-- Skill Bars -->
+						<div class="mt-8">
+							<h2 class="text-xl font-semibold text-indigo-400 mb-4">Top Skills</h2>
+							<div class="space-y-3">
+								<div v-for="skill in skills.slice(0, 4)" :key="skill.name">
+									<div class="flex justify-between mb-1">
+										<span class="text-indigo-200">{{ skill.name }}</span>
+										<span class="text-indigo-300">{{ skill.level }}%</span>
+									</div>
+									<div class="h-2 bg-gray-700 rounded overflow-hidden">
+										<div
+											class="h-full bg-indigo-500 rounded"
+											:style="{ width: `${skill.level}%` }"
+										></div>
+									</div>
+								</div>
 							</div>
 						</div>
 					</div>
@@ -55,27 +69,16 @@ onMounted(() => {
 						<div class="exp-card">
 							<h2 class="text-xl font-semibold text-indigo-400 mb-4">Experience</h2>
 							<div class="space-y-4">
-								<div class="exp-item">
-									<h3 class="text-white font-medium">Senior Developer</h3>
-									<div class="text-indigo-200 text-sm">TechCorp • 2019 - Present</div>
+								<div
+									v-for="exp in experiences"
+									:key="exp.company"
+									class="exp-item"
+									:style="exp.opacity ? { opacity: exp.opacity } : {}"
+								>
+									<h3 class="text-white font-medium">{{ exp.role }}</h3>
+									<div class="text-indigo-200 text-sm">{{ exp.company }} • {{ exp.period }}</div>
 									<p class="text-gray-300 mt-2">
-										Led development of multiple web applications using Vue.js and Node.js.
-									</p>
-								</div>
-
-								<div class="exp-item opacity-90">
-									<h3 class="text-white font-medium">Frontend Developer</h3>
-									<div class="text-indigo-200 text-sm">WebSolutions • 2016 - 2019</div>
-									<p class="text-gray-300 mt-2">
-										Developed responsive and interactive UI components for client projects.
-									</p>
-								</div>
-
-								<div class="exp-item opacity-80">
-									<h3 class="text-white font-medium">Junior Developer</h3>
-									<div class="text-indigo-200 text-sm">StartupX • 2014 - 2016</div>
-									<p class="text-gray-300 mt-2">
-										Built and maintained frontend features for a SaaS product.
+										{{ exp.description }}
 									</p>
 								</div>
 							</div>
@@ -83,95 +86,21 @@ onMounted(() => {
 
 						<div class="exp-card">
 							<h2 class="text-xl font-semibold text-indigo-400 mb-4">Education</h2>
-							<div class="exp-item">
-								<h3 class="text-white font-medium">M.S. Computer Science</h3>
-								<div class="text-indigo-200 text-sm">Tech University • 2012 - 2014</div>
-								<p class="text-gray-300 mt-2">
-									Specialized in Web Technologies and Software Engineering
-								</p>
+							<div class="space-y-4">
+								<div v-for="edu in education" :key="edu.institution" class="exp-item">
+									<h3 class="text-white font-medium">{{ edu.degree }}</h3>
+									<div class="text-indigo-200 text-sm">
+										{{ edu.institution }} • {{ edu.period }}
+									</div>
+									<p class="text-gray-300 mt-2">
+										{{ edu.description }}
+									</p>
+								</div>
 							</div>
 						</div>
 					</div>
 				</div>
-			</ContentPanel>
+			</Card>
 		</div>
 	</div>
 </template>
-
-<style scoped>
-.section {
-	min-height: 100vh;
-	padding: 0 1rem;
-}
-
-.exp-card {
-	background: rgba(30, 41, 59, 0.4);
-	border: 1px solid rgba(99, 102, 241, 0.15);
-	border-radius: 0.75rem;
-	padding: 1.25rem;
-	transition: all 0.3s ease;
-	position: relative;
-	overflow: hidden;
-}
-
-.exp-card::before {
-	content: '';
-	position: absolute;
-	top: 0;
-	left: 0;
-	right: 0;
-	height: 2px;
-	background: linear-gradient(
-		90deg,
-		rgba(99, 102, 241, 0) 0%,
-		rgba(99, 102, 241, 0.6) 50%,
-		rgba(99, 102, 241, 0) 100%
-	);
-}
-
-.exp-card:hover {
-	transform: translateY(-5px);
-	box-shadow: 0 10px 20px rgba(0, 0, 0, 0.2);
-	border-color: rgba(99, 102, 241, 0.3);
-}
-
-.exp-item {
-	border-left: 2px solid rgba(99, 102, 241, 0.6);
-	padding-left: 1rem;
-	position: relative;
-	transition: all 0.3s ease;
-}
-
-.exp-item::before {
-	content: '';
-	position: absolute;
-	top: 0;
-	left: -5px;
-	width: 8px;
-	height: 8px;
-	border-radius: 50%;
-	background: rgba(99, 102, 241, 0.8);
-	box-shadow: 0 0 8px rgba(99, 102, 241, 0.6);
-}
-
-.exp-item:hover {
-	border-left-color: rgba(99, 102, 241, 1);
-}
-
-.tech-badge {
-	padding: 0.5rem 1rem;
-	background: rgba(99, 102, 241, 0.15);
-	color: rgba(165, 180, 252, 1);
-	border-radius: 0.5rem;
-	font-size: 0.875rem;
-	border: 1px solid rgba(99, 102, 241, 0.2);
-	transition: all 0.3s ease;
-}
-
-.tech-badge:hover {
-	background: rgba(99, 102, 241, 0.25);
-	transform: translateY(-2px);
-	box-shadow: 0 5px 10px rgba(0, 0, 0, 0.1);
-	border-color: rgba(99, 102, 241, 0.4);
-}
-</style>

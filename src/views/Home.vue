@@ -1,31 +1,27 @@
 <script setup lang="ts">
 import { useI18n } from 'vue-i18n'
-import { onMounted, ref } from 'vue'
-import { gsap } from 'gsap'
-import ContentPanel from '../components/ContentPanel.vue'
+import { ref } from 'vue'
+import { usePageAnimation } from '@/composables/useAnimation'
+import { useProjectsStore } from '@/stores/projectsStore'
+import Card from '@/components/Card.vue'
+import Button from '@/components/Button.vue'
 
 const { t } = useI18n()
+const projectsStore = useProjectsStore()
 
-// Animation des sections
-onMounted(() => {
-	gsap.from('.home-content', {
-		opacity: 0,
-		y: 30,
-		duration: 1,
-		ease: 'expo.out',
-		delay: 0.4,
-	})
-})
+// Use our animation composable
+usePageAnimation('.home-content', 0.4)
+
+// Get featured projects from the store
+const featuredProjects = projectsStore.featuredProjects
 </script>
 
 <template>
 	<div class="section flex items-center justify-center pt-24">
 		<div class="home-content max-w-4xl mx-auto p-8">
-			<ContentPanel>
+			<Card variant="panel">
 				<div class="text-center">
-					<h1
-						class="text-5xl md:text-6xl font-bold text-transparent bg-clip-text bg-gradient-to-r from-indigo-300 to-indigo-500 mb-6"
-					>
+					<h1 class="text-5xl md:text-6xl font-bold gradient-text mb-6">
 						{{ t('home.title') }}
 					</h1>
 
@@ -33,9 +29,7 @@ onMounted(() => {
 						{{ t('home.subtitle') }}
 					</p>
 
-					<div
-						class="terminal bg-gray-900/70 p-4 rounded-lg font-mono text-sm mb-10 border border-indigo-500/20"
-					>
+					<div class="terminal mb-10">
 						<div class="mb-2 text-gray-400">
 							<span class="text-indigo-400">~</span> $ <span class="typing-effect">whoami</span>
 						</div>
@@ -45,18 +39,18 @@ onMounted(() => {
 							<span class="typing-effect">skills --list</span>
 						</div>
 						<div class="text-indigo-400 flex flex-wrap gap-2">
-							<span class="px-2 py-1 bg-indigo-900/30 rounded-md">Vue.js</span>
-							<span class="px-2 py-1 bg-indigo-900/30 rounded-md">TypeScript</span>
-							<span class="px-2 py-1 bg-indigo-900/30 rounded-md">Node.js</span>
-							<span class="px-2 py-1 bg-indigo-900/30 rounded-md">TailwindCSS</span>
-							<span class="px-2 py-1 bg-indigo-900/30 rounded-md">GraphQL</span>
-							<span class="px-2 py-1 bg-indigo-900/30 rounded-md">MongoDB</span>
+							<span class="tech-badge">Vue.js</span>
+							<span class="tech-badge">TypeScript</span>
+							<span class="tech-badge">Node.js</span>
+							<span class="tech-badge">TailwindCSS</span>
+							<span class="tech-badge">GraphQL</span>
+							<span class="tech-badge">MongoDB</span>
 						</div>
 					</div>
 
 					<div class="flex flex-wrap justify-center gap-4">
-						<router-link to="/projects" class="btn-futuristic inline-flex items-center">
-							<span>View Projects</span>
+						<Button to="/projects" variant="primary">
+							View Projects
 							<svg
 								xmlns="http://www.w3.org/2000/svg"
 								class="h-5 w-5 ml-2"
@@ -69,97 +63,55 @@ onMounted(() => {
 									clip-rule="evenodd"
 								/>
 							</svg>
-						</router-link>
+						</Button>
 
-						<router-link to="/contact" class="btn-outline-futuristic inline-flex items-center">
-							<span>Contact Me</span>
-						</router-link>
+						<Button to="/contact" variant="outline"> Contact Me </Button>
 					</div>
 				</div>
-			</ContentPanel>
+
+				<!-- Featured Projects Section -->
+				<div v-if="featuredProjects.length > 0" class="mt-20">
+					<h2 class="text-2xl font-bold gradient-text mb-6 text-center">Featured Projects</h2>
+
+					<div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+						<div v-for="project in featuredProjects.slice(0, 2)" :key="project.id" class="group">
+							<Card hover>
+								<div class="relative overflow-hidden rounded-lg mb-4 aspect-video">
+									<img
+										:src="project.image"
+										:alt="project.title"
+										class="w-full h-full object-cover transform transition-transform duration-300 group-hover:scale-110"
+									/>
+									<div
+										class="absolute inset-0 bg-gradient-to-t from-black/70 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-300 flex items-end p-4"
+									>
+										<div class="text-white text-sm font-medium">View Project</div>
+									</div>
+								</div>
+								<h3 class="text-lg font-medium text-white mb-2">
+									{{ project.title }}
+								</h3>
+								<p class="text-gray-400 text-sm mb-4 line-clamp-2">
+									{{ project.description }}
+								</p>
+								<div class="flex flex-wrap gap-2">
+									<span
+										v-for="tech in project.tech.slice(0, 3)"
+										:key="tech"
+										class="px-2 py-1 text-xs bg-primary-500/10 text-primary-300 rounded-full border border-primary-500/20"
+									>
+										{{ tech }}
+									</span>
+								</div>
+
+								<div class="mt-4">
+									<Button to="/projects" variant="text" size="sm"> View details </Button>
+								</div>
+							</Card>
+						</div>
+					</div>
+				</div>
+			</Card>
 		</div>
 	</div>
 </template>
-
-<style scoped>
-.section {
-	min-height: 100vh;
-	padding: 0 1rem;
-}
-
-.typing-effect {
-	position: relative;
-}
-
-.typing-effect::after {
-	content: '';
-	position: absolute;
-	right: -10px;
-	top: 50%;
-	transform: translateY(-50%);
-	width: 6px;
-	height: 15px;
-	background-color: #6366f1;
-	animation: blink 1s step-end infinite;
-}
-
-.btn-futuristic {
-	background: rgba(99, 102, 241, 0.2);
-	color: rgba(165, 180, 252, 1);
-	padding: 0.75rem 1.5rem;
-	border-radius: 0.375rem;
-	font-weight: 500;
-	border: 1px solid rgba(99, 102, 241, 0.4);
-	position: relative;
-	overflow: hidden;
-	transition: all 0.3s;
-	box-shadow: 0 0 10px rgba(99, 102, 241, 0.3);
-}
-
-.btn-futuristic::before {
-	content: '';
-	position: absolute;
-	top: 0;
-	left: -100%;
-	width: 100%;
-	height: 100%;
-	background: linear-gradient(90deg, transparent, rgba(99, 102, 241, 0.2), transparent);
-	transition: 0.5s;
-}
-
-.btn-futuristic:hover {
-	background: rgba(99, 102, 241, 0.3);
-	box-shadow: 0 0 20px rgba(99, 102, 241, 0.5);
-	transform: translateY(-2px);
-}
-
-.btn-futuristic:hover::before {
-	left: 100%;
-}
-
-.btn-outline-futuristic {
-	background: transparent;
-	color: rgba(165, 180, 252, 1);
-	padding: 0.75rem 1.5rem;
-	border-radius: 0.375rem;
-	font-weight: 500;
-	border: 1px solid rgba(99, 102, 241, 0.4);
-	transition: all 0.3s;
-}
-
-.btn-outline-futuristic:hover {
-	border-color: rgba(99, 102, 241, 0.8);
-	box-shadow: 0 0 15px rgba(99, 102, 241, 0.3);
-	transform: translateY(-2px);
-}
-
-@keyframes blink {
-	from,
-	to {
-		opacity: 1;
-	}
-	50% {
-		opacity: 0;
-	}
-}
-</style>
