@@ -19,7 +19,7 @@ function initBackgroundAnimation() {
 		canvas.height = window.innerHeight * dpr
 		canvas.style.width = `${window.innerWidth}px`
 		canvas.style.height = `${window.innerHeight}px`
-		ctx.scale(dpr, dpr)
+		ctx!.scale(dpr, dpr)
 	}
 
 	// Écouter le redimensionnement de la fenêtre
@@ -128,26 +128,26 @@ function initBackgroundAnimation() {
 
 	// Animation
 	function animate() {
-		ctx.clearRect(0, 0, canvas.width, canvas.height)
+		ctx!.clearRect(0, 0, canvas.width, canvas.height)
 
 		// Dessiner le fond avec un dégradé linéaire sombre (comme dans le loader original)
-		const gradient = ctx.createLinearGradient(0, 0, 0, canvas.height);
+		const gradient = ctx!.createLinearGradient(0, 0, 0, canvas.height);
 		gradient.addColorStop(0, '#0A0B12');
 		gradient.addColorStop(1, '#090A0F');
-		ctx.fillStyle = gradient;
-		ctx.fillRect(0, 0, canvas.width, canvas.height)
+		ctx!.fillStyle = gradient;
+		ctx!.fillRect(0, 0, canvas.width, canvas.height)
 
 		// Dessiner la grille
-		drawGrid(ctx, canvas.width, canvas.height)
+		drawGrid(ctx!, canvas.width, canvas.height)
 
 		// Mettre à jour et dessiner les points
 		dots.forEach((dot) => {
 			dot.update()
-			dot.draw(ctx)
+			dot.draw(ctx!)
 		})
 
 		// Dessiner les connexions
-		drawConnections(dots, ctx)
+		drawConnections(dots, ctx!)
 
 		// Continuer l'animation
 		backgroundAnimation = requestAnimationFrame(animate)
