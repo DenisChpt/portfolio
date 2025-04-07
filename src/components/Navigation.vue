@@ -61,8 +61,8 @@ const closeMenu = () => {
 						class="p-2 rounded-md text-gray-400 hover:text-indigo-400 transition-all duration-200 hover:bg-indigo-500/10"
 						aria-label="Toggle theme"
 					>
-						<span v-if="themeStore.isDark">🌞</span>
-						<span v-else>🌙</span>
+						<span v-if="themeStore.isDark">☀️</span>
+						<span v-else>🌕</span>
 					</button>
 
 					<LanguageSelector />
@@ -119,8 +119,8 @@ const closeMenu = () => {
 						class="p-2 rounded-md text-gray-400 hover:text-indigo-400 transition-all duration-200 hover:bg-indigo-500/10"
 						aria-label="Toggle theme"
 					>
-						<span v-if="themeStore.isDark">🌞</span>
-						<span v-else>🌙</span>
+						<span v-if="themeStore.isDark">☀️</span>
+						<span v-else>🌕</span>
 					</button>
 
 					<LanguageSelector />
