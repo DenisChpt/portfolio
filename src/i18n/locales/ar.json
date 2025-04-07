@@ -1,0 +1,35 @@
+{
+	"nav": {
+		"home": "الرئيسية",
+		"about": "من أنا",
+		"projects": "المشاريع",
+		"contact": "اتصل بي"
+	},
+	"home": {
+		"title": "مرحباً بكم في ملفي الشخصي",
+		"subtitle": "مطور ويب شامل",
+		"terminal": {
+			"commandWhoAmI": "whoami",
+			"developerInfo": "دينيس شابوت • مطور ويب شامل",
+			"commandSkills": "skills --list"
+		},
+		"viewProjects": "عرض المشاريع",
+		"contactMe": "اتصل بي",
+		"featuredProjects": "المشاريع المميزة"
+	},
+	"about": {
+		"title": "من أنا",
+		"description": "لوريم إيبسوم هو نص شكلي يُستخدم في صناعات الطباعة والتنضيد. كان النص المعياري منذ القرن الخامس عشر وما زال يُستخدم حتى الآن."
+	},
+	"projects": {
+		"title": "مشاريعي",
+		"description": "إليك بعض من أحدث مشاريعي"
+	},
+	"contact": {
+		"title": "اتصل بي",
+		"name": "الاسم",
+		"email": "البريد الإلكتروني",
+		"message": "الرسالة",
+		"send": "أرسل الرسالة"
+	}
+}

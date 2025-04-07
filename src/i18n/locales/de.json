@@ -1,0 +1,35 @@
+{
+	"nav": {
+		"home": "Startseite",
+		"about": "Über mich",
+		"projects": "Projekte",
+		"contact": "Kontakt"
+	},
+	"home": {
+		"title": "Willkommen in meinem Portfolio",
+		"subtitle": "Full Stack Entwickler",
+		"terminal": {
+			"commandWhoAmI": "whoami",
+			"developerInfo": "Denis Chapot • Full Stack Entwickler",
+			"commandSkills": "skills --list"
+		},
+		"viewProjects": "Projekte ansehen",
+		"contactMe": "Kontaktiere mich",
+		"featuredProjects": "Hervorgehobene Projekte"
+	},
+	"about": {
+		"title": "Über mich",
+		"description": "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed do eiusmod tempor incididunt ut labore et dolore magna aliqua."
+	},
+	"projects": {
+		"title": "Meine Projekte",
+		"description": "Hier sind einige meiner neuesten Projekte"
+	},
+	"contact": {
+		"title": "Kontaktiere mich",
+		"name": "Name",
+		"email": "E-Mail",
+		"message": "Nachricht",
+		"send": "Nachricht senden"
+	}
+}

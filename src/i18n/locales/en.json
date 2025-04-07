@@ -1,27 +1,35 @@
 {
-  "nav": {
-    "home": "Home",
-    "about": "About",
-    "projects": "Projects",
-    "contact": "Contact"
-  },
-  "home": {
-    "title": "Welcome to My Portfolio",
-    "subtitle": "Full Stack Developer"
-  },
-  "about": {
-    "title": "About Me",
-    "description": "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed do eiusmod tempor incididunt ut labore et dolore magna aliqua."
-  },
-  "projects": {
-    "title": "My Projects",
-    "description": "Here are some of my recent projects"
-  },
-  "contact": {
-    "title": "Contact Me",
-    "name": "Name",
-    "email": "Email",
-    "message": "Message",
-    "send": "Send Message"
-  }
+	"nav": {
+		"home": "Home",
+		"about": "About",
+		"projects": "Projects",
+		"contact": "Contact"
+	},
+	"home": {
+		"title": "Welcome to My Portfolio",
+		"subtitle": "Full Stack Developer",
+		"terminal": {
+			"commandWhoAmI": "whoami",
+			"developerInfo": "Denis Chapot • Full Stack Developer",
+			"commandSkills": "skills --list"
+		},
+		"viewProjects": "View Projects",
+		"contactMe": "Contact Me",
+		"featuredProjects": "Featured Projects"
+	},
+	"about": {
+		"title": "About Me",
+		"description": "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed do eiusmod tempor incididunt ut labore et dolore magna aliqua."
+	},
+	"projects": {
+		"title": "My Projects",
+		"description": "Here are some of my recent projects"
+	},
+	"contact": {
+		"title": "Contact Me",
+		"name": "Name",
+		"email": "Email",
+		"message": "Message",
+		"send": "Send Message"
+	}
 }
