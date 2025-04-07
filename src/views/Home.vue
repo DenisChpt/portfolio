@@ -31,12 +31,11 @@ const featuredProjects = projectsStore.featuredProjects
 
 					<div class="terminal mb-10">
 						<div class="mb-2 text-gray-400">
-							<span class="text-indigo-400">~</span> $ <span class="typing-effect">whoami</span>
+							<span class="text-indigo-400">~</span> $ <span class="typing-effect">{{ t('home.terminal.commandWhoAmI') }}</span>
 						</div>
-						<div class="text-indigo-400 mb-2">Denis Chapot • Full Stack Developer</div>
+						<div class="text-indigo-400 mb-2">{{ t('home.terminal.developerInfo') }}</div>
 						<div class="mb-2 text-gray-400">
-							<span class="text-indigo-400">~</span> $
-							<span class="typing-effect">skills --list</span>
+							<span class="text-indigo-400">~</span> $ <span class="typing-effect">{{ t('home.terminal.commandSkills') }}</span>
 						</div>
 						<div class="text-indigo-400 flex flex-wrap gap-2">
 							<span class="tech-badge">Vue.js</span>
@@ -50,7 +49,7 @@ const featuredProjects = projectsStore.featuredProjects
 
 					<div class="flex flex-wrap justify-center gap-4">
 						<Button to="/projects" variant="primary">
-							View Projects
+							{{ t('home.viewProjects') }}
 							<svg
 								xmlns="http://www.w3.org/2000/svg"
 								class="h-5 w-5 ml-2"
@@ -65,13 +64,13 @@ const featuredProjects = projectsStore.featuredProjects
 							</svg>
 						</Button>
 
-						<Button to="/contact" variant="outline"> Contact Me </Button>
+						<Button to="/contact" variant="outline"> {{ t('home.contactMe') }} </Button>
 					</div>
 				</div>
 
 				<!-- Featured Projects Section -->
 				<div v-if="featuredProjects.length > 0" class="mt-20">
-					<h2 class="text-2xl font-bold gradient-text mb-6 text-center">Featured Projects</h2>
+					<h2 class="text-2xl font-bold gradient-text mb-6 text-center">{{ t('home.featuredProjects') }}</h2>
 
 					<div class="grid grid-cols-1 md:grid-cols-2 gap-6">
 						<div v-for="project in featuredProjects.slice(0, 2)" :key="project.id" class="group">

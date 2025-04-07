@@ -1,27 +1,35 @@
 {
-  "nav": {
-    "home": "Accueil",
-    "about": "À propos",
-    "projects": "Projets",
-    "contact": "Contact"
-  },
-  "home": {
-    "title": "Bienvenue sur Mon Portfolio",
-    "subtitle": "Développeur Full Stack"
-  },
-  "about": {
-    "title": "À propos de moi",
-    "description": "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed do eiusmod tempor incididunt ut labore et dolore magna aliqua."
-  },
-  "projects": {
-    "title": "Mes Projets",
-    "description": "Voici quelques-uns de mes projets récents"
-  },
-  "contact": {
-    "title": "Me Contacter",
-    "name": "Nom",
-    "email": "Email",
-    "message": "Message",
-    "send": "Envoyer le message"
-  }
+	"nav": {
+		"home": "Accueil",
+		"about": "À propos",
+		"projects": "Projets",
+		"contact": "Contact"
+	},
+	"home": {
+		"title": "Bienvenue sur Mon Portfolio",
+		"subtitle": "Développeur Full Stack",
+		"terminal": {
+			"commandWhoAmI": "whoami",
+			"developerInfo": "Denis Chapot • Développeur Full Stack",
+			"commandSkills": "skills --list"
+		},
+		"viewProjects": "Voir les Projets",
+		"contactMe": "Contactez-moi",
+		"featuredProjects": "Projets en Vedette"
+	},
+	"about": {
+		"title": "À propos de moi",
+		"description": "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed do eiusmod tempor incididunt ut labore et dolore magna aliqua."
+	},
+	"projects": {
+		"title": "Mes Projets",
+		"description": "Voici quelques-uns de mes projets récents"
+	},
+	"contact": {
+		"title": "Me Contacter",
+		"name": "Nom",
+		"email": "Email",
+		"message": "Message",
+		"send": "Envoyer le message"
+	}
 }
