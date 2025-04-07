@@ -1,5 +1,5 @@
 <script setup lang="ts">
-import { ref, computed } from 'vue'
+import { ref, computed, watch, onMounted } from 'vue'
 import { useI18n } from 'vue-i18n'
 import { useRouter, useRoute } from 'vue-router'
 import { useThemeStore } from '@/stores/themeStore'
@@ -14,6 +14,7 @@ const router = useRouter()
 const route = useRoute()
 const themeStore = useThemeStore()
 const isMenuOpen = ref(false)
+const isScrolled = ref(false)
 
 const currentSection = computed(() => route.name as string)
 
@@ -24,27 +25,44 @@ const toggleMenu = () => {
 const closeMenu = () => {
 	isMenuOpen.value = false
 }
+
+// Détecter le défilement pour changer l'apparence de la navigation
+const handleScroll = () => {
+	isScrolled.value = window.scrollY > 50
+}
+
+onMounted(() => {
+	window.addEventListener('scroll', handleScroll)
+	handleScroll() // Vérification initiale
+})
+
+watch(() => route.path, () => {
+	closeMenu()
+})
 </script>
 
 <template>
 	<nav
-		class="bg-gray-900/40 backdrop-blur-md shadow-lg fixed w-full z-50 border-b border-indigo-500/20"
+		class="fixed w-full z-50 transition-all duration-300 bg-gray-900/90 backdrop-blur-lg shadow-lg border-b border-indigo-500/20"
+		:class="[
+			isScrolled ? 'py-1' : 'py-2'
+		]"
 	>
 		<div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-			<div class="flex justify-between h-16">
-				<div class="flex">
+			<div class="flex justify-between h-14">
+				<div class="flex items-center">
 					<div class="flex-shrink-0 flex items-center">
-						<router-link to="/" class="text-xl font-bold text-indigo-400">
+						<router-link to="/" class="text-xl font-bold text-indigo-400 hover:text-indigo-300 transition-colors duration-300">
 							Portfolio
 							<span class="blink">_</span>
 						</router-link>
 					</div>
-					<div class="hidden sm:ml-6 sm:flex sm:space-x-8">
+					<div class="hidden sm:ml-10 sm:flex sm:space-x-12">
 						<router-link
 							v-for="route in ['home', 'about', 'projects', 'contact']"
 							:key="route"
 							:to="{ name: route }"
-							class="nav-link inline-flex items-center px-1 pt-1 border-b-2 text-sm font-medium transition-colors duration-200"
+							class="nav-link inline-flex items-center px-3 pt-1 border-b-2 text-base font-medium transition-all duration-300"
 							:class="{
 								'text-indigo-400 border-indigo-500': currentSection === route,
 								'text-gray-100 border-transparent hover:text-indigo-400 hover:border-indigo-400/50':
@@ -58,11 +76,11 @@ const closeMenu = () => {
 				<div class="hidden sm:ml-6 sm:flex sm:items-center space-x-4">
 					<button
 						@click="$emit('toggle-theme')"
-						class="p-2 rounded-md text-gray-400 hover:text-indigo-400 transition-all duration-200 hover:bg-indigo-500/10"
+						class="p-2 rounded-full text-gray-400 hover:text-indigo-400 transition-all duration-300 hover:bg-indigo-500/10"
 						aria-label="Toggle theme"
 					>
-						<span v-if="themeStore.isDark">☀️</span>
-						<span v-else>🌕</span>
+						<span v-if="themeStore.isDark" class="text-lg">☀️</span>
+						<span v-else class="text-lg">🌕</span>
 					</button>
 
 					<LanguageSelector />
@@ -95,13 +113,17 @@ const closeMenu = () => {
 				</div>
 			</div>
 		</div>
-		<div v-show="isMenuOpen" class="sm:hidden">
-			<div class="pt-2 pb-3 space-y-1 border-t border-indigo-500/20">
+		<div
+			v-show="isMenuOpen"
+			class="sm:hidden absolute w-full transform transition-transform duration-300"
+			:class="isMenuOpen ? 'translate-y-0 opacity-100' : '-translate-y-10 opacity-0 pointer-events-none'"
+		>
+			<div class="pt-2 pb-3 space-y-1 border-t border-indigo-500/20 bg-gray-900/90 backdrop-blur-lg">
 				<router-link
 					v-for="route in ['home', 'about', 'projects', 'contact']"
 					:key="route"
 					:to="{ name: route }"
-					class="mobile-nav-link block pl-3 pr-4 py-2 text-base font-medium transition-colors duration-200"
+					class="mobile-nav-link block pl-3 pr-4 py-2 text-base font-medium transition-all duration-300"
 					:class="{
 						'text-indigo-400 bg-indigo-900/20 border-l-2 border-indigo-500':
 							currentSection === route,
@@ -185,5 +207,14 @@ const closeMenu = () => {
 
 .blink {
 	animation: blink 1s step-end infinite;
+}
+
+@keyframes blink {
+	from, to {
+		opacity: 1;
+	}
+	50% {
+		opacity: 0;
+	}
 }
 </style>

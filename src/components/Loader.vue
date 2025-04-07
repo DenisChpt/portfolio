@@ -266,7 +266,7 @@ function handleCircleHover(isEntering: boolean) {
 			circle.style.getPropertyValue('--circle-dash-array-hover') || '325.27 36.09 325.27 36.09'
 		const hoverDashOffset = circle.style.getPropertyValue('--circle-dash-offset-hover') || '325.27'
 		const hoverR = circle.style.getPropertyValue('--circle-r1-hover') || '145px'
-		const outlineR = circle.style.getPropertyValue('--circle-r2-hover') || '155px'
+		const outlineR = circle.style.getPropertyValue('--circle-r2-hover') || '160px'
 
 		// Amélioration 3: Utiliser une timeline GSAP pour coordonner les animations
 		const tl = gsap.timeline({
@@ -358,7 +358,7 @@ function handleCircleHover(isEntering: boolean) {
 		tl.to(
 			circle,
 			{
-				r: 155,
+				r: 160,
 				opacity: 0.5,
 				overwrite: 'auto',
 			},
@@ -479,7 +479,7 @@ onBeforeUnmount(() => {
 							opacity="0.5"
 							cx="231"
 							cy="231"
-							r="155"
+							r="160"
 							stroke="currentColor"
 							:style="{
 								strokeDasharray: dashArray,
@@ -543,15 +543,15 @@ onBeforeUnmount(() => {
 
 .preloader-progress-wrapper {
 	position: relative;
-	width: 28.75rem;
-	height: 28.75rem;
+	width: 30rem;
+	height: 30rem;
 	z-index: 1;
 }
 
 @media (max-width: 999px) {
 	.preloader-progress-wrapper {
-		width: 18.75rem;
-		height: 18.75rem;
+		width: 22rem;
+		height: 22rem;
 	}
 }
 
@@ -591,21 +591,30 @@ onBeforeUnmount(() => {
 .preloader-progress-outline {
 	will-change: r, opacity;
 	transform: translateZ(0);
+	stroke-width: 1px;
 }
 
 .preloader-progress-circle {
 	will-change: r, opacity, stroke-dasharray, stroke-dashoffset;
 	transform: translateZ(0);
+	stroke-width: 2px;
 }
 
 .preloader-progress-text {
 	position: absolute;
 	top: 50%;
 	left: 50%;
-	width: 5rem;
+	width: 6rem;
 	transform: translate(-50%, -55%);
 	text-align: center;
 	pointer-events: none;
+}
+
+.preloader-progress-text-percent {
+	font-size: 1.75rem;
+	font-weight: 600;
+	color: rgba(255, 255, 255, 0.95);
+	margin-bottom: -5px;
 }
 
 .preloader-cta {
@@ -639,8 +648,8 @@ onBeforeUnmount(() => {
 .preloader-cta-text-static,
 .preloader-cta-text-hover {
 	padding: 0.5rem 1rem;
-	font-size: 1.25rem;
-	letter-spacing: 0.3em;
+	font-size: 1.5rem;
+	letter-spacing: 0.4em;
 	text-transform: uppercase;
 	will-change: transform, opacity;
 	backface-visibility: hidden;
@@ -652,6 +661,7 @@ onBeforeUnmount(() => {
 	left: 0;
 	transform: translateY(100%);
 	opacity: 0;
+	color: rgba(165, 180, 252, 1);
 }
 
 .preloader-footer {
@@ -666,9 +676,8 @@ onBeforeUnmount(() => {
 .preloader-footer-text-inner {
 	display: flex;
 	overflow: hidden;
-	transform: translateY(-110%);
 	opacity: 0;
-	transition: transform 1.2s, opacity 1.2s;
+	letter-spacing: 0.2em;
 }
 
 .preloader-footer-text-dots {

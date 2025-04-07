@@ -62,7 +62,8 @@ defineProps<{
 	backdrop-filter: blur(8px);
 	box-shadow: 0 0 20px rgba(79, 70, 229, 0.15), 0 0 0 1px rgba(99, 102, 241, 0.1) inset;
 	overflow: hidden;
-	transition: all 0.3s ease;
+	transition: all 0.5s cubic-bezier(0.34, 1.56, 0.64, 1);
+	transform: translateZ(0);
 }
 
 /* Hover effects */
@@ -83,6 +84,10 @@ defineProps<{
 }
 
 /* Panel variant */
+.card-panel {
+	position: relative;
+}
+
 .card-panel::before {
 	content: '';
 	position: absolute;
@@ -138,19 +143,26 @@ defineProps<{
 }
 
 .panel-content {
-	padding: 1.5rem;
+	padding: 1.5rem 2rem; /* Increased padding for better spacing */
 }
 
 /* Responsive adjustments */
 @media (min-width: 768px) {
 	.card {
 		max-width: 90%;
+		margin: 0 auto;
 	}
 }
 
 @media (min-width: 1024px) {
 	.card {
-		max-width: 1024px;
+		max-width: 1100px; /* Increased max-width for better desktop experience */
+	}
+}
+
+@media (max-width: 640px) {
+	.panel-content {
+		padding: 1.25rem 1rem; /* Reduced padding on mobile */
 	}
 }
 </style>
