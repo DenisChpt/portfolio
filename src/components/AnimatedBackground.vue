@@ -29,7 +29,7 @@ function initBackgroundAnimation() {
 	// Paramètres de l'animation
 	const gridSize = 40
 	const gridLineWidth = 0.3
-	const dotsCount = 30
+	const dotsCount = 50
 	const dotMinRadius = 1
 	const dotMaxRadius = 3
 	const maxSpeed = 0.4
