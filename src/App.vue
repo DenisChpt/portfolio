@@ -1,37 +1,28 @@
 <script setup lang="ts">
-import { ref, watch, onMounted } from 'vue'
+import { ref } from 'vue'
 import { useI18n } from 'vue-i18n'
 import Navigation from './components/Navigation.vue'
 import Footer from './components/Footer.vue'
 import Loader from './components/Loader.vue'
 import AnimatedBackground from './components/AnimatedBackground.vue'
-import { useThemeStore } from './stores/themeStore'
 
 const { locale } = useI18n()
 const isLoading = ref(true)
-const themeStore = useThemeStore()
 
 const handleLoadingComplete = () => {
 	isLoading.value = false
-}
-
-const toggleTheme = () => {
-	themeStore.toggleDark()
 }
 </script>
 
 <template>
 	<Loader v-if="isLoading" @loading-complete="handleLoadingComplete" />
 
-	<div
-		v-else
-		class="min-h-screen flex flex-col"
-		:class="{ dark: themeStore.isDark, light: !themeStore.isDark }"
-	>
+	<div v-else class="min-h-screen flex flex-col">
 		<!-- Animated background -->
 		<AnimatedBackground />
 
-		<Navigation @toggle-theme="toggleTheme" :is-dark="themeStore.isDark" />
+		<!-- Navigation sans toggler de thème -->
+		<Navigation />
 
 		<main class="flex-grow">
 			<router-view v-slot="{ Component }">
@@ -62,7 +53,7 @@ const toggleTheme = () => {
 	transform: translateY(-20px);
 }
 
-/* Smooth scrolling for the entire page */
+/* Smooth scrolling */
 html {
 	scroll-behavior: smooth;
 }
@@ -102,7 +93,6 @@ html {
 /* Mise à jour du style de fond */
 body {
 	@apply antialiased overflow-x-hidden;
-	/* IMPORTANT: Supprimer tous les styles de fond ici */
 	background: transparent !important;
 	color: rgb(var(--color-text));
 	font-family: var(--font-sans);
