@@ -1,11 +1,10 @@
 <script setup lang="ts">
 import { ref, computed, watch, onMounted } from 'vue'
 import { useI18n } from 'vue-i18n'
-import { useRouter, useRoute } from 'vue-router'
+import { useRoute } from 'vue-router'
 import LanguageSelector from './LanguageSelector.vue'
 
 const { t } = useI18n()
-const router = useRouter()
 const route = useRoute()
 const isMenuOpen = ref(false)
 const isScrolled = ref(false)

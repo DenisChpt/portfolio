@@ -3,7 +3,6 @@ import { ref, onMounted, onBeforeUnmount } from 'vue'
 import { useRouter } from 'vue-router'
 import { gsap } from 'gsap'
 import { CSSPlugin } from 'gsap/CSSPlugin'
-import AnimatedBackground from './AnimatedBackground.vue'
 
 // Enregistrement des plugins nécessaires
 gsap.registerPlugin(CSSPlugin)
@@ -21,6 +20,7 @@ const progressCircle = ref<SVGCircleElement>()
 const progressOutline = ref<SVGCircleElement>()
 const progressTextInner = ref<HTMLDivElement>()
 const footerTextInner = ref<HTMLDivElement>()
+const loaderContainer = ref<HTMLDivElement>()
 
 const loading = ref(true)
 const progress = ref(0)
@@ -223,19 +223,20 @@ function simulateProgress() {
 }
 
 function handleEnter() {
-	if (!progressContainer.value) return
+	if (!progressContainer.value || !loaderContainer.value) return
 
+	// Animation du cercle
 	gsap.to(progressContainer.value, {
-		scale: 1.2,
+		scale: 1.3,
 		opacity: 0,
-		duration: 1,
+		duration: 0.8,
 		ease: 'expo.out',
 	})
 
-	gsap.to('.loader-container', {
+	// Fade out instantané du contenu du loader sans changer le fond
+	gsap.to(loaderContainer.value, {
 		opacity: 0,
-		duration: 1.5,
-		delay: 0.5,
+		duration: 0.8,
 		ease: 'expo.out',
 		onComplete: () => {
 			loading.value = false
@@ -431,11 +432,9 @@ onBeforeUnmount(() => {
 <template>
 	<div
 		v-if="loading"
-		class="loader-container fixed inset-0 flex items-center justify-center bg-[#090A0F] z-50"
+		ref="loaderContainer"
+		class="loader-container fixed inset-0 flex items-center justify-center z-50"
 	>
-		<!-- Utiliser le même fond animé que le reste de l'application -->
-		<AnimatedBackground />
-
 		<div class="preloader c-color">
 			<div class="preloader-progress-wrapper">
 				<div class="preloader-progress" ref="progressContainer">
@@ -522,6 +521,7 @@ onBeforeUnmount(() => {
 
 .loader-container {
 	color: #bcbcbc;
+	background: transparent !important; /* Fond transparent pour voir AnimatedBackground */
 }
 
 .preloader {

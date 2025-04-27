@@ -1,12 +1,10 @@
 <script setup lang="ts">
 import { ref } from 'vue'
-import { useI18n } from 'vue-i18n'
 import Navigation from './components/Navigation.vue'
 import Footer from './components/Footer.vue'
 import Loader from './components/Loader.vue'
 import AnimatedBackground from './components/AnimatedBackground.vue'
 
-const { locale } = useI18n()
 const isLoading = ref(true)
 
 const handleLoadingComplete = () => {
@@ -15,13 +13,15 @@ const handleLoadingComplete = () => {
 </script>
 
 <template>
+	<!-- AnimatedBackground reste visible en permanence -->
+	<AnimatedBackground />
+
+	<!-- Loader par-dessus l'AnimatedBackground -->
 	<Loader v-if="isLoading" @loading-complete="handleLoadingComplete" />
 
-	<div v-else class="min-h-screen flex flex-col">
-		<!-- Animated background -->
-		<AnimatedBackground />
-
-		<!-- Navigation sans toggler de thème -->
+	<!-- Le contenu principal n'apparaît que lorsque le chargement est terminé -->
+	<div v-if="!isLoading" class="min-h-screen flex flex-col">
+		<!-- Navigation -->
 		<Navigation />
 
 		<main class="flex-grow">

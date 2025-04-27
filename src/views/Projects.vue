@@ -1,5 +1,5 @@
 <script setup lang="ts">
-import { ref, onMounted, watch } from 'vue'
+import { ref, onMounted, watch, nextTick } from 'vue'
 import { useI18n } from 'vue-i18n'
 import { gsap } from 'gsap'
 import { useProjectsStore } from '@/stores/projectsStore'
@@ -13,28 +13,83 @@ const projectsStore = useProjectsStore()
 const headerRef = ref(null)
 const filtersRef = ref(null)
 const projectsGridRef = ref(null)
+const cardRef = ref(null)
+
+// Variable pour contrôler la visibilité initiale
+const contentReady = ref(false)
 
 // Search and filters
 const searchQuery = ref('')
 const selectedTech = ref<string | null>(null)
+const isFiltering = ref(false)
 
 // Référence pour le modal
 const projectDetailsRef = ref(null)
 
 // Handle filtering
 const handleSearch = () => {
+	isFiltering.value = true
 	projectsStore.setSearchQuery(searchQuery.value)
 }
 
-const handleTechFilter = (tech: string | null) => {
-	projectsStore.setTechFilter(tech === selectedTech.value ? null : tech)
-	selectedTech.value = tech === selectedTech.value ? null : tech
+const handleTechFilter = async (tech: string | null) => {
+	isFiltering.value = true
+
+	// Si on clique sur la techno déjà sélectionnée, on la désélectionne
+	const newTech = tech === selectedTech.value ? null : tech
+
+	// Mettre à jour l'état de sélection
+	selectedTech.value = newTech
+
+	// Mettre à jour le filtre dans le store
+	projectsStore.setTechFilter(newTech)
+
+	// Permettre au DOM de se mettre à jour avant d'animer
+	await nextTick()
+
+	// Animation des éléments filtrés
+	animateFilteredProjects()
 }
 
-const clearFilters = () => {
+const clearFilters = async () => {
+	isFiltering.value = true
 	searchQuery.value = ''
 	selectedTech.value = null
 	projectsStore.clearFilters()
+
+	// Permettre au DOM de se mettre à jour avant d'animer
+	await nextTick()
+
+	// Animation des éléments filtrés
+	animateFilteredProjects()
+}
+
+// Animation spécifique pour les projets filtrés
+const animateFilteredProjects = () => {
+	// Sélectionner tous les projets (qui sont maintenant dans le DOM)
+	const projectCards = document.querySelectorAll('.project-card')
+
+	if (projectCards.length === 0) return
+
+	// Réinitialiser l'opacité et d'autres styles d'animation
+	gsap.set(projectCards, {
+		opacity: 0,
+		y: 20,
+		scale: 0.95,
+	})
+
+	// Animer les cartes avec un effet de cascade
+	gsap.to(projectCards, {
+		opacity: 1,
+		y: 0,
+		scale: 1,
+		duration: 0.5,
+		stagger: 0.05,
+		clearProps: 'all',
+		onComplete: () => {
+			isFiltering.value = false
+		},
+	})
 }
 
 // Open and close project details
@@ -87,7 +142,7 @@ const animateProjects = () => {
 	// Filtres
 	tl.fromTo(filtersRef.value, { y: 20, opacity: 0 }, { y: 0, opacity: 1, duration: 0.6 }, 0.5)
 
-	// Grille de projets
+	// Grille de projets - avec callback pour marquer la fin d'animation
 	tl.fromTo(
 		'.project-card',
 		{ y: 30, opacity: 0, scale: 0.95 },
@@ -97,45 +152,56 @@ const animateProjects = () => {
 			scale: 1,
 			duration: 0.7,
 			stagger: 0.1,
-			clearProps: 'transform,opacity',
+			clearProps: 'all', // Nettoyer toutes les propriétés d'animation
 		},
 		0.7
 	)
 }
 
 onMounted(() => {
-	// Animation à l'entrée
+	// On cache le contenu initialement
+	contentReady.value = false
+
+	// On utilise un timeout pour s'assurer que le DOM est prêt et que tout est masqué
 	setTimeout(() => {
-		animateProjects()
-	}, 200)
+		// Maintenant on peut rendre le contenu visible
+		contentReady.value = true
+
+		// Et lancer l'animation après que le contenu soit rendu
+		setTimeout(() => {
+			animateProjects()
+		}, 50) // Un petit délai pour être sûr que la transition d'opacité est terminée
+	}, 50)
 })
 
-// Réanimer la grille quand les filtres changent
+// Observer les changements dans les projets filtrés
 watch(
 	() => projectsStore.filteredProjects,
-	() => {
-		gsap.fromTo(
-			'.project-card',
-			{ opacity: 0, y: 20, scale: 0.95 },
-			{
-				opacity: 1,
-				y: 0,
-				scale: 1,
-				duration: 0.5,
-				stagger: 0.05,
-				clearProps: 'transform,opacity',
-			}
-		)
+	(_, oldProjects) => {
+		// Ne pas animer si le contenu n'est pas encore prêt
+		if (!contentReady.value) return
+
+		// Ne pas animer à l'initialisation ou si l'animation est déjà gérée par handleTechFilter
+		if (!oldProjects || isFiltering.value) return
+
+		// Animer les modifications de filtres
+		nextTick(() => {
+			animateFilteredProjects()
+		})
 	},
 	{ deep: true }
 )
 </script>
 
 <template>
-	<div class="section min-h-screen flex items-center justify-center pt-32 pb-16">
-		<div class="projects-window max-w-6xl w-full mx-auto px-4 sm:px-6 lg:px-8">
-			<Card title="portfolio.projects" variant="window" :fullHeight="true">
-				<div ref="headerRef" class="mb-12">
+	<div class="section flex flex-col items-center justify-start pt-32 pb-16">
+		<div class="projects-window max-w-6xl w-full mx-auto px-4 sm:px-6 lg:px-8 flex-grow">
+			<!-- En attendant que le contenu soit prêt, on affiche un placeholder invisible -->
+			<div v-if="!contentReady" class="w-full h-full"></div>
+
+			<!-- Le contenu principal n'est rendu que lorsqu'il est prêt à être animé -->
+			<Card v-else title="portfolio.projects" variant="window">
+				<div ref="headerRef" class="mb-8" :style="{ opacity: 0 }">
 					<h1 class="text-4xl md:text-5xl font-bold gradient-text mb-6">
 						{{ t('projects.title') }}
 					</h1>
@@ -145,7 +211,11 @@ watch(
 				</div>
 
 				<!-- Search and filter -->
-				<div ref="filtersRef" class="mb-10 flex flex-wrap gap-6 items-center">
+				<div
+					ref="filtersRef"
+					class="mb-8 flex flex-wrap gap-6 items-center"
+					:style="{ opacity: 0 }"
+				>
 					<div class="flex-1 min-w-[250px]">
 						<div class="relative">
 							<input
@@ -216,17 +286,15 @@ watch(
 					<Button @click="clearFilters" variant="outline" size="md">Clear Filters</Button>
 				</div>
 
-				<!-- Projects grid -->
-				<div
-					v-else
-					ref="projectsGridRef"
-					class="projects-grid grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8 overflow-y-auto max-h-[calc(100vh-20rem)] px-1 py-2"
-				>
+				<!-- Projects grid - CORRIGÉ -->
+				<div v-else ref="projectsGridRef" class="projects-grid">
 					<div
 						v-for="project in projectsStore.filteredProjects"
 						:key="project.id"
 						class="project-card cursor-pointer group"
+						ref="cardRef"
 						@click="openProject(project.id)"
+						:style="{ opacity: 0 }"
 					>
 						<Card hover>
 							<div
@@ -398,6 +466,11 @@ watch(
 </template>
 
 <style scoped>
+.section {
+	min-height: 100vh;
+	padding-bottom: 100px; /* Ajouter plus d'espace en bas */
+}
+
 .gradient-text {
 	background: linear-gradient(to right, rgb(129, 140, 248), rgb(165, 180, 252), rgb(129, 140, 248));
 	-webkit-background-clip: text;
@@ -417,19 +490,48 @@ watch(
 	transform-origin: center center;
 }
 
-/* Personnalisation de la scrollbar pour la grille de projets */
+/* Configuration de la grille de projets avec scrolling */
+.projects-grid {
+	display: grid;
+	grid-template-columns: repeat(1, minmax(0, 1fr));
+	gap: 2rem;
+	padding: 0.25rem 0.25rem;
+	height: auto;
+	max-height: 60vh; /* Hauteur fixe pour forcer l'apparition du scroll */
+	overflow-y: auto;
+}
+
+@media (min-width: 768px) {
+	.projects-grid {
+		grid-template-columns: repeat(2, minmax(0, 1fr));
+	}
+}
+
+@media (min-width: 1024px) {
+	.projects-grid {
+		grid-template-columns: repeat(3, minmax(0, 1fr));
+	}
+}
+
+/* Amélioration des styles de scrollbar pour la grille de projets */
+.projects-grid {
+	scrollbar-width: thin;
+	scrollbar-color: rgba(99, 102, 241, 0.3) rgba(30, 41, 59, 0.5);
+}
+
 .projects-grid::-webkit-scrollbar {
-	width: 6px;
+	width: 10px; /* Scrollbar plus large pour être plus visible */
 }
 
 .projects-grid::-webkit-scrollbar-track {
 	background: rgba(30, 41, 59, 0.5);
-	border-radius: 3px;
+	border-radius: 4px;
 }
 
 .projects-grid::-webkit-scrollbar-thumb {
 	background: rgba(99, 102, 241, 0.3);
-	border-radius: 3px;
+	border-radius: 4px;
+	border: 1px solid rgba(30, 41, 59, 0.5);
 }
 
 .projects-grid::-webkit-scrollbar-thumb:hover {
