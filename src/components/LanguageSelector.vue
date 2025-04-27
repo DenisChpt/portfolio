@@ -6,10 +6,12 @@ const { locale } = useI18n()
 const isOpen = ref(false)
 
 const languages = [
-	{ code: 'en', name: 'English', flag: '🇬🇧' },
-	{ code: 'fr', name: 'Français', flag: '🇫🇷' },
-	{ code: 'de', name: 'Deutsch', flag: '🇩🇪' },
-	{ code: 'ar', name: 'العربية', flag: '🇸🇦' },
+{ code: 'en', name: 'English', flag: '🇬🇧' },
+{ code: 'fr', name: 'Français', flag: '🇫🇷' },
+{ code: 'es', name: 'Español', flag: '🇪🇸' },
+{ code: 'pt', name: 'Português', flag: '🇧🇷' },
+{ code: 'de', name: 'Deutsch', flag: '🇩🇪' },
+{ code: 'ar', name: 'العربية', flag: '🇸🇦' },
 ]
 
 const changeLanguage = (langCode: string) => {

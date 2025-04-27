@@ -31,11 +31,13 @@ const featuredProjects = projectsStore.featuredProjects
 
 					<div class="terminal mb-10">
 						<div class="mb-2 text-gray-400">
-							<span class="text-indigo-400">~</span> $ <span class="typing-effect">{{ t('home.terminal.commandWhoAmI') }}</span>
+							<span class="text-indigo-400">~</span> $
+							<span class="typing-effect">{{ t('home.terminal.commandWhoAmI') }}</span>
 						</div>
 						<div class="text-indigo-400 mb-2">{{ t('home.terminal.developerInfo') }}</div>
 						<div class="mb-2 text-gray-400">
-							<span class="text-indigo-400">~</span> $ <span class="typing-effect">{{ t('home.terminal.commandSkills') }}</span>
+							<span class="text-indigo-400">~</span> $
+							<span class="typing-effect">{{ t('home.terminal.commandSkills') }}</span>
 						</div>
 						<div class="text-indigo-400 flex flex-wrap gap-2">
 							<span class="tech-badge">Vue.js</span>
@@ -70,7 +72,9 @@ const featuredProjects = projectsStore.featuredProjects
 
 				<!-- Featured Projects Section -->
 				<div v-if="featuredProjects.length > 0" class="mt-20">
-					<h2 class="text-2xl font-bold gradient-text mb-6 text-center">{{ t('home.featuredProjects') }}</h2>
+					<h2 class="text-2xl font-bold gradient-text mb-6 text-center">
+						{{ t('home.featuredProjects') }}
+					</h2>
 
 					<div class="grid grid-cols-1 md:grid-cols-2 gap-6">
 						<div v-for="project in featuredProjects.slice(0, 2)" :key="project.id" class="group">
@@ -84,7 +88,9 @@ const featuredProjects = projectsStore.featuredProjects
 									<div
 										class="absolute inset-0 bg-gradient-to-t from-black/70 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-300 flex items-end p-4"
 									>
-										<div class="text-white text-sm font-medium">View Project</div>
+										<div class="text-white text-sm font-medium">
+											{{ t('projects.viewProject') }}
+										</div>
 									</div>
 								</div>
 								<h3 class="text-lg font-medium text-white mb-2">
@@ -104,7 +110,9 @@ const featuredProjects = projectsStore.featuredProjects
 								</div>
 
 								<div class="mt-4">
-									<Button to="/projects" variant="text" size="sm"> View details </Button>
+									<Button to="/projects" variant="text" size="sm">
+										{{ t('projects.viewProject') }}
+									</Button>
 								</div>
 							</Card>
 						</div>

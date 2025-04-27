@@ -16,7 +16,7 @@ const projectsGridRef = ref(null)
 
 // Search and filters
 const searchQuery = ref('')
-const selectedTech = ref(null)
+const selectedTech = ref<string | null>(null)
 
 // Référence pour le modal
 const projectDetailsRef = ref(null)
@@ -26,7 +26,7 @@ const handleSearch = () => {
 	projectsStore.setSearchQuery(searchQuery.value)
 }
 
-const handleTechFilter = (tech) => {
+const handleTechFilter = (tech: string | null) => {
 	projectsStore.setTechFilter(tech === selectedTech.value ? null : tech)
 	selectedTech.value = tech === selectedTech.value ? null : tech
 }
@@ -38,7 +38,7 @@ const clearFilters = () => {
 }
 
 // Open and close project details
-const openProject = (id) => {
+const openProject = (id: number) => {
 	projectsStore.selectProject(id)
 
 	// Animer l'apparition du modal
@@ -367,7 +367,7 @@ watch(
 									clip-rule="evenodd"
 								/>
 							</svg>
-							View Live Demo
+							{{ t('projects.viewLiveDemo') }}
 						</Button>
 						<Button
 							v-if="projectsStore.selectedProject.sourceUrl"
@@ -388,7 +388,7 @@ watch(
 									clip-rule="evenodd"
 								/>
 							</svg>
-							View Source
+							{{ t('projects.viewSource') }}
 						</Button>
 					</div>
 				</Card>

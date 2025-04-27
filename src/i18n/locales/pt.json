@@ -1,89 +1,89 @@
 {
 	"nav": {
-		"home": "Home",
-		"about": "About",
-		"projects": "Projects",
-		"contact": "Contact"
+		"home": "Início",
+		"about": "Sobre",
+		"projects": "Projetos",
+		"contact": "Contato"
 	},
 	"home": {
-		"title": "Welcome to My Portfolio",
-		"subtitle": "Full Stack Developer",
+		"title": "Bem-vindo ao Meu Portfólio",
+		"subtitle": "Desenvolvedor Full Stack",
 		"terminal": {
 			"commandWhoAmI": "whoami",
-			"developerInfo": "Denis Chapot • Full Stack Developer",
+			"developerInfo": "Denis Chapot • Desenvolvedor Full Stack",
 			"commandSkills": "skills --list"
 		},
-		"viewProjects": "View Projects",
-		"contactMe": "Contact Me",
-		"featuredProjects": "Featured Projects"
+		"viewProjects": "Ver Projetos",
+		"contactMe": "Entre em Contato",
+		"featuredProjects": "Projetos em Destaque"
 	},
 	"about": {
-		"title": "About Me",
+		"title": "Sobre mim",
 		"description": "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.",
-		"experience": "Experience",
-		"education": "Education",
-		"technologies": "Technologies",
-		"topSkills": "Top Skills"
+		"experience": "Experiência",
+		"education": "Educação",
+		"technologies": "Tecnologias",
+		"topSkills": "Principais Habilidades"
 	},
 	"projects": {
-		"title": "My Projects",
-		"description": "Here are some of my recent projects",
-		"searchPlaceholder": "Search projects...",
-		"noResults": "No projects found matching your criteria.",
-		"clearFilters": "Clear Filters",
-		"viewProject": "View Project",
-		"viewLiveDemo": "View Live Demo",
-		"viewSource": "View Source",
+		"title": "Meus Projetos",
+		"description": "Aqui estão alguns dos meus projetos recentes",
+		"searchPlaceholder": "Buscar projetos...",
+		"noResults": "Nenhum projeto encontrado com seus critérios.",
+		"clearFilters": "Limpar Filtros",
+		"viewProject": "Ver Projeto",
+		"viewLiveDemo": "Ver Demo",
+		"viewSource": "Ver Código Fonte",
 		"items": [
 			{
 				"id": 1,
-				"title": "E-commerce Platform",
+				"title": "Plataforma de E-commerce",
 				"description": "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris.",
 				"longDescription": "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur."
 			},
 			{
 				"id": 2,
-				"title": "Social Media Dashboard",
+				"title": "Painel de Controle para Redes Sociais",
 				"description": "Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat.",
 				"longDescription": "Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident."
 			},
 			{
 				"id": 3,
-				"title": "AI-Powered Analytics",
+				"title": "Análise Impulsionada por IA",
 				"description": "Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur.",
 				"longDescription": "Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum."
 			},
 			{
 				"id": 4,
-				"title": "Mobile Fitness App",
+				"title": "Aplicativo Móvel de Fitness",
 				"description": "Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.",
 				"longDescription": "Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum. Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua."
 			},
 			{
 				"id": 5,
-				"title": "Smart Home IoT Platform",
+				"title": "Plataforma IoT para Casa Inteligente",
 				"description": "Sed ut perspiciatis unde omnis iste natus error sit voluptatem accusantium doloremque laudantium.",
 				"longDescription": "Sed ut perspiciatis unde omnis iste natus error sit voluptatem accusantium doloremque laudantium, totam rem aperiam, eaque ipsa quae ab illo inventore veritatis et quasi architecto beatae vitae dicta sunt explicabo."
 			},
 			{
 				"id": 6,
-				"title": "Blockchain Wallet",
+				"title": "Carteira Blockchain",
 				"description": "Nemo enim ipsam voluptatem quia voluptas sit aspernatur aut odit aut fugit, sed quia consequuntur.",
 				"longDescription": "Nemo enim ipsam voluptatem quia voluptas sit aspernatur aut odit aut fugit, sed quia consequuntur magni dolores eos qui ratione voluptatem sequi nesciunt."
 			}
 		]
 	},
 	"contact": {
-		"title": "Contact Me",
-		"subtitle": "Feel free to reach out to me for any questions, collaboration opportunities, or just to say hello!",
-		"getInTouch": "I'll get back to you as soon as possible.",
-		"name": "Name",
-		"email": "Email",
-		"message": "Message",
-		"send": "Send Message",
-		"messageSent": "Message sent successfully!"
+		"title": "Entre em Contato",
+		"subtitle": "Sinta-se à vontade para entrar em contato comigo para qualquer pergunta, oportunidades de colaboração ou apenas para dizer olá!",
+		"getInTouch": "Responderei o mais rápido possível.",
+		"name": "Nome",
+		"email": "E-mail",
+		"message": "Mensagem",
+		"send": "Enviar Mensagem",
+		"messageSent": "Mensagem enviada com sucesso!"
 	},
 	"footer": {
-		"allRightsReserved": "All rights reserved."
+		"allRightsReserved": "Todos os direitos reservados."
 	}
 }
