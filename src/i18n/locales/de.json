@@ -19,17 +19,71 @@
 	},
 	"about": {
 		"title": "Über mich",
-		"description": "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed do eiusmod tempor incididunt ut labore et dolore magna aliqua."
+		"description": "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.",
+		"experience": "Erfahrung",
+		"education": "Ausbildung",
+		"technologies": "Technologien",
+		"topSkills": "Top-Fähigkeiten"
 	},
 	"projects": {
 		"title": "Meine Projekte",
-		"description": "Hier sind einige meiner neuesten Projekte"
+		"description": "Hier sind einige meiner neuesten Projekte",
+		"searchPlaceholder": "Projekte suchen...",
+		"noResults": "Keine Projekte gefunden, die Ihren Kriterien entsprechen.",
+		"clearFilters": "Filter löschen",
+		"viewProject": "Projekt ansehen",
+		"viewLiveDemo": "Live-Demo ansehen",
+		"viewSource": "Quellcode ansehen",
+		"items": [
+			{
+				"id": 1,
+				"title": "E-Commerce-Plattform",
+				"description": "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris.",
+				"longDescription": "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur."
+			},
+			{
+				"id": 2,
+				"title": "Social Media Dashboard",
+				"description": "Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat.",
+				"longDescription": "Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident."
+			},
+			{
+				"id": 3,
+				"title": "KI-gestützte Analytik",
+				"description": "Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur.",
+				"longDescription": "Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum."
+			},
+			{
+				"id": 4,
+				"title": "Mobile Fitness-App",
+				"description": "Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.",
+				"longDescription": "Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum. Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua."
+			},
+			{
+				"id": 5,
+				"title": "Smart Home IoT-Plattform",
+				"description": "Sed ut perspiciatis unde omnis iste natus error sit voluptatem accusantium doloremque laudantium.",
+				"longDescription": "Sed ut perspiciatis unde omnis iste natus error sit voluptatem accusantium doloremque laudantium, totam rem aperiam, eaque ipsa quae ab illo inventore veritatis et quasi architecto beatae vitae dicta sunt explicabo."
+			},
+			{
+				"id": 6,
+				"title": "Blockchain-Wallet",
+				"description": "Nemo enim ipsam voluptatem quia voluptas sit aspernatur aut odit aut fugit, sed quia consequuntur.",
+				"longDescription": "Nemo enim ipsam voluptatem quia voluptas sit aspernatur aut odit aut fugit, sed quia consequuntur magni dolores eos qui ratione voluptatem sequi nesciunt."
+			}
+		]
 	},
 	"contact": {
 		"title": "Kontaktiere mich",
+		"subtitle": "Zögere nicht, mich bei Fragen, Kooperationsmöglichkeiten oder einfach nur zum Hallo sagen zu kontaktieren!",
+		"getInTouch": "Ich werde mich so schnell wie möglich bei dir melden.",
 		"name": "Name",
 		"email": "E-Mail",
 		"message": "Nachricht",
-		"send": "Nachricht senden"
+		"send": "Nachricht senden",
+		"messageSent": "Nachricht erfolgreich gesendet!"
+	},
+	"footer": {
+		"allRightsReserved": "Alle Rechte vorbehalten."
 	}
 }
