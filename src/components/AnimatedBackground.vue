@@ -29,7 +29,7 @@ function initBackgroundAnimation() {
 	// Paramètres de l'animation
 	const gridSize = 40
 	const gridLineWidth = 0.3
-	const dotsCount = 50
+	const dotsCount = 70
 	const dotMinRadius = 1
 	const dotMaxRadius = 3
 	const maxSpeed = 0.4
@@ -130,11 +130,9 @@ function initBackgroundAnimation() {
 	function animate() {
 		ctx!.clearRect(0, 0, canvas.width, canvas.height)
 
-		// Dessiner le fond avec un dégradé linéaire sombre (comme dans le loader original)
-		const gradient = ctx!.createLinearGradient(0, 0, 0, canvas.height);
-		gradient.addColorStop(0, '#0A0B12');
-		gradient.addColorStop(1, '#090A0F');
-		ctx!.fillStyle = gradient;
+		// Dessiner le fond avec un dégradé constant au lieu d'un dégradé linéaire
+		// Le voile plus clair était probablement causé par ce dégradé
+		ctx!.fillStyle = '#090A0F';
 		ctx!.fillRect(0, 0, canvas.width, canvas.height)
 
 		// Dessiner la grille
@@ -207,6 +205,7 @@ html, body {
 	height: 100vh;
 	z-index: -9999;
 	pointer-events: none;
+	overflow: hidden; /* Empêcher tout débordement */
 }
 
 .animated-background-canvas {

@@ -18,7 +18,7 @@ const skills = SKILLS
 <template>
 	<div class="section flex items-center justify-center pt-24">
 		<div class="about-window max-w-4xl w-full mx-auto">
-			<Card title="About Me" variant="panel">
+			<Card title="portfolio.about" variant="window">
 				<div class="grid grid-cols-1 md:grid-cols-2 gap-8">
 					<div>
 						<div class="space-y-4 text-indigo-100">
