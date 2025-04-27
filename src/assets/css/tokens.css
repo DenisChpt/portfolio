@@ -98,25 +98,6 @@
 	--animation-fast: 0.5s;
 }
 
-/* Dark theme specific overrides (already dark by default) */
-.dark-theme {
-	/* Already dark by default - no changes needed */
-}
-
-/* Light theme overrides (if we ever add a light theme) */
-.light-theme {
-	--color-background: 240, 240, 240;
-	--color-background-light: 250, 250, 250;
-	--color-background-dark: 220, 220, 220;
-
-	--color-surface: 255, 255, 255;
-	--color-surface-light: 245, 245, 245;
-
-	--color-text: 30, 30, 30;
-	--color-text-secondary: 80, 80, 80;
-	--color-text-disabled: 140, 140, 140;
-}
-
 /* CSS utility functions */
 :root {
 	/* Using rgba with the CSS variables */
