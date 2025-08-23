@@ -48,8 +48,8 @@ watch(isOpen, (newVal) => {
 			@click.stop="isOpen = !isOpen"
 			class="lang-selector flex items-center space-x-2 p-2 rounded-md text-gray-300 hover:text-indigo-400 transition-all duration-200 border border-transparent hover:border-indigo-500/20 hover:bg-indigo-500/10"
 		>
-			<span class="text-xl">{{ getCurrentLanguage().flag }}</span>
-			<span class="hidden sm:inline-block">{{ getCurrentLanguage().name }}</span>
+			<span class="text-2xl">{{ getCurrentLanguage().flag }}</span>
+			<span class="hidden sm:inline-block text-xl">{{ getCurrentLanguage().name }}</span>
 			<svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
 				<path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7" />
 			</svg>
@@ -64,11 +64,11 @@ watch(isOpen, (newVal) => {
 					v-for="lang in languages"
 					:key="lang.code"
 					@click.stop="changeLanguage(lang.code)"
-					class="lang-option w-full flex items-center space-x-3 px-4 py-2 text-sm text-gray-300 hover:text-indigo-400 hover:bg-indigo-500/10 transition-all duration-200"
+					class="lang-option w-full flex items-center space-x-3 px-4 py-2 text-xl text-gray-300 hover:text-indigo-400 hover:bg-indigo-500/10 transition-all duration-200"
 					:class="{ 'bg-indigo-500/10 text-indigo-400': locale === lang.code }"
 				>
-					<span class="text-xl">{{ lang.flag }}</span>
-					<span>{{ lang.name }}</span>
+					<span class="text-2xl">{{ lang.flag }}</span>
+					<span class="text-base">{{ lang.name }}</span>
 				</button>
 			</div>
 		</div>

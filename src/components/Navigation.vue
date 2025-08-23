@@ -19,6 +19,11 @@ const closeMenu = () => {
 	isMenuOpen.value = false
 }
 
+const reloadPage = (event: Event) => {
+	event.preventDefault()
+	window.location.reload()
+}
+
 const handleScroll = () => {
 	isScrolled.value = window.scrollY > 50
 }
@@ -38,34 +43,45 @@ watch(
 
 <template>
 	<nav
-		class="fixed w-full z-50 transition-all duration-300 bg-gray-900/90 backdrop-blur-lg shadow-lg border-b border-indigo-500/20"
-		:class="[isScrolled ? 'py-1' : 'py-2']"
+		class="fixed w-full z-50 transition-all duration-500"
+		:class="[
+			isScrolled
+				? 'py-2 bg-gray-900/80 backdrop-blur-xl shadow-2xl border-b border-indigo-500/10'
+				: 'py-4 bg-gradient-to-b from-gray-900/50 to-transparent backdrop-blur-sm',
+		]"
 	>
 		<div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
 			<div class="flex justify-between h-14">
 				<div class="flex items-center">
 					<div class="flex-shrink-0 flex items-center">
-						<router-link
-							to="/"
-							class="text-xl font-bold text-indigo-400 hover:text-indigo-300 transition-colors duration-300"
-						>
-							Portfolio
-							<span class="blink">_</span>
-						</router-link>
+						<a href="/" @click="reloadPage" class="group text-xl font-bold relative">
+							<span
+								class="text-transparent bg-clip-text bg-gradient-to-r from-indigo-400 to-purple-400 group-hover:from-purple-400 group-hover:to-pink-400 transition-all duration-500"
+							>
+								Portfolio
+							</span>
+						</a>
 					</div>
-					<div class="hidden sm:ml-10 sm:flex sm:space-x-12">
+					<div class="hidden sm:ml-10 sm:flex sm:space-x-8">
 						<router-link
-							v-for="r in ['home', 'about', 'projects', 'contact']"
+							v-for="r in ['home', 'about', 'projects', 'research', 'contact']"
 							:key="r"
 							:to="{ name: r }"
-							class="nav-link inline-flex items-center px-3 pt-1 border-b-2 text-base font-medium transition-all duration-300"
+							class="nav-link group relative inline-flex items-center px-4 py-2 text-xl font-medium transition-all duration-300"
 							:class="{
-								'text-indigo-400 border-indigo-500': currentSection === r,
-								'text-gray-100 border-transparent hover:text-indigo-400 hover:border-indigo-400/50':
-									currentSection !== r,
+								'text-indigo-300': currentSection === r,
+								'text-gray-300 hover:text-indigo-300': currentSection !== r,
 							}"
 						>
-							{{ t(`nav.${r}`) }}
+							<span class="relative z-10">{{ t(`nav.${r}`) }}</span>
+							<div
+								v-if="currentSection === r"
+								class="absolute inset-0 bg-gradient-to-r from-indigo-500/20 to-purple-500/20 rounded-lg blur-sm"
+							></div>
+							<div
+								v-if="currentSection === r"
+								class="absolute inset-0 bg-gradient-to-r from-indigo-500/10 to-purple-500/10 rounded-lg"
+							></div>
 						</router-link>
 					</div>
 				</div>
@@ -114,10 +130,10 @@ watch(
 				class="pt-2 pb-3 space-y-1 border-t border-indigo-500/20 bg-gray-900/90 backdrop-blur-lg"
 			>
 				<router-link
-					v-for="r in ['home', 'about', 'projects', 'contact']"
+					v-for="r in ['home', 'about', 'projects', 'research', 'contact']"
 					:key="r"
 					:to="{ name: r }"
-					class="mobile-nav-link block pl-3 pr-4 py-2 text-base font-medium transition-all duration-300"
+					class="mobile-nav-link block pl-3 pr-4 py-2 text-lg font-medium transition-all duration-300"
 					:class="{
 						'text-indigo-400 bg-indigo-900/20 border-l-2 border-indigo-500': currentSection === r,
 						'text-gray-300 hover:bg-indigo-900/10 hover:text-indigo-400 border-l-2 border-transparent':
