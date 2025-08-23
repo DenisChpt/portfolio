@@ -32,131 +32,179 @@ usePageAnimation('.contact-window', 0.2)
 </script>
 
 <template>
-	<div class="section flex items-center justify-center pt-24">
-		<div class="contact-window max-w-4xl w-full mx-auto">
-			<Card title="portfolio.contact" variant="window">
-				<div class="grid grid-cols-1 md:grid-cols-2 gap-8">
-					<div>
-						<h1 class="text-3xl font-bold gradient-text mb-6">
-							{{ t('contact.title') }}
-						</h1>
+	<div class="min-h-screen pt-24 pb-16">
+		<!-- Animated background -->
+		<div class="fixed inset-0 -z-10">
+			<div class="absolute inset-0 bg-gradient-to-br from-gray-900 via-indigo-900/10 to-gray-900"></div>
+			<div class="absolute top-64 right-48 w-96 h-96 bg-purple-500/5 rounded-full blur-3xl animate-pulse"></div>
+			<div class="absolute bottom-64 left-48 w-96 h-96 bg-indigo-500/5 rounded-full blur-3xl animate-pulse delay-1000"></div>
+		</div>
+		
+		<div class="contact-window max-w-6xl mx-auto px-4 sm:px-6 lg:px-8">
+			<!-- Header -->
+			<div class="text-center mb-12">
+				<h1 class="text-5xl md:text-7xl font-bold mb-6">
+					<span class="text-transparent bg-clip-text bg-gradient-to-r from-indigo-400 via-purple-400 to-pink-400">
+						{{ t('contact.title') }}
+					</span>
+				</h1>
+				<p class="text-xl text-gray-300 max-w-3xl mx-auto">
+					{{ t('contact.subtitle') }}
+				</p>
+				<div class="w-32 h-1 bg-gradient-to-r from-indigo-500 to-purple-500 mx-auto mt-6 rounded-full"></div>
+			</div>
+			
+			<div class="grid grid-cols-1 lg:grid-cols-2 gap-12">
+				<!-- Contact Info -->
+				<div class="space-y-8">
+					<div class="bg-gray-800/30 backdrop-blur-sm rounded-2xl border border-gray-700/50 p-8">
+						<h2 class="text-2xl font-bold text-transparent bg-clip-text bg-gradient-to-r from-indigo-400 to-purple-400 mb-6">
+							Get In Touch
+						</h2>
+						<p class="text-gray-300 mb-8">
+							{{ t('contact.getInTouch') }}
+						</p>
 
-						<div class="space-y-4 text-gray-300 mb-8">
-							<p>
-								Feel free to reach out to me for any questions, collaboration opportunities, or just
-								to say hello!
-							</p>
-							<p>I'll get back to you as soon as possible.</p>
-						</div>
-
-						<div class="space-y-4">
-							<div class="flex items-center space-x-4 text-gray-300">
-								<div
-									class="w-10 h-10 rounded-full bg-primary-500/20 flex items-center justify-center text-primary-400"
-								>
+						<div class="space-y-6">
+							<div class="flex items-center gap-4 group">
+								<div class="w-12 h-12 rounded-xl bg-gradient-to-br from-indigo-500/20 to-purple-500/20 flex items-center justify-center text-indigo-400 group-hover:scale-110 transition-transform duration-300">
 									<IconEmail />
 								</div>
-								<span>contact@example.com</span>
+								<div>
+									<p class="text-sm text-gray-400">Email</p>
+									<a href="mailto:denis.chaput77@gmail.com" class="text-gray-200 hover:text-indigo-300 transition-colors">
+										denis.chaput77@gmail.com
+									</a>
+								</div>
 							</div>
 
-							<div class="flex items-center space-x-4 text-gray-300">
-								<div
-									class="w-10 h-10 rounded-full bg-primary-500/20 flex items-center justify-center text-primary-400"
-								>
+							<div class="flex items-center gap-4 group">
+								<div class="w-12 h-12 rounded-xl bg-gradient-to-br from-indigo-500/20 to-purple-500/20 flex items-center justify-center text-indigo-400 group-hover:scale-110 transition-transform duration-300">
 									<IconLocation />
 								</div>
-								<span>Paris, France</span>
-							</div>
-
-							<div class="mt-8 flex space-x-4">
-								<a
-									href="#"
-									class="w-10 h-10 rounded-full bg-white/5 hover:bg-primary-500/20 flex items-center justify-center text-gray-300 hover:text-primary-400 transition-colors duration-200"
-								>
-									<IconGithub />
-								</a>
-
-								<a
-									href="#"
-									class="w-10 h-10 rounded-full bg-white/5 hover:bg-primary-500/20 flex items-center justify-center text-gray-300 hover:text-primary-400 transition-colors duration-200"
-								>
-									<IconLinkedin />
-								</a>
-
-								<a
-									href="#"
-									class="w-10 h-10 rounded-full bg-white/5 hover:bg-primary-500/20 flex items-center justify-center text-gray-300 hover:text-primary-400 transition-colors duration-200"
-								>
-									<IconTwitter />
-								</a>
+								<div>
+									<p class="text-sm text-gray-400">Location</p>
+									<p class="text-gray-200">Paris, France</p>
+								</div>
 							</div>
 						</div>
 					</div>
 
-					<Card variant="default">
-						<form @submit="handleSubmit" class="space-y-4">
-							<div
-								v-if="isSuccess"
-								class="bg-green-500/20 border border-green-500/30 text-green-400 p-4 rounded-lg mb-4 text-center"
-								role="alert"
+					<!-- Social Links -->
+					<div class="bg-gray-800/30 backdrop-blur-sm rounded-2xl border border-gray-700/50 p-8">
+						<h2 class="text-2xl font-bold text-transparent bg-clip-text bg-gradient-to-r from-indigo-400 to-purple-400 mb-6">
+							Connect With Me
+						</h2>
+						<div class="flex gap-4">
+							<a
+								href="https://github.com/DenisChpt"
+								target="_blank"
+								rel="noopener noreferrer"
+								class="group w-12 h-12 rounded-xl bg-gray-900/50 border border-gray-700/50 flex items-center justify-center text-gray-400 hover:border-indigo-500/50 hover:text-indigo-300 hover:bg-indigo-500/10 transition-all duration-300"
 							>
-								Message sent successfully!
-							</div>
+								<IconGithub class="w-5 h-5" />
+							</a>
 
-							<div>
-								<label class="block text-gray-300 text-sm font-medium mb-2" for="name">
-									{{ t('contact.name') }}
-								</label>
-								<input
-									v-model="form.name"
-									type="text"
-									id="name"
-									class="input"
-									required
-									:disabled="isLoading"
-									aria-required="true"
-								/>
-							</div>
+							<a
+								href="https://www.linkedin.com/in/denis-chaput/"
+								target="_blank"
+								rel="noopener noreferrer"
+								class="group w-12 h-12 rounded-xl bg-gray-900/50 border border-gray-700/50 flex items-center justify-center text-gray-400 hover:border-indigo-500/50 hover:text-indigo-300 hover:bg-indigo-500/10 transition-all duration-300"
+							>
+								<IconLinkedin class="w-5 h-5" />
+							</a>
 
-							<div>
-								<label class="block text-gray-300 text-sm font-medium mb-2" for="email">
-									{{ t('contact.email') }}
-								</label>
-								<input
-									v-model="form.email"
-									type="email"
-									id="email"
-									class="input"
-									required
-									:disabled="isLoading"
-									aria-required="true"
-								/>
-							</div>
-
-							<div>
-								<label class="block text-gray-300 text-sm font-medium mb-2" for="message">
-									{{ t('contact.message') }}
-								</label>
-								<textarea
-									v-model="form.message"
-									id="message"
-									class="input"
-									rows="5"
-									required
-									:disabled="isLoading"
-									aria-required="true"
-								></textarea>
-							</div>
-
-							<div class="flex justify-end">
-								<Button type="submit" variant="primary" :loading="isLoading">
-									{{ t('contact.send') }}
-								</Button>
-							</div>
-						</form>
-					</Card>
+							<a
+								href="#"
+								class="group w-12 h-12 rounded-xl bg-gray-900/50 border border-gray-700/50 flex items-center justify-center text-gray-400 hover:border-indigo-500/50 hover:text-indigo-300 hover:bg-indigo-500/10 transition-all duration-300"
+							>
+								<IconTwitter class="w-5 h-5" />
+							</a>
+						</div>
+					</div>
 				</div>
-			</Card>
+
+				<!-- Contact Form -->
+				<div class="bg-gray-800/30 backdrop-blur-sm rounded-2xl border border-gray-700/50 p-8">
+					<h2 class="text-2xl font-bold text-transparent bg-clip-text bg-gradient-to-r from-indigo-400 to-purple-400 mb-6">
+						Send Me a Message
+					</h2>
+					<form @submit="handleSubmit" class="space-y-6">
+						<div
+							v-if="isSuccess"
+							class="bg-gradient-to-r from-green-500/20 to-emerald-500/20 border border-green-500/30 text-green-400 p-4 rounded-xl text-center font-medium"
+							role="alert"
+						>
+							✓ {{ t('contact.messageSent') }}
+						</div>
+
+						<div>
+							<label class="block text-gray-300 font-medium mb-2" for="name">
+								{{ t('contact.name') }}
+							</label>
+							<input
+								v-model="form.name"
+								type="text"
+								id="name"
+								class="w-full px-4 py-3 bg-gray-900/50 border border-gray-700/50 rounded-xl text-gray-200 placeholder-gray-500 focus:outline-none focus:border-indigo-500/50 focus:ring-2 focus:ring-indigo-500/20 transition-all duration-300"
+								placeholder="Your name"
+								required
+								:disabled="isLoading"
+								aria-required="true"
+							/>
+						</div>
+
+						<div>
+							<label class="block text-gray-300 font-medium mb-2" for="email">
+								{{ t('contact.email') }}
+							</label>
+							<input
+								v-model="form.email"
+								type="email"
+								id="email"
+								class="w-full px-4 py-3 bg-gray-900/50 border border-gray-700/50 rounded-xl text-gray-200 placeholder-gray-500 focus:outline-none focus:border-indigo-500/50 focus:ring-2 focus:ring-indigo-500/20 transition-all duration-300"
+								placeholder="your.email@example.com"
+								required
+								:disabled="isLoading"
+								aria-required="true"
+							/>
+						</div>
+
+						<div>
+							<label class="block text-gray-300 font-medium mb-2" for="message">
+								{{ t('contact.message') }}
+							</label>
+							<textarea
+								v-model="form.message"
+								id="message"
+								class="w-full px-4 py-3 bg-gray-900/50 border border-gray-700/50 rounded-xl text-gray-200 placeholder-gray-500 focus:outline-none focus:border-indigo-500/50 focus:ring-2 focus:ring-indigo-500/20 transition-all duration-300 resize-none"
+								placeholder="Your message..."
+								rows="5"
+								required
+								:disabled="isLoading"
+								aria-required="true"
+							></textarea>
+						</div>
+
+						<div class="flex justify-end">
+							<button
+								type="submit"
+								:disabled="isLoading"
+								class="px-8 py-3 bg-gradient-to-r from-indigo-500 to-purple-500 text-white font-medium rounded-xl hover:shadow-lg hover:shadow-indigo-500/25 transition-all duration-300 disabled:opacity-50 disabled:cursor-not-allowed"
+							>
+								<span v-if="!isLoading">{{ t('contact.send') }}</span>
+								<span v-else class="flex items-center gap-2">
+									<svg class="animate-spin h-5 w-5" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24">
+										<circle class="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" stroke-width="4"></circle>
+										<path class="opacity-75" fill="currentColor" d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4zm2 5.291A7.962 7.962 0 014 12H0c0 3.042 1.135 5.824 3 7.938l3-2.647z"></path>
+									</svg>
+									Sending...
+								</span>
+							</button>
+						</div>
+					</form>
+				</div>
+			</div>
 		</div>
 	</div>
 </template>

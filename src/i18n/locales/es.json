@@ -3,14 +3,15 @@
 		"home": "Inicio",
 		"about": "Sobre mí",
 		"projects": "Proyectos",
+		"research": "Investigación",
 		"contact": "Contacto"
 	},
 	"home": {
 		"title": "Bienvenido a Mi Portafolio",
-		"subtitle": "Desarrollador Full Stack",
+		"subtitle": "Ingeniero en Matemáticas e Informática",
 		"terminal": {
 			"commandWhoAmI": "whoami",
-			"developerInfo": "Denis Chapot • Desarrollador Full Stack",
+			"developerInfo": "Denis Chaput • Ingeniero en Matemáticas e Informática • Thales",
 			"commandSkills": "skills --list"
 		},
 		"viewProjects": "Ver Proyectos",
@@ -85,5 +86,17 @@
 	},
 	"footer": {
 		"allRightsReserved": "Todos los derechos reservados."
+	},
+	"research": {
+		"title": "Publicaciones e Investigación",
+		"description": "Mis trabajos de investigación y publicaciones académicas en optimización, CI/CD y ciberseguridad.",
+		"searchPlaceholder": "Buscar publicaciones...",
+		"sortByDate": "Ordenar por fecha",
+		"sortByCitations": "Ordenar por citas",
+		"allTopics": "Todos los temas",
+		"featured": "Destacados",
+		"citations": "citas",
+		"downloadPdf": "Descargar PDF",
+		"noResults": "No se encontraron publicaciones."
 	}
 }

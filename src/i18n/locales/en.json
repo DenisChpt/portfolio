@@ -3,14 +3,15 @@
 		"home": "Home",
 		"about": "About",
 		"projects": "Projects",
+		"research": "Research",
 		"contact": "Contact"
 	},
 	"home": {
 		"title": "Welcome to My Portfolio",
-		"subtitle": "Full Stack Developer",
+		"subtitle": "Mathematics and Computer Science Engineer",
 		"terminal": {
 			"commandWhoAmI": "whoami",
-			"developerInfo": "Denis Chapot • Full Stack Developer",
+			"developerInfo": "Denis Chaput • Mathematics and Computer Science Engineer • Thales",
 			"commandSkills": "skills --list"
 		},
 		"viewProjects": "View Projects",
@@ -19,7 +20,7 @@
 	},
 	"about": {
 		"title": "About Me",
-		"description": "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.",
+		"description": "Engineering apprentice at Thales, specialized in CI/CD systems and software production chain optimization. Passionate about cutting-edge technologies, performance optimization, and complex technical challenges.",
 		"experience": "Experience",
 		"education": "Education",
 		"technologies": "Technologies",
@@ -27,7 +28,7 @@
 	},
 	"projects": {
 		"title": "My Projects",
-		"description": "Here are some of my recent projects",
+		"description": "Explore my professional and personal projects",
 		"searchPlaceholder": "Search projects...",
 		"noResults": "No projects found matching your criteria.",
 		"clearFilters": "Clear Filters",
@@ -37,39 +38,39 @@
 		"items": [
 			{
 				"id": 1,
-				"title": "E-commerce Platform",
-				"description": "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris.",
-				"longDescription": "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur."
+				"title": "ProChain - CI/CD Production Chain",
+				"description": "New modular software production chain for Thales, replacing GCONF_TOOLS. Python architecture enabling parallel compilation, incremental production, and independence from Jenkins.",
+				"longDescription": "During my apprenticeship at Thales, I designed and implemented ProChain, a modular CI/CD production chain replacing the legacy GCONF_TOOLS solution. This new Python architecture enables build parallelization, fine-grained dependency management per OS/architecture, and drastically reduces Jenkins dependency. The system handles multi-million line codebases with ITAR traceability and multi-platform support (Linux, Windows). Results: 20% reduction in full compilation time, and up to 80% in delta mode."
 			},
 			{
 				"id": 2,
-				"title": "Social Media Dashboard",
-				"description": "Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat.",
-				"longDescription": "Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident."
+				"title": "RiemannOpt - Riemannian Optimization Library",
+				"description": "High-performance Rust library for optimization on Riemannian manifolds. Implementation of geodesic gradient descent and retraction algorithms for machine learning.",
+				"longDescription": "RiemannOpt is an optimization library developed in Rust, specialized in optimization methods on Riemannian manifolds. It implements state-of-the-art algorithms like Riemannian gradient descent, retraction methods, and parallel transport. The library offers exceptional performance thanks to Rust and finds applications in machine learning, computer vision, and signal processing. It includes optimizations for Grassmann and Stiefel manifolds, and SPD matrices."
 			},
 			{
 				"id": 3,
-				"title": "AI-Powered Analytics",
-				"description": "Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur.",
-				"longDescription": "Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum."
+				"title": "MinePP - Minecraft Clone in C++",
+				"description": "Voxel game engine developed from scratch in modern C++ with OpenGL. Procedural terrain generation, optimized chunk system, and custom physics engine.",
+				"longDescription": "MinePP is a Minecraft clone developed entirely in modern C++ (C++20), using OpenGL for 3D rendering. The project implements a chunk system with frustum culling, procedural terrain generation via Perlin noise, custom physics engine with AABB collision detection, and dynamic lighting system. The architecture is designed to be extensible with an ECS (Entity Component System) and supports multithreading for terrain generation."
 			},
 			{
 				"id": 4,
-				"title": "Mobile Fitness App",
-				"description": "Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.",
-				"longDescription": "Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum. Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua."
+				"title": "Wazuh AI Assistant - Cybersecurity API",
+				"description": "On-premise REST API integrating an LLM to synthesize Wazuh reports. Containerized solution meeting C3 security constraints with multi-model support.",
+				"longDescription": "Developed during my internship in Romania at Thales, this project consists of a secure REST API enabling automatic analysis and synthesis of Wazuh security reports via a locally hosted LLM. The solution, fully containerized with Docker, supports multiple models (TinyLlama, Qwen, Mistral 7B) and integrates Redis cache for performance optimization. The architecture includes PostgreSQL for account management, Qdrant for vector search in CVEs, and Nginx for TLS termination. Compliant with C3 security requirements."
 			},
 			{
 				"id": 5,
-				"title": "Smart Home IoT Platform",
-				"description": "Sed ut perspiciatis unde omnis iste natus error sit voluptatem accusantium doloremque laudantium.",
-				"longDescription": "Sed ut perspiciatis unde omnis iste natus error sit voluptatem accusantium doloremque laudantium, totam rem aperiam, eaque ipsa quae ab illo inventore veritatis et quasi architecto beatae vitae dicta sunt explicabo."
+				"title": "Personal Portfolio",
+				"description": "Modern portfolio website developed with Vue 3 and TypeScript. Responsive design, smooth animations, multilingual support, and dark mode.",
+				"longDescription": "Personal portfolio developed with the latest web technologies. Uses Vue 3 with Composition API, TypeScript for strong typing, and Pinia for state management. The design is fully responsive with Tailwind CSS, includes custom animations, a light/dark theme system, and multilingual support (i18n) for 6 languages. Optimized for performance with lazy loading and code splitting."
 			},
 			{
 				"id": 6,
-				"title": "Blockchain Wallet",
-				"description": "Nemo enim ipsam voluptatem quia voluptas sit aspernatur aut odit aut fugit, sed quia consequuntur.",
-				"longDescription": "Nemo enim ipsam voluptatem quia voluptas sit aspernatur aut odit aut fugit, sed quia consequuntur magni dolores eos qui ratione voluptatem sequi nesciunt."
+				"title": "SBOM/CVE Generator Module",
+				"description": "Dependency analysis and SBOM generation tool for vulnerability detection. Parses CMake and vcxproj files to identify actual dependencies.",
+				"longDescription": "Module developed at Thales to automatically generate Software Bill of Materials (SBOM) and detect CVEs in C++/Java projects. The tool analyzes build files (Makefiles, vcxproj) to extract actual rather than declared dependencies, ensuring maximum accuracy. It produces enriched JSON files used for SBOM generation in standard format, enabling integration with vulnerability scanners. Critical solution for software supply chain compliance and security."
 			}
 		]
 	},
@@ -85,5 +86,17 @@
 	},
 	"footer": {
 		"allRightsReserved": "All rights reserved."
+	},
+	"research": {
+		"title": "Publications & Research",
+		"description": "My research work and academic publications in optimization, CI/CD, and cybersecurity.",
+		"searchPlaceholder": "Search publications...",
+		"sortByDate": "Sort by date",
+		"sortByCitations": "Sort by citations",
+		"allTopics": "All topics",
+		"featured": "Featured",
+		"citations": "citations",
+		"downloadPdf": "Download PDF",
+		"noResults": "No publications found."
 	}
 }

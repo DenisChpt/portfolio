@@ -9,11 +9,11 @@ const currentYear = new Date().getFullYear()
 		<div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
 			<div class="flex flex-col md:flex-row justify-between items-center">
 				<p class="text-gray-400 mb-4 md:mb-0">
-					© {{ currentYear }} Denis Chapot. All rights reserved.
+					© {{ currentYear }} Denis Chaput. All rights reserved.
 				</p>
 
 				<div class="flex space-x-6">
-					<a href="#" class="footer-social-link" aria-label="GitHub">
+					<a href="https://github.com/DenisChpt" target="_blank" rel="noopener noreferrer" class="footer-social-link" aria-label="GitHub">
 						<svg
 							xmlns="http://www.w3.org/2000/svg"
 							class="h-5 w-5"
@@ -26,7 +26,7 @@ const currentYear = new Date().getFullYear()
 						</svg>
 					</a>
 
-					<a href="#" class="footer-social-link" aria-label="LinkedIn">
+					<a href="https://www.linkedin.com/in/denis-chaput/" target="_blank" rel="noopener noreferrer" class="footer-social-link" aria-label="LinkedIn">
 						<svg
 							xmlns="http://www.w3.org/2000/svg"
 							class="h-5 w-5"

@@ -522,6 +522,45 @@ onBeforeUnmount(() => {
 .loader-container {
 	color: #bcbcbc;
 	background: transparent !important; /* Fond transparent pour voir AnimatedBackground */
+	
+	/* Ajout du fond avec gradient animé similaire aux autres pages */
+	&::before {
+		content: '';
+		position: fixed;
+		inset: 0;
+		background: linear-gradient(to bottom right, 
+			rgb(17, 24, 39), 
+			rgba(99, 102, 241, 0.1), 
+			rgb(17, 24, 39));
+		z-index: -1;
+	}
+	
+	/* Bulles de gradient animées */
+	&::after {
+		content: '';
+		position: fixed;
+		top: 20%;
+		left: 10%;
+		width: 400px;
+		height: 400px;
+		background: radial-gradient(circle, rgba(99, 102, 241, 0.1), transparent);
+		border-radius: 50%;
+		filter: blur(60px);
+		animation: float 20s ease-in-out infinite;
+		z-index: -1;
+	}
+}
+
+@keyframes float {
+	0%, 100% {
+		transform: translate(0, 0) scale(1);
+	}
+	33% {
+		transform: translate(30px, -50px) scale(1.1);
+	}
+	66% {
+		transform: translate(-20px, 20px) scale(0.9);
+	}
 }
 
 .preloader {
