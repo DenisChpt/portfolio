@@ -50,9 +50,23 @@ const getTechColor = (tech: string): string => {
 	return techColors[tech] || techColors['default']
 }
 
+// Color mapping for project status
+const statusColors: Record<string, { dot: string; text: string }> = {
+	'active': { dot: 'bg-green-400', text: 'text-green-400' },
+	'completed': { dot: 'bg-blue-400', text: 'text-blue-400' },
+	'in-progress': { dot: 'bg-yellow-400', text: 'text-yellow-400' },
+	'archived': { dot: 'bg-gray-400', text: 'text-gray-400' },
+	'maintenance': { dot: 'bg-orange-400', text: 'text-orange-400' }
+}
+
+const getStatusColor = (status?: string) => {
+	return statusColors[status || 'active'] || statusColors['active']
+}
+
 // Référence pour le modal
 const projectDetailsRef = ref(null)
 const projectImageRef = ref<HTMLElement | null>(null)
+const modalBackdropRef = ref<HTMLElement | null>(null)
 
 // Mouse tracking for image tilt effect
 const handleMouseMove = (event: MouseEvent) => {
@@ -147,33 +161,56 @@ const animateFilteredProjects = () => {
 const openProject = (id: number) => {
 	projectsStore.selectProject(id)
 
-	// Animer l'apparition du modal
-	if (projectDetailsRef.value) {
-		gsap.fromTo(
-			projectDetailsRef.value,
-			{
-				opacity: 0,
-				scale: 0.95,
-				y: 20,
-			},
-			{
-				opacity: 1,
-				scale: 1,
-				y: 0,
-				duration: 0.5,
-				ease: 'back.out(1.3)',
-			}
-		)
-	}
+	// Animer l'apparition du modal et du backdrop
+	nextTick(() => {
+		// Animation du backdrop (fond sombre)
+		if (modalBackdropRef.value) {
+			gsap.fromTo(
+				modalBackdropRef.value,
+				{
+					opacity: 0,
+				},
+				{
+					opacity: 1,
+					duration: 0.4,
+					ease: 'power2.out',
+				}
+			)
+		}
+
+		// Animation du modal depuis le bas
+		if (projectDetailsRef.value) {
+			gsap.fromTo(
+				projectDetailsRef.value,
+				{
+					y: '100%',
+					opacity: 0.8,
+				},
+				{
+					y: 0,
+					opacity: 1,
+					duration: 0.4,
+					ease: 'power3.out',
+				}
+			)
+		}
+	})
 }
 
 const closeProject = () => {
-	// Animer la disparition du modal
+	// Animer la disparition du modal et du backdrop
+	if (modalBackdropRef.value) {
+		gsap.to(modalBackdropRef.value, {
+			opacity: 0,
+			duration: 0.3,
+			ease: 'power2.in',
+		})
+	}
+	
 	if (projectDetailsRef.value) {
 		gsap.to(projectDetailsRef.value, {
+			y: '50%',
 			opacity: 0,
-			scale: 0.95,
-			y: -20,
 			duration: 0.3,
 			ease: 'power2.in',
 			onComplete: () => projectsStore.selectProject(null),
@@ -387,11 +424,11 @@ watch(
 									<div class="absolute inset-0 bg-gradient-to-t from-gray-900 via-gray-900/40 to-transparent"></div>
 									
 									
-									<!-- Hover indicator -->
-									<div class="absolute bottom-4 right-4 z-20 transform translate-x-10 group-hover:translate-x-0 transition-transform duration-500">
+									<!-- Hover indicator - chevron centered at bottom -->
+									<div class="absolute bottom-0 left-1/2 transform -translate-x-1/2 translate-y-full group-hover:translate-y-0 transition-transform duration-500 z-20">
 										<div class="p-2 bg-white/10 backdrop-blur-md rounded-full">
 											<svg xmlns="http://www.w3.org/2000/svg" class="h-4 w-4 text-white" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-												<path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M14 5l7 7m0 0l-7 7m7-7H3" />
+												<path stroke-linecap="round" stroke-linejoin="round" stroke-width="3" d="M19 9l-7 7-7-7" />
 											</svg>
 										</div>
 									</div>
@@ -430,8 +467,16 @@ watch(
 									<!-- Interactive footer -->
 									<div class="flex items-center justify-between pt-4 border-t border-gray-800 group-hover:border-gray-700 transition-colors duration-300">
 										<div class="flex items-center space-x-2">
-											<div class="w-2 h-2 rounded-full bg-green-400 animate-pulse"></div>
-											<span class="text-xs text-gray-500">Active</span>
+											<div 
+												class="w-2 h-2 rounded-full animate-pulse"
+												:class="getStatusColor(project.status).dot"
+											></div>
+											<span 
+												class="text-xs"
+												:class="getStatusColor(project.status).text"
+											>
+												{{ t(`projects.status.${project.status || 'active'}`) }}
+											</span>
 										</div>
 										<div class="px-3 py-1 bg-black/30 backdrop-blur-sm rounded-full border border-white/10 group-hover:bg-indigo-500/20 group-hover:border-indigo-400/30 transition-all duration-300">
 											<span class="text-xs font-mono text-white/70 group-hover:text-indigo-300">#{{ String(index + 1).padStart(2, '0') }}</span>
@@ -450,7 +495,7 @@ watch(
 			v-if="projectsStore.selectedProject"
 			class="fixed inset-0 z-50 flex items-center justify-center p-4"
 		>
-			<div class="absolute inset-0 bg-black/60 backdrop-blur-md" @click="closeProject"></div>
+			<div ref="modalBackdropRef" class="absolute inset-0 bg-black/60 backdrop-blur-md" @click="closeProject"></div>
 
 			<div
 				ref="projectDetailsRef"
@@ -521,6 +566,23 @@ watch(
 										:class="getTechColor(tech)"
 									>
 										{{ tech }}
+									</span>
+								</div>
+							</div>
+							
+							<!-- Project Status -->
+							<div>
+								<h3 class="text-sm font-semibold text-purple-300 mb-3 uppercase tracking-wider">Project Status</h3>
+								<div class="flex items-center space-x-3">
+									<div 
+										class="w-3 h-3 rounded-full animate-pulse"
+										:class="getStatusColor(projectsStore.selectedProject.status).dot"
+									></div>
+									<span 
+										class="text-base font-medium"
+										:class="getStatusColor(projectsStore.selectedProject.status).text"
+									>
+										{{ t(`projects.status.${projectsStore.selectedProject.status || 'active'}`) }}
 									</span>
 								</div>
 							</div>

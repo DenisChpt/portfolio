@@ -1,4 +1,9 @@
 /**
+ * Project status types
+ */
+export type ProjectStatus = 'active' | 'completed' | 'in-progress' | 'archived' | 'maintenance'
+
+/**
  * Represents a project in the portfolio
  */
 export interface Project {
@@ -12,6 +17,7 @@ export interface Project {
 	liveUrl?: string
 	sourceUrl?: string
 	featured?: boolean
+	status?: ProjectStatus
 }
 
 /**

@@ -18,6 +18,9 @@ export const useProjectsStore = defineStore('projects', () => {
 
 	// Computed
 	const selectedProject = computed(() => {
+		// Force reactivity on locale change
+		const currentLocale = locale.value
+		
 		if (selectedProjectId.value === null) return null
 		const project = projects.value.find((project) => project.id === selectedProjectId.value) || null
 
@@ -37,6 +40,9 @@ export const useProjectsStore = defineStore('projects', () => {
 	})
 
 	const filteredProjects = computed(() => {
+		// Force reactivity on locale change
+		const currentLocale = locale.value
+		
 		let result = projects.value.map((project) => {
 			// Get translated versions
 			const translatedTitle = t(`projects.items.${project.id - 1}.title`)
@@ -73,6 +79,9 @@ export const useProjectsStore = defineStore('projects', () => {
 	})
 
 	const featuredProjects = computed(() => {
+		// Force reactivity on locale change
+		const currentLocale = locale.value
+		
 		return projects.value
 			.filter((project) => project.featured)
 			.map((project) => {

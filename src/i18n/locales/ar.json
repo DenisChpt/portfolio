@@ -9,6 +9,7 @@
 	"home": {
 		"title": "مرحباً بكم في ملفي الشخصي",
 		"subtitle": "مهندس رياضيات وعلوم الحاسوب",
+		"passion": "شغوف بالتحسين والخوارزميات المتقدمة والتحديات التقنية المعقدة",
 		"terminal": {
 			"commandWhoAmI": "whoami",
 			"developerInfo": "دينيس شابو • مهندس رياضيات وعلوم الحاسوب • Thales",
@@ -35,6 +36,13 @@
 		"viewProject": "عرض المشروع",
 		"viewLiveDemo": "عرض العرض التوضيحي",
 		"viewSource": "عرض الكود المصدري",
+		"status": {
+			"active": "نشط",
+			"completed": "مكتمل",
+			"in-progress": "قيد التنفيذ",
+			"archived": "مؤرشف",
+			"maintenance": "صيانة"
+		},
 		"items": [
 			{
 				"id": 1,
