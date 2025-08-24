@@ -9,6 +9,7 @@
 	"home": {
 		"title": "Bienvenido a Mi Portafolio",
 		"subtitle": "Ingeniero en Matemáticas e Informática",
+		"passion": "Apasionado por la optimización, los algoritmos avanzados y los desafíos técnicos complejos",
 		"terminal": {
 			"commandWhoAmI": "whoami",
 			"developerInfo": "Denis Chaput • Ingeniero en Matemáticas e Informática • Thales",
@@ -35,6 +36,13 @@
 		"viewProject": "Ver Proyecto",
 		"viewLiveDemo": "Ver Demo",
 		"viewSource": "Ver Código Fuente",
+		"status": {
+			"active": "Activo",
+			"completed": "Completado",
+			"in-progress": "En Progreso",
+			"archived": "Archivado",
+			"maintenance": "Mantenimiento"
+		},
 		"items": [
 			{
 				"id": 1,

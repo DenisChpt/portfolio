@@ -9,6 +9,7 @@
 	"home": {
 		"title": "Welcome to My Portfolio",
 		"subtitle": "Mathematics and Computer Science Engineer",
+		"passion": "Passionate about optimization, advanced algorithms and complex technical challenges",
 		"terminal": {
 			"commandWhoAmI": "whoami",
 			"developerInfo": "Denis Chaput • Mathematics and Computer Science Engineer • Thales",
@@ -35,6 +36,13 @@
 		"viewProject": "View Project",
 		"viewLiveDemo": "View Live Demo",
 		"viewSource": "View Source",
+		"status": {
+			"active": "Active",
+			"completed": "Completed",
+			"in-progress": "In Progress",
+			"archived": "Archived",
+			"maintenance": "Maintenance"
+		},
 		"items": [
 			{
 				"id": 1,

@@ -19,6 +19,7 @@ export const PROJECTS: Project[] = [
 			'https://via.placeholder.com/800x600',
 		],
 		featured: true,
+		status: 'completed' as const,
 	},
 	{
 		id: 2,
@@ -36,6 +37,7 @@ export const PROJECTS: Project[] = [
 		],
 		sourceUrl: 'https://github.com/DenisChpt/RiemannOpt',
 		featured: true,
+		status: 'maintenance' as const,
 	},
 	{
 		id: 3,
@@ -52,6 +54,7 @@ export const PROJECTS: Project[] = [
 			'https://via.placeholder.com/800x600',
 		],
 		sourceUrl: 'https://github.com/DenisChpt/MinePP',
+		status: 'archived' as const,
 	},
 	{
 		id: 4,
@@ -68,6 +71,7 @@ export const PROJECTS: Project[] = [
 			'https://via.placeholder.com/800x600',
 		],
 		featured: true,
+		status: 'completed' as const,
 	},
 	{
 		id: 5,
@@ -85,6 +89,7 @@ export const PROJECTS: Project[] = [
 		],
 		sourceUrl: 'https://github.com/DenisChpt/portfolio',
 		liveUrl: 'https://denischaput.dev',
+		status: 'active' as const,
 	},
 	{
 		id: 6,
@@ -100,6 +105,7 @@ export const PROJECTS: Project[] = [
 			'https://via.placeholder.com/800x600',
 			'https://via.placeholder.com/800x600',
 		],
+		status: 'in-progress' as const,
 	},
 ]
 

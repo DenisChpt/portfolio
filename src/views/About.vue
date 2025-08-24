@@ -170,22 +170,6 @@ const skills = SKILLS
 							</div>
 						</div>
 					</div>
-					
-					<!-- Technologies Grid -->
-					<div>
-						<h2 class="text-2xl font-bold text-transparent bg-clip-text bg-gradient-to-r from-indigo-400 to-purple-400 mb-6">
-							{{ t('about.technologies') }}
-						</h2>
-						<div class="flex flex-wrap gap-3">
-							<span 
-								v-for="skill in skills" 
-								:key="skill.name" 
-								class="px-4 py-2 bg-gradient-to-r from-indigo-500/10 to-purple-500/10 border border-indigo-500/30 text-indigo-300 rounded-xl font-medium hover:from-indigo-500/20 hover:to-purple-500/20 hover:border-indigo-500/50 transition-all duration-300"
-							>
-								{{ skill.name }}
-							</span>
-						</div>
-					</div>
 				</div>
 			</div>
 		</div>

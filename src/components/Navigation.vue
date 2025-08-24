@@ -25,7 +25,8 @@ const reloadPage = (event: Event) => {
 }
 
 const handleScroll = () => {
-	isScrolled.value = window.scrollY > 50
+	// Utiliser un seuil plus petit pour une transition plus rapide
+	isScrolled.value = window.scrollY > 20
 }
 
 onMounted(() => {
@@ -43,11 +44,11 @@ watch(
 
 <template>
 	<nav
-		class="fixed w-full z-50 transition-all duration-500"
+		class="fixed w-full z-50 transition-all duration-700 ease-out border-b"
 		:class="[
 			isScrolled
-				? 'py-2 bg-gray-900/80 backdrop-blur-xl shadow-2xl border-b border-indigo-500/10'
-				: 'py-4 bg-gradient-to-b from-gray-900/50 to-transparent backdrop-blur-sm',
+				? 'py-2 bg-gray-900/80 backdrop-blur-xl shadow-2xl border-indigo-500/10'
+				: 'py-4 bg-gradient-to-b from-gray-900/50 to-transparent backdrop-blur-sm border-transparent',
 		]"
 	>
 		<div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
@@ -153,6 +154,14 @@ watch(
 </template>
 
 <style scoped>
+/* Smooth transition for the nav bar */
+nav {
+	will-change: transform, background-color, backdrop-filter;
+	transform: translateZ(0);
+	-webkit-backface-visibility: hidden;
+	backface-visibility: hidden;
+}
+
 .nav-link {
 	position: relative;
 }

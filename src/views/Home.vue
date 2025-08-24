@@ -1,15 +1,16 @@
 <script setup lang="ts">
+import { computed } from 'vue'
 import { useI18n } from 'vue-i18n'
 import { usePageAnimation } from '@/composables/useAnimation'
 import { useProjectsStore } from '@/stores/projectsStore'
-const { t } = useI18n()
+const { t, locale } = useI18n()
 const projectsStore = useProjectsStore()
 
 // Use our animation composable
 usePageAnimation('.home-content', 0.4)
 
-// Get featured projects from the store
-const featuredProjects = projectsStore.featuredProjects
+// Get featured projects from the store - use computed to be reactive to language changes
+const featuredProjects = computed(() => projectsStore.featuredProjects)
 </script>
 
 <template>
@@ -36,7 +37,7 @@ const featuredProjects = projectsStore.featuredProjects
 				</p>
 
 				<p class="text-xl text-gray-400 max-w-4xl mx-auto mb-12">
-					Passionate about optimization, advanced algorithms and complex technical challenges
+					{{ t('home.passion') }}
 				</p>
 			</div>
 
@@ -55,13 +56,13 @@ const featuredProjects = projectsStore.featuredProjects
 					<div
 						v-for="(project, index) in featuredProjects.slice(0, 3)"
 						:key="project.id"
-						class="group relative"
+						class="group relative flex"
 						:style="{ animationDelay: `${index * 0.1}s` }"
 					>
-						<router-link :to="`/projects#${project.id}`" class="block">
-							<div class="relative bg-gray-800/30 backdrop-blur-sm rounded-2xl border border-gray-700/50 overflow-hidden transition-all duration-500 hover:border-indigo-500/50 hover:shadow-2xl hover:shadow-indigo-500/10 hover:-translate-y-2">
+						<router-link :to="`/projects#${project.id}`" class="flex w-full">
+							<div class="relative bg-gray-800/30 backdrop-blur-sm rounded-2xl border border-gray-700/50 overflow-hidden transition-all duration-500 hover:border-indigo-500/50 hover:shadow-2xl hover:shadow-indigo-500/10 hover:-translate-y-2 flex flex-col w-full">
 								<!-- Project Image with overlay -->
-								<div class="relative h-48 overflow-hidden">
+								<div class="relative h-48 overflow-hidden flex-shrink-0">
 									<div class="absolute inset-0 bg-gradient-to-br from-indigo-500/20 to-purple-500/20"></div>
 									<img
 										:src="project.image"
@@ -79,11 +80,11 @@ const featuredProjects = projectsStore.featuredProjects
 								</div>
 
 								<!-- Content -->
-								<div class="p-6">
+								<div class="p-6 flex flex-col flex-grow">
 									<h3 class="text-xl font-bold text-white mb-3 group-hover:text-indigo-300 transition-colors">
 										{{ project.title }}
 									</h3>
-									<p class="text-gray-400 text-sm mb-4 line-clamp-2">
+									<p class="text-gray-400 text-sm mb-4 line-clamp-3 flex-grow">
 										{{ project.description }}
 									</p>
 
@@ -102,7 +103,7 @@ const featuredProjects = projectsStore.featuredProjects
 									</div>
 
 									<!-- View project link -->
-									<div class="flex items-center text-indigo-400 font-medium text-sm group-hover:text-indigo-300 transition-colors">
+									<div class="flex items-center text-indigo-400 font-medium text-sm group-hover:text-indigo-300 transition-colors mt-auto">
 										<span>{{ t('projects.viewProject') }}</span>
 										<svg
 											xmlns="http://www.w3.org/2000/svg"
