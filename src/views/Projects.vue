@@ -1,6 +1,7 @@
 <script setup lang="ts">
 import { ref, onMounted, watch, nextTick } from 'vue'
 import { useI18n } from 'vue-i18n'
+import { useRoute, useRouter } from 'vue-router'
 import { gsap } from 'gsap'
 import { useProjectsStore } from '@/stores/projectsStore'
 import Card from '@/components/Card.vue'
@@ -8,6 +9,8 @@ import Button from '@/components/Button.vue'
 
 const { t } = useI18n()
 const projectsStore = useProjectsStore()
+const route = useRoute()
+const router = useRouter()
 
 // Références pour l'animation
 const headerRef = ref(null)
@@ -18,9 +21,9 @@ const cardRef = ref(null)
 // Variable pour contrôler la visibilité initiale
 const contentReady = ref(false)
 
-// Search and filters
-const searchQuery = ref('')
-const selectedTechs = ref<Set<string>>(new Set())
+// Search and filters - initialize from store to maintain state
+const searchQuery = ref(projectsStore.searchQuery)
+const selectedTechs = ref<Set<string>>(new Set(projectsStore.filterTechs))
 const isFiltering = ref(false)
 
 // Color mapping for technologies - vibrant and distinct colors
@@ -213,10 +216,20 @@ const closeProject = () => {
 			opacity: 0,
 			duration: 0.3,
 			ease: 'power2.in',
-			onComplete: () => projectsStore.selectProject(null),
+			onComplete: () => {
+				projectsStore.selectProject(null)
+				// Nettoyer le paramètre query si présent
+				if (route.query.project) {
+					router.replace({ name: 'projects', query: {} })
+				}
+			},
 		})
 	} else {
 		projectsStore.selectProject(null)
+		// Nettoyer le paramètre query si présent
+		if (route.query.project) {
+			router.replace({ name: 'projects', query: {} })
+		}
 	}
 }
 
@@ -258,6 +271,17 @@ onMounted(() => {
 		// Et lancer l'animation après que le contenu soit rendu
 		setTimeout(() => {
 			animateProjects()
+			
+			// Vérifier si on doit ouvrir un projet spécifique
+			if (route.query.project) {
+				const projectId = Number(route.query.project)
+				if (!isNaN(projectId)) {
+					// Attendre que l'animation initiale soit terminée avant d'ouvrir le projet
+					setTimeout(() => {
+						openProject(projectId)
+					}, 1500) // Délai pour laisser l'animation de la page se terminer
+				}
+			}
 		}, 50) // Un petit délai pour être sûr que la transition d'opacité est terminée
 	}, 50)
 })
@@ -282,7 +306,7 @@ watch(
 </script>
 
 <template>
-	<div class="min-h-screen pt-24 pb-16">
+	<div class="min-h-screen pt-32 pb-16">
 		<!-- Animated background -->
 		<div class="fixed inset-0 -z-10">
 			<div class="absolute inset-0 bg-gradient-to-br from-gray-900 via-indigo-900/10 to-gray-900"></div>

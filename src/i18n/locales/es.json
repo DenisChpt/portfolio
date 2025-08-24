@@ -22,7 +22,8 @@
 	"about": {
 		"title": "Sobre mí",
 		"description": "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.",
-		"experience": "Experiencia",
+		"experience": "Experiencia profesional",
+		"personalInfo": "Descripción",
 		"education": "Educación",
 		"technologies": "Tecnologías",
 		"topSkills": "Habilidades Principales"
@@ -46,50 +47,60 @@
 		"items": [
 			{
 				"id": 1,
-				"title": "Plataforma de Comercio Electrónico",
-				"description": "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris.",
-				"longDescription": "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur."
+				"title": "ProChain - Cadena de Producción CI/CD",
+				"description": "Nueva cadena de producción de software modular para Thales, reemplazando GCONF_TOOLS. Arquitectura Python que permite compilación paralela, producción incremental e independencia de Jenkins.",
+				"longDescription": "Durante mi alternancia en Thales, diseñé e implementé ProChain, una cadena de producción CI/CD modular que reemplaza la antigua solución GCONF_TOOLS. Esta nueva arquitectura en Python permite la paralelización de builds, gestión detallada de dependencias por SO/arquitectura, y reduce drásticamente la dependencia de Jenkins. El sistema gestiona proyectos de varios millones de líneas de código con trazabilidad ITAR y soporte multiplataforma (Linux, Windows). Resultados: reducción del 20% del tiempo de compilación en modo completo, y hasta el 80% en modo delta."
 			},
 			{
 				"id": 2,
-				"title": "Panel de Control de Redes Sociales",
-				"description": "Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat.",
-				"longDescription": "Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident."
+				"title": "RiemannOpt - Biblioteca de Optimización Riemanniana",
+				"description": "Biblioteca Rust de alto rendimiento para optimización en variedades riemannianas. Implementación de algoritmos de descenso de gradiente geodésico y retracción para aprendizaje automático.",
+				"longDescription": "RiemannOpt es una biblioteca de optimización desarrollada en Rust, especializada en métodos de optimización en variedades riemannianas. Implementa algoritmos de vanguardia como descenso de gradiente riemanniano, métodos de retracción y transporte paralelo. La biblioteca ofrece un rendimiento excepcional gracias a Rust y encuentra aplicaciones en aprendizaje automático, visión por computadora y procesamiento de señales. Incluye optimizaciones para variedades de Grassmann, Stiefel y matrices SPD."
 			},
 			{
 				"id": 3,
-				"title": "Análisis Potenciado por IA",
-				"description": "Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur.",
-				"longDescription": "Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum."
+				"title": "MinePP - Clon de Minecraft en C++",
+				"description": "Motor de juego voxel desarrollado desde cero en C++ moderno con OpenGL. Generación procedural de terreno, sistema de chunks optimizado y motor de física personalizado.",
+				"longDescription": "MinePP es un clon de Minecraft desarrollado completamente en C++ moderno (C++20), utilizando OpenGL para el renderizado 3D. El proyecto implementa un sistema de chunks con frustum culling, generación procedural de terreno mediante ruido de Perlin, motor de física personalizado con detección de colisiones AABB y sistema de iluminación dinámica. La arquitectura está diseñada para ser extensible con un sistema ECS (Entity Component System) y soporta multithreading para la generación de terreno."
 			},
 			{
 				"id": 4,
-				"title": "Aplicación Móvil de Fitness",
-				"description": "Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.",
-				"longDescription": "Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum. Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua."
+				"title": "Wazuh AI Assistant - API de Ciberseguridad",
+				"description": "API REST on-premise integrando un LLM para sintetizar informes de Wazuh. Solución containerizada que cumple con restricciones de seguridad C3 con soporte multi-modelo.",
+				"longDescription": "Desarrollado durante mi pasantía en Rumania en Thales, este proyecto consiste en una API REST segura que permite el análisis y síntesis automática de informes de seguridad de Wazuh mediante un LLM alojado localmente. La solución, completamente containerizada con Docker, soporta múltiples modelos (TinyLlama, Qwen, Mistral 7B) e integra caché Redis para optimización de rendimiento. La arquitectura incluye PostgreSQL para gestión de cuentas, Qdrant para búsqueda vectorial en CVEs, y Nginx para terminación TLS. Cumple con los requisitos de seguridad C3."
 			},
 			{
 				"id": 5,
-				"title": "Plataforma IoT para Hogar Inteligente",
-				"description": "Sed ut perspiciatis unde omnis iste natus error sit voluptatem accusantium doloremque laudantium.",
-				"longDescription": "Sed ut perspiciatis unde omnis iste natus error sit voluptatem accusantium doloremque laudantium, totam rem aperiam, eaque ipsa quae ab illo inventore veritatis et quasi architecto beatae vitae dicta sunt explicabo."
+				"title": "Portfolio Personal",
+				"description": "Sitio web portfolio moderno desarrollado con Vue 3 y TypeScript. Diseño responsive, animaciones fluidas, soporte multilingüe y modo oscuro.",
+				"longDescription": "Portfolio personal desarrollado con las últimas tecnologías web. Utiliza Vue 3 con Composition API, TypeScript para tipado fuerte y Pinia para gestión de estado. El diseño es completamente responsive con Tailwind CSS, incluye animaciones personalizadas, sistema de tema claro/oscuro y soporte multilingüe (i18n) para 6 idiomas. Optimizado para rendimiento con lazy loading y code splitting."
 			},
 			{
 				"id": 6,
-				"title": "Monedero Blockchain",
-				"description": "Nemo enim ipsam voluptatem quia voluptas sit aspernatur aut odit aut fugit, sed quia consequuntur.",
-				"longDescription": "Nemo enim ipsam voluptatem quia voluptas sit aspernatur aut odit aut fugit, sed quia consequuntur magni dolores eos qui ratione voluptatem sequi nesciunt."
+				"title": "Módulo Generador SBOM/CVE",
+				"description": "Herramienta de análisis de dependencias y generación de SBOM para detección de vulnerabilidades. Analiza archivos CMake y vcxproj para identificar dependencias reales.",
+				"longDescription": "Módulo desarrollado en Thales para generar automáticamente Software Bill of Materials (SBOM) y detectar CVEs en proyectos C++/Java. La herramienta analiza archivos de compilación (Makefiles, vcxproj) para extraer dependencias reales en lugar de declaradas, garantizando máxima precisión. Produce archivos JSON enriquecidos utilizados para la generación de SBOM en formato estándar, permitiendo integración con escáneres de vulnerabilidades. Solución crítica para cumplimiento y seguridad de la cadena de suministro de software."
 			}
 		]
 	},
 	"contact": {
 		"title": "Contáctame",
 		"subtitle": "No dudes en ponerte en contacto conmigo para cualquier pregunta, oportunidades de colaboración, o simplemente para saludar!",
+		"getInTouchTitle": "Ponte en Contacto",
 		"getInTouch": "Me pondré en contacto contigo lo antes posible.",
+		"emailLabel": "Email",
+		"locationLabel": "Ubicación",
+		"locationValue": "París, Francia",
+		"connectWithMe": "Conecta Conmigo",
+		"sendMessageTitle": "Envíame un Mensaje",
 		"name": "Nombre",
+		"namePlaceholder": "Tu nombre",
 		"email": "Correo Electrónico",
+		"emailPlaceholder": "tu.email@ejemplo.com",
 		"message": "Mensaje",
+		"messagePlaceholder": "Tu mensaje...",
 		"send": "Enviar Mensaje",
+		"sending": "Enviando...",
 		"messageSent": "¡Mensaje enviado con éxito!"
 	},
 	"footer": {

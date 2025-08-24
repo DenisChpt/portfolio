@@ -74,7 +74,7 @@ const getVenue = (paper: ResearchPaper) => {
 </script>
 
 <template>
-	<div class="min-h-screen pt-24 pb-16">
+	<div class="min-h-screen pt-32 pb-16">
 		<!-- Animated background -->
 		<div class="fixed inset-0 -z-10">
 			<div class="absolute inset-0 bg-gradient-to-br from-gray-900 via-indigo-900/10 to-gray-900"></div>
