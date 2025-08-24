@@ -26,6 +26,8 @@ const loading = ref(true)
 const progress = ref(0)
 const ctaActive = ref(false)
 const isHovered = ref(false)
+const mouseX = ref(0)
+const mouseY = ref(0)
 
 const baseRadius = 150 // Rayon de base augmenté pour le cercle
 // Ces coefficients déterminent la taille du gap par rapport à la circonférence.
@@ -210,6 +212,9 @@ function simulateProgress() {
 											y: 0,
 											duration: 0.8,
 											ease: 'power2.out',
+											onComplete: () => {
+												checkMousePosition()
+											}
 										}
 									)
 								}
@@ -244,6 +249,31 @@ function handleEnter() {
 			router.push('/') // Navigation vers la page d'accueil
 		},
 	})
+}
+
+// Fonction pour vérifier si la souris est dans la zone clickable
+function checkMousePosition() {
+	const clickableArea = document.querySelector('.preloader-clickable-area')
+	if (!clickableArea || !ctaActive.value) return
+
+	const rect = clickableArea.getBoundingClientRect()
+	const centerX = rect.left + rect.width / 2
+	const centerY = rect.top + rect.height / 2
+	const radius = rect.width / 2
+
+	const distance = Math.sqrt(
+		Math.pow(mouseX.value - centerX, 2) + Math.pow(mouseY.value - centerY, 2)
+	)
+
+	if (distance <= radius && !isHovered.value) {
+		handleCircleHover(true)
+	}
+}
+
+// Tracker la position de la souris
+function trackMousePosition(event: MouseEvent) {
+	mouseX.value = event.clientX
+	mouseY.value = event.clientY
 }
 
 function handleCircleHover(isEntering: boolean) {
@@ -407,6 +437,9 @@ function handleCircleHover(isEntering: boolean) {
 }
 
 onMounted(() => {
+	// Ajouter un écouteur pour tracker la position de la souris
+	window.addEventListener('mousemove', trackMousePosition)
+
 	// S'assurer que les refs sont bien définies avant d'initialiser
 	setTimeout(() => {
 		if (progressCircle.value && progressOutline.value) {
@@ -426,6 +459,8 @@ onBeforeUnmount(() => {
 	if (circleRotation.value) {
 		circleRotation.value.kill()
 	}
+
+	window.removeEventListener('mousemove', trackMousePosition)
 })
 </script>
 
@@ -522,19 +557,19 @@ onBeforeUnmount(() => {
 .loader-container {
 	color: #bcbcbc;
 	background: transparent !important; /* Fond transparent pour voir AnimatedBackground */
-	
+
 	/* Ajout du fond avec gradient animé similaire aux autres pages */
 	&::before {
 		content: '';
 		position: fixed;
 		inset: 0;
-		background: linear-gradient(to bottom right, 
-			rgb(17, 24, 39), 
-			rgba(99, 102, 241, 0.1), 
+		background: linear-gradient(to bottom right,
+			rgb(17, 24, 39),
+			rgba(99, 102, 241, 0.1),
 			rgb(17, 24, 39));
 		z-index: -1;
 	}
-	
+
 	/* Bulles de gradient animées */
 	&::after {
 		content: '';

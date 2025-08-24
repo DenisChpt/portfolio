@@ -20,11 +20,61 @@ const contentReady = ref(false)
 
 // Search and filters
 const searchQuery = ref('')
-const selectedTech = ref<string | null>(null)
+const selectedTechs = ref<Set<string>>(new Set())
 const isFiltering = ref(false)
+
+// Color mapping for technologies - vibrant and distinct colors
+const techColors: Record<string, string> = {
+	'Python': 'bg-yellow-500/20 text-yellow-300 border-yellow-500/40',
+	'JavaScript': 'bg-amber-500/20 text-amber-300 border-amber-500/40',
+	'TypeScript': 'bg-blue-500/20 text-blue-300 border-blue-500/40',
+	'React': 'bg-cyan-500/20 text-cyan-300 border-cyan-500/40',
+	'Vue.js': 'bg-emerald-500/20 text-emerald-300 border-emerald-500/40',
+	'Node.js': 'bg-green-500/20 text-green-300 border-green-500/40',
+	'Docker': 'bg-sky-500/20 text-sky-300 border-sky-500/40',
+	'Kubernetes': 'bg-indigo-500/20 text-indigo-300 border-indigo-500/40',
+	'Jenkins': 'bg-red-500/20 text-red-300 border-red-500/40',
+	'GitLab CI': 'bg-orange-500/20 text-orange-300 border-orange-500/40',
+	'CMake': 'bg-purple-500/20 text-purple-300 border-purple-500/40',
+	'C++': 'bg-rose-500/20 text-rose-300 border-rose-500/40',
+	'Rust': 'bg-amber-600/20 text-amber-400 border-amber-600/40',
+	'Linux': 'bg-slate-500/20 text-slate-300 border-slate-500/40',
+	'Git': 'bg-red-600/20 text-red-400 border-red-600/40',
+	'AWS': 'bg-orange-600/20 text-orange-400 border-orange-600/40',
+	'SQL': 'bg-violet-500/20 text-violet-300 border-violet-500/40',
+	'OpenGL': 'bg-teal-500/20 text-teal-300 border-teal-500/40',
+	'default': 'bg-gray-500/20 text-gray-300 border-gray-500/40'
+}
+
+const getTechColor = (tech: string): string => {
+	return techColors[tech] || techColors['default']
+}
 
 // Référence pour le modal
 const projectDetailsRef = ref(null)
+const projectImageRef = ref<HTMLElement | null>(null)
+
+// Mouse tracking for image tilt effect
+const handleMouseMove = (event: MouseEvent) => {
+	if (!projectImageRef.value) return
+	
+	const rect = projectImageRef.value.getBoundingClientRect()
+	const x = event.clientX - rect.left
+	const y = event.clientY - rect.top
+	
+	const centerX = rect.width / 2
+	const centerY = rect.height / 2
+	
+	const rotateX = ((y - centerY) / centerY) * -10 // Max 10 degrees
+	const rotateY = ((x - centerX) / centerX) * 10 // Max 10 degrees
+	
+	projectImageRef.value.style.transform = `perspective(1000px) rotateX(${rotateX}deg) rotateY(${rotateY}deg) scale(1.05)`
+}
+
+const handleMouseLeave = () => {
+	if (!projectImageRef.value) return
+	projectImageRef.value.style.transform = 'perspective(1000px) rotateX(0) rotateY(0) scale(1)'
+}
 
 // Handle filtering
 const handleSearch = () => {
@@ -32,17 +82,18 @@ const handleSearch = () => {
 	projectsStore.setSearchQuery(searchQuery.value)
 }
 
-const handleTechFilter = async (tech: string | null) => {
+const handleTechFilter = async (tech: string) => {
 	isFiltering.value = true
 
-	// Si on clique sur la techno déjà sélectionnée, on la désélectionne
-	const newTech = tech === selectedTech.value ? null : tech
+	// Toggle la sélection de la techno
+	if (selectedTechs.value.has(tech)) {
+		selectedTechs.value.delete(tech)
+	} else {
+		selectedTechs.value.add(tech)
+	}
 
-	// Mettre à jour l'état de sélection
-	selectedTech.value = newTech
-
-	// Mettre à jour le filtre dans le store
-	projectsStore.setTechFilter(newTech)
+	// Mettre à jour le filtre dans le store avec toutes les technos sélectionnées
+	projectsStore.setMultipleTechFilters(Array.from(selectedTechs.value))
 
 	// Permettre au DOM de se mettre à jour avant d'animer
 	await nextTick()
@@ -54,7 +105,7 @@ const handleTechFilter = async (tech: string | null) => {
 const clearFilters = async () => {
 	isFiltering.value = true
 	searchQuery.value = ''
-	selectedTech.value = null
+	selectedTechs.value.clear()
 	projectsStore.clearFilters()
 
 	// Permettre au DOM de se mettre à jour avant d'animer
@@ -222,17 +273,18 @@ watch(
 				<!-- Search and filter -->
 				<div
 					ref="filtersRef"
-					class="mb-8 flex flex-wrap gap-6 items-center"
+					class="mb-8 space-y-6"
 					:style="{ opacity: 0 }"
 				>
-					<div class="flex-1 min-w-[250px]">
+					<!-- Search bar on its own line -->
+					<div class="w-full max-w-2xl mx-auto">
 						<div class="relative">
 							<input
 								v-model="searchQuery"
 								@input="handleSearch"
 								type="text"
 								placeholder="Search projects..."
-								class="input pr-10 text-base py-3"
+								class="input w-full pr-10 text-base py-3"
 							/>
 							<button
 								v-if="searchQuery"
@@ -255,19 +307,22 @@ watch(
 						</div>
 					</div>
 
-					<div class="flex flex-wrap gap-3">
+					<!-- Tech filters on their own line -->
+					<div class="flex flex-wrap justify-center gap-3">
 						<button
 							v-for="tech in projectsStore.allTechnologies"
 							:key="tech"
 							@click="handleTechFilter(tech)"
 							class="px-4 py-2 text-sm rounded-full border transition-all duration-300"
-							:class="
-								tech === selectedTech
-									? 'bg-indigo-500/40 text-indigo-200 border-indigo-500 shadow-lg shadow-indigo-900/20'
-									: 'bg-indigo-500/10 text-indigo-300 border-indigo-500/20 hover:bg-indigo-500/20'
-							"
+							:class="[
+								getTechColor(tech),
+								selectedTechs.has(tech) 
+									? 'ring-2 ring-white/50 shadow-lg transform scale-105' 
+									: 'hover:scale-105'
+							]"
 						>
 							{{ tech }}
+							<span v-if="selectedTechs.has(tech)" class="ml-1">✓</span>
 						</button>
 					</div>
 				</div>
@@ -300,76 +355,88 @@ watch(
 					<div
 						v-for="(project, index) in projectsStore.filteredProjects"
 						:key="project.id"
-						class="project-card group relative"
+						class="project-card group"
 						ref="cardRef"
 						@click="openProject(project.id)"
 						:style="{ opacity: 0, animationDelay: `${index * 0.1}s` }"
 					>
-						<div class="relative bg-gray-800/30 backdrop-blur-sm rounded-2xl border border-gray-700/50 overflow-hidden transition-all duration-500 hover:border-indigo-500/50 hover:shadow-2xl hover:shadow-indigo-500/10 hover:-translate-y-2 cursor-pointer">
-							<!-- Project Image with advanced overlay -->
-							<div class="relative h-56 overflow-hidden">
-								<div class="absolute inset-0 bg-gradient-to-br from-indigo-500/20 to-purple-500/20 z-10"></div>
-								<img
-									:src="project.image"
-									:alt="project.title"
-									class="w-full h-full object-cover transition-transform duration-700 group-hover:scale-110"
-								/>
-								<div class="absolute inset-0 bg-gradient-to-t from-gray-900 via-gray-900/50 to-transparent opacity-60 z-20"></div>
+						<!-- Ultra modern card design -->
+						<div class="card-container relative h-full">
+							<!-- Glow effect that follows mouse -->
+							<div class="card-glow absolute -inset-0.5 bg-gradient-to-r from-indigo-500 via-purple-500 to-pink-500 rounded-2xl opacity-0 group-hover:opacity-75 blur transition-all duration-500"></div>
+							
+							<!-- Main card -->
+							<div class="card-content relative h-full bg-gray-900/90 backdrop-blur-xl rounded-2xl border border-gray-800 overflow-hidden transition-all duration-500 group-hover:border-transparent group-hover:transform group-hover:-translate-y-1 flex flex-col">
 								
-								<!-- Hover overlay with icon -->
-								<div class="absolute inset-0 bg-black/60 opacity-0 group-hover:opacity-100 transition-all duration-500 flex items-center justify-center z-30">
-									<div class="transform scale-0 group-hover:scale-100 transition-transform duration-500">
-										<div class="p-4 bg-indigo-500/20 backdrop-blur-sm rounded-full border-2 border-indigo-400">
-											<svg
-												xmlns="http://www.w3.org/2000/svg"
-												class="h-8 w-8 text-indigo-300"
-												fill="none"
-												viewBox="0 0 24 24"
-												stroke="currentColor"
-											>
-												<path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 12a3 3 0 11-6 0 3 3 0 016 0z" />
-												<path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M2.458 12C3.732 7.943 7.523 5 12 5c4.478 0 8.268 2.943 9.542 7-1.274 4.057-5.064 7-9.542 7-4.477 0-8.268-2.943-9.542-7z" />
+								<!-- Gradient overlay that animates -->
+								<div class="absolute inset-0 bg-gradient-to-br from-indigo-500/5 via-purple-500/5 to-pink-500/5 opacity-0 group-hover:opacity-100 transition-opacity duration-700"></div>
+								
+								<!-- Image section with parallax effect -->
+								<div class="relative h-48 overflow-hidden bg-gradient-to-br from-indigo-900/20 to-purple-900/20">
+									<!-- Animated gradient background -->
+									<div class="absolute inset-0 bg-gradient-to-r from-indigo-500/20 via-purple-500/20 to-pink-500/20 animate-gradient-shift"></div>
+									
+									<!-- Project image with advanced effects -->
+									<img
+										:src="project.image"
+										:alt="project.title"
+										class="w-full h-full object-cover transition-all duration-700 group-hover:scale-110 group-hover:rotate-1"
+									/>
+									
+									<!-- Dark gradient overlay -->
+									<div class="absolute inset-0 bg-gradient-to-t from-gray-900 via-gray-900/40 to-transparent"></div>
+									
+									
+									<!-- Hover indicator -->
+									<div class="absolute bottom-4 right-4 z-20 transform translate-x-10 group-hover:translate-x-0 transition-transform duration-500">
+										<div class="p-2 bg-white/10 backdrop-blur-md rounded-full">
+											<svg xmlns="http://www.w3.org/2000/svg" class="h-4 w-4 text-white" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+												<path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M14 5l7 7m0 0l-7 7m7-7H3" />
 											</svg>
 										</div>
 									</div>
 								</div>
 								
-							</div>
-							
-							<!-- Content -->
-							<div class="p-6">
-								<h3 class="text-xl font-bold text-white mb-3 group-hover:text-indigo-300 transition-colors duration-300">
-									{{ project.title }}
-								</h3>
-								<p class="text-gray-400 text-sm mb-4 line-clamp-3">
-									{{ project.description }}
-								</p>
-								
-								<!-- Tech badges -->
-								<div class="flex flex-wrap gap-2 mb-4">
-									<span
-										v-for="tech in project.tech"
-										:key="tech"
-										class="px-3 py-1 text-xs bg-indigo-500/10 text-indigo-300 rounded-full border border-indigo-500/20 backdrop-blur-sm"
-									>
-										{{ tech }}
-									</span>
-								</div>
-								
-								<!-- View project link -->
-								<div class="flex items-center justify-between">
-									<span class="text-indigo-400 font-medium text-sm group-hover:text-indigo-300 transition-colors duration-300">
-										{{ t('projects.viewProject') }}
-									</span>
-									<svg
-										xmlns="http://www.w3.org/2000/svg"
-										class="h-5 w-5 text-indigo-400 transform transition-all duration-300 group-hover:translate-x-2 group-hover:text-indigo-300"
-										fill="none"
-										viewBox="0 0 24 24"
-										stroke="currentColor"
-									>
-										<path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17 8l4 4m0 0l-4 4m4-4H3" />
-									</svg>
+								<!-- Content section with glassmorphism -->
+								<div class="relative p-6 flex-1 flex flex-col z-10">
+									<!-- Title with gradient on hover -->
+									<h3 class="text-xl font-bold text-white mb-2 transition-all duration-300 group-hover:text-transparent group-hover:bg-clip-text group-hover:bg-gradient-to-r group-hover:from-indigo-400 group-hover:via-purple-400 group-hover:to-pink-400">
+										{{ project.title }}
+									</h3>
+									
+									<!-- Animated underline -->
+									<div class="h-0.5 w-0 group-hover:w-16 bg-gradient-to-r from-indigo-500 to-purple-500 transition-all duration-500 mb-3"></div>
+									
+									<!-- Description -->
+									<p class="text-gray-400 text-sm mb-4 line-clamp-2 flex-1 group-hover:text-gray-300 transition-colors duration-300">
+										{{ project.description }}
+									</p>
+									
+									<!-- Tech stack with consistent colors -->
+									<div class="flex flex-wrap gap-2 mb-4">
+										<span
+											v-for="tech in project.tech.slice(0, 3)"
+											:key="tech"
+											class="tech-badge px-3 py-1 text-xs rounded-full border backdrop-blur-sm transition-all duration-300 hover:scale-105"
+											:class="getTechColor(tech)"
+										>
+											{{ tech }}
+										</span>
+										<span v-if="project.tech.length > 3" class="px-3 py-1 text-xs text-gray-500">
+											+{{ project.tech.length - 3 }}
+										</span>
+									</div>
+									
+									<!-- Interactive footer -->
+									<div class="flex items-center justify-between pt-4 border-t border-gray-800 group-hover:border-gray-700 transition-colors duration-300">
+										<div class="flex items-center space-x-2">
+											<div class="w-2 h-2 rounded-full bg-green-400 animate-pulse"></div>
+											<span class="text-xs text-gray-500">Active</span>
+										</div>
+										<div class="px-3 py-1 bg-black/30 backdrop-blur-sm rounded-full border border-white/10 group-hover:bg-indigo-500/20 group-hover:border-indigo-400/30 transition-all duration-300">
+											<span class="text-xs font-mono text-white/70 group-hover:text-indigo-300">#{{ String(index + 1).padStart(2, '0') }}</span>
+										</div>
+									</div>
 								</div>
 							</div>
 						</div>
@@ -378,25 +445,39 @@ watch(
 			</div>
 		</div>
 
-		<!-- Project Details Modal avec transitions améliorées -->
+		<!-- Project Details Modal avec style glassmorphism moderne -->
 		<div
 			v-if="projectsStore.selectedProject"
 			class="fixed inset-0 z-50 flex items-center justify-center p-4"
 		>
-			<div class="absolute inset-0 bg-black/80 backdrop-blur-md" @click="closeProject"></div>
+			<div class="absolute inset-0 bg-black/60 backdrop-blur-md" @click="closeProject"></div>
 
 			<div
 				ref="projectDetailsRef"
-				class="project-details max-w-4xl w-full mx-auto max-h-[90vh] overflow-y-auto z-10"
+				class="project-details relative max-w-5xl w-full mx-auto max-h-[90vh] overflow-hidden rounded-3xl"
 			>
-				<Card :title="`project.${projectsStore.selectedProject.id}`" variant="window">
+				<!-- Glassmorphism background -->
+				<div class="absolute inset-0 bg-gray-900/90 backdrop-blur-xl"></div>
+				<div class="absolute inset-0 bg-gradient-to-br from-indigo-500/10 via-purple-500/5 to-pink-500/10"></div>
+				
+				<!-- Border glow effect -->
+				<div class="absolute inset-0 rounded-3xl border border-indigo-500/20"></div>
+				
+				<!-- Content -->
+				<div class="relative z-10 p-8 overflow-y-auto max-h-[90vh]">
+					<!-- Header -->
 					<div class="flex justify-between items-start mb-8">
-						<h2 class="text-3xl font-bold gradient-text">
-							{{ projectsStore.selectedProject.title }}
-						</h2>
+						<div>
+							<h2 class="text-4xl font-bold mb-2">
+								<span class="text-transparent bg-clip-text bg-gradient-to-r from-indigo-400 via-purple-400 to-pink-400">
+									{{ projectsStore.selectedProject.title }}
+								</span>
+							</h2>
+							<div class="w-24 h-1 bg-gradient-to-r from-indigo-500 to-purple-500 rounded-full"></div>
+						</div>
 						<button
 							@click="closeProject"
-							class="text-gray-400 hover:text-white transition-colors duration-300 p-2 rounded-full hover:bg-indigo-500/10"
+							class="text-gray-400 hover:text-white transition-all duration-300 p-3 rounded-full hover:bg-indigo-500/20 hover:rotate-90 transform"
 							aria-label="Close project details"
 						>
 							<svg class="w-6 h-6" fill="none" viewBox="0 0 24 24" stroke="currentColor">
@@ -410,78 +491,82 @@ watch(
 						</button>
 					</div>
 
-					<div class="grid grid-cols-1 md:grid-cols-2 gap-8 mb-8">
+					<!-- Main content -->
+					<div class="grid grid-cols-1 lg:grid-cols-2 gap-8 mb-8">
+						<!-- Left column - Image and tech -->
 						<div class="space-y-6">
-							<div class="relative rounded-lg overflow-hidden shadow-xl shadow-indigo-900/20">
+							<div 
+								class="relative rounded-2xl overflow-hidden"
+								@mousemove="handleMouseMove"
+								@mouseleave="handleMouseLeave"
+							>
 								<img
+									ref="projectImageRef"
 									:src="projectsStore.selectedProject.image"
 									:alt="projectsStore.selectedProject.title"
-									class="w-full rounded-lg aspect-video object-cover"
+									class="w-full rounded-2xl aspect-video object-cover transition-transform duration-200 ease-out"
+									style="transform-style: preserve-3d; will-change: transform;"
 								/>
-								<div
-									class="absolute inset-0 bg-gradient-to-t from-black/60 to-transparent opacity-0 hover:opacity-100 transition-opacity duration-300"
-								></div>
+								<div class="absolute inset-0 bg-gradient-to-t from-gray-900/30 via-transparent to-transparent pointer-events-none"></div>
 							</div>
-							<div class="flex flex-wrap gap-3">
-								<span
-									v-for="tech in projectsStore.selectedProject.tech"
-									:key="tech"
-									class="px-3 py-1.5 text-base bg-primary-500/10 text-primary-300 rounded-full border border-primary-500/20 hover:bg-primary-500/20 transition-colors duration-300"
-								>
-									{{ tech }}
-								</span>
-							</div>
-						</div>
-
-						<div class="space-y-6">
-							<p class="text-gray-200 text-lg leading-relaxed">
-								{{ projectsStore.selectedProject.longDescription }}
-							</p>
-
-							<div class="grid grid-cols-2 gap-4">
-								<div
-									v-for="(image, index) in projectsStore.selectedProject.gallery.slice(0, 4)"
-									:key="index"
-									class="relative rounded-lg overflow-hidden shadow-lg hover:shadow-xl transition-all duration-300 transform hover:scale-105"
-								>
-									<img
-										:src="image"
-										:alt="`${projectsStore.selectedProject.title} gallery ${index + 1}`"
-										class="w-full rounded-lg aspect-video object-cover"
-									/>
+							
+							<!-- Tech stack with consistent colors -->
+							<div>
+								<h3 class="text-sm font-semibold text-indigo-300 mb-3 uppercase tracking-wider">Technologies Used</h3>
+								<div class="flex flex-wrap gap-2">
+									<span
+										v-for="tech in projectsStore.selectedProject.tech"
+										:key="tech"
+										class="px-4 py-2 text-sm rounded-full border backdrop-blur-sm transition-all duration-300 hover:scale-105 transform"
+										:class="getTechColor(tech)"
+									>
+										{{ tech }}
+									</span>
 								</div>
 							</div>
 						</div>
+
+						<!-- Right column - Description -->
+						<div class="space-y-6">
+							<div>
+								<h3 class="text-sm font-semibold text-purple-300 mb-3 uppercase tracking-wider">Project Overview</h3>
+								<p class="text-gray-300 text-base leading-relaxed">
+									{{ projectsStore.selectedProject.longDescription }}
+								</p>
+							</div>
+						</div>
 					</div>
 
-					<div class="flex justify-end space-x-5 pt-4 border-t border-indigo-500/20">
-						<Button
+					<!-- Actions with modern buttons -->
+					<div class="flex flex-wrap gap-4 pt-6 border-t border-indigo-500/20">
+						<a
 							v-if="projectsStore.selectedProject.liveUrl"
 							:href="projectsStore.selectedProject.liveUrl"
-							external
-							variant="primary"
-							size="lg"
+							target="_blank"
+							rel="noopener noreferrer"
+							class="group relative inline-flex items-center px-6 py-3 overflow-hidden rounded-full bg-gradient-to-r from-indigo-500 to-purple-500 text-white font-medium shadow-lg transition-all duration-300 hover:scale-105 hover:shadow-xl hover:shadow-indigo-500/25"
 						>
-							<svg
-								xmlns="http://www.w3.org/2000/svg"
-								class="h-5 w-5 mr-2"
-								viewBox="0 0 20 20"
-								fill="currentColor"
-							>
-								<path
-									fill-rule="evenodd"
-									d="M10 18a8 8 0 100-16 8 8 0 000 16zM9.555 7.168A1 1 0 008 8v4a1 1 0 001.555.832l3-2a1 1 0 000-1.664l-3-2z"
-									clip-rule="evenodd"
-								/>
-							</svg>
-							{{ t('projects.viewLiveDemo') }}
-						</Button>
-						<Button
+							<span class="relative z-10 flex items-center">
+								<svg
+									xmlns="http://www.w3.org/2000/svg"
+									class="h-5 w-5 mr-2"
+									viewBox="0 0 20 20"
+									fill="currentColor"
+								>
+									<path d="M10 12a2 2 0 100-4 2 2 0 000 4z" />
+									<path fill-rule="evenodd" d="M.458 10C1.732 5.943 5.522 3 10 3s8.268 2.943 9.542 7c-1.274 4.057-5.064 7-9.542 7S1.732 14.057.458 10zM14 10a4 4 0 11-8 0 4 4 0 018 0z" clip-rule="evenodd" />
+								</svg>
+								{{ t('projects.viewLiveDemo') }}
+							</span>
+							<div class="absolute inset-0 bg-gradient-to-r from-purple-500 to-pink-500 opacity-0 transition-opacity duration-300 group-hover:opacity-100 rounded-full"></div>
+						</a>
+						
+						<a
 							v-if="projectsStore.selectedProject.sourceUrl"
 							:href="projectsStore.selectedProject.sourceUrl"
-							external
-							variant="outline"
-							size="lg"
+							target="_blank"
+							rel="noopener noreferrer"
+							class="group inline-flex items-center px-6 py-3 rounded-full border-2 border-gray-600 text-gray-300 font-medium transition-all duration-300 hover:border-indigo-500 hover:text-indigo-300 hover:scale-105 hover:shadow-lg hover:shadow-indigo-500/10 backdrop-blur-sm"
 						>
 							<svg
 								xmlns="http://www.w3.org/2000/svg"
@@ -489,16 +574,12 @@ watch(
 								viewBox="0 0 20 20"
 								fill="currentColor"
 							>
-								<path
-									fill-rule="evenodd"
-									d="M12.316 3.051a1 1 0 01.633 1.265l-4 12a1 1 0 11-1.898-.632l4-12a1 1 0 011.265-.633zM5.707 6.293a1 1 0 010 1.414L3.414 10l2.293 2.293a1 1 0 11-1.414 1.414l-3-3a1 1 0 010-1.414l3-3a1 1 0 011.414 0zm8.586 0a1 1 0 011.414 0l3 3a1 1 0 010 1.414l-3 3a1 1 0 11-1.414-1.414L16.586 10l-2.293-2.293a1 1 0 010-1.414z"
-									clip-rule="evenodd"
-								/>
+								<path fill-rule="evenodd" d="M12.316 3.051a1 1 0 01.633 1.265l-4 12a1 1 0 11-1.898-.632l4-12a1 1 0 011.265-.633zM5.707 6.293a1 1 0 010 1.414L3.414 10l2.293 2.293a1 1 0 11-1.414 1.414l-3-3a1 1 0 010-1.414l3-3a1 1 0 011.414 0zm8.586 0a1 1 0 011.414 0l3 3a1 1 0 010 1.414l-3 3a1 1 0 11-1.414-1.414L16.586 10l-2.293-2.293a1 1 0 010-1.414z" clip-rule="evenodd" />
 							</svg>
 							{{ t('projects.viewSource') }}
-						</Button>
+						</a>
 					</div>
-				</Card>
+				</div>
 			</div>
 		</div>
 	</div>
@@ -518,25 +599,76 @@ watch(
 
 .project-card {
 	animation: fadeInUp 0.6s ease-out forwards;
+	cursor: pointer;
+}
+
+/* Glow effect animation */
+.card-glow {
+	background-size: 200% 200%;
+	animation: gradient-animation 3s ease infinite;
+}
+
+@keyframes gradient-animation {
+	0% {
+		background-position: 0% 50%;
+	}
+	50% {
+		background-position: 100% 50%;
+	}
+	100% {
+		background-position: 0% 50%;
+	}
+}
+
+/* Animated gradient shift for image overlay */
+@keyframes gradient-shift {
+	0%, 100% {
+		opacity: 0.3;
+		transform: translateX(0);
+	}
+	50% {
+		opacity: 0.5;
+		transform: translateX(10px);
+	}
+}
+
+.animate-gradient-shift {
+	animation: gradient-shift 8s ease-in-out infinite;
+}
+
+/* Tech badge hover animation */
+.tech-badge {
+	transform: translateY(0);
+}
+
+.group:hover .tech-badge {
+	animation: float-badge 0.5s ease forwards;
+}
+
+@keyframes float-badge {
+	to {
+		transform: translateY(-2px);
+	}
+}
+
+/* Card container hover effects */
+.card-container {
+	transform-style: preserve-3d;
+	perspective: 1000px;
+}
+
+.card-content {
+	transform: translateZ(0);
+	will-change: transform;
+}
+
+/* Smooth hover lift */
+.group:hover .card-content {
+	transform: translateZ(20px);
 }
 
 .delay-1000 {
 	animation-delay: 1s;
-}
-
-@keyframes shine {
-	0% {
-		background-position: 0% 50%;
-	}
-	100% {
-		background-position: 200% 50%;
-	}
-}
-
-@keyframes shine {
-	to {
-		background-position: 200% center;
-	}
 }
 
 .project-details {
