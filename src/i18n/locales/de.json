@@ -74,12 +74,6 @@
 				"title": "Persönliches Portfolio",
 				"description": "Moderne Portfolio-Website entwickelt mit Vue 3 und TypeScript. Responsives Design, flüssige Animationen, mehrsprachiger Support und Dark Mode.",
 				"longDescription": "Persönliches Portfolio entwickelt mit den neuesten Webtechnologien. Verwendet Vue 3 mit Composition API, TypeScript für starke Typisierung und Pinia für Zustandsverwaltung. Das Design ist vollständig responsiv mit Tailwind CSS, enthält benutzerdefinierte Animationen, ein Licht-/Dunkel-Theme-System und mehrsprachigen Support (i18n) für 6 Sprachen. Optimiert für Performance mit Lazy Loading und Code Splitting."
-			},
-			{
-				"id": 6,
-				"title": "SBOM/CVE Generator Modul",
-				"description": "Tool zur Abhängigkeitsanalyse und SBOM-Generierung für die Schwachstellenerkennung. Parst CMake- und vcxproj-Dateien zur Identifikation tatsächlicher Abhängigkeiten.",
-				"longDescription": "Bei Thales entwickeltes Modul zur automatischen Generierung von Software Bill of Materials (SBOM) und CVE-Erkennung in C++/Java-Projekten. Das Tool analysiert Build-Dateien (Makefiles, vcxproj) zur Extraktion tatsächlicher statt deklarierter Abhängigkeiten und gewährleistet maximale Genauigkeit. Es produziert angereicherte JSON-Dateien für SBOM-Generierung im Standardformat und ermöglicht Integration mit Schwachstellen-Scannern. Kritische Lösung für Software-Supply-Chain-Compliance und -Sicherheit."
 			}
 		]
 	},

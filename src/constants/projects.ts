@@ -91,22 +91,6 @@ export const PROJECTS: Project[] = [
 		liveUrl: 'https://denischaput.dev',
 		status: 'active' as const,
 	},
-	{
-		id: 6,
-		title: 'Module SBOM/CVE Generator',
-		description:
-			'Outil d\'analyse de dépendances et génération de SBOM pour la détection de vulnérabilités. Parse les fichiers CMake et vcxproj pour identifier les dépendances réelles.',
-		longDescription:
-			'Module développé chez Thales pour générer automatiquement des Software Bill of Materials (SBOM) et détecter les CVE dans les projets C++/Java. L\'outil analyse les fichiers de build (Makefiles, vcxproj) pour extraire les dépendances réelles plutôt que déclarées, garantissant une précision maximale. Il produit des fichiers JSON enrichis servant à la génération de SBOM au format standard, permettant l\'intégration avec les scanners de vulnérabilités. Solution critique pour la conformité et la sécurité de la supply chain logicielle.',
-		tech: ['Python', 'Jenkins'],
-		image: 'https://via.placeholder.com/800x600',
-		gallery: [
-			'https://via.placeholder.com/800x600',
-			'https://via.placeholder.com/800x600',
-			'https://via.placeholder.com/800x600',
-		],
-		status: 'in-progress' as const,
-	},
 ]
 
 /**

@@ -74,12 +74,6 @@
 				"title": "Personal Portfolio",
 				"description": "Modern portfolio website developed with Vue 3 and TypeScript. Responsive design, smooth animations, multilingual support, and dark mode.",
 				"longDescription": "Personal portfolio developed with the latest web technologies. Uses Vue 3 with Composition API, TypeScript for strong typing, and Pinia for state management. The design is fully responsive with Tailwind CSS, includes custom animations, a light/dark theme system, and multilingual support (i18n) for 6 languages. Optimized for performance with lazy loading and code splitting."
-			},
-			{
-				"id": 6,
-				"title": "SBOM/CVE Generator Module",
-				"description": "Dependency analysis and SBOM generation tool for vulnerability detection. Parses CMake and vcxproj files to identify actual dependencies.",
-				"longDescription": "Module developed at Thales to automatically generate Software Bill of Materials (SBOM) and detect CVEs in C++/Java projects. The tool analyzes build files (Makefiles, vcxproj) to extract actual rather than declared dependencies, ensuring maximum accuracy. It produces enriched JSON files used for SBOM generation in standard format, enabling integration with vulnerability scanners. Critical solution for software supply chain compliance and security."
 			}
 		]
 	},

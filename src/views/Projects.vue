@@ -94,9 +94,15 @@ const handleMouseLeave = () => {
 }
 
 // Handle filtering
-const handleSearch = () => {
+const handleSearch = async () => {
 	isFiltering.value = true
 	projectsStore.setSearchQuery(searchQuery.value)
+	
+	// Permettre au DOM de se mettre à jour avant d'animer
+	await nextTick()
+	
+	// Animation des éléments filtrés
+	animateFilteredProjects()
 }
 
 const handleTechFilter = async (tech: string) => {
@@ -134,29 +140,34 @@ const clearFilters = async () => {
 
 // Animation spécifique pour les projets filtrés
 const animateFilteredProjects = () => {
-	// Sélectionner tous les projets (qui sont maintenant dans le DOM)
-	const projectCards = document.querySelectorAll('.project-card')
+	// Attendre que Vue ait mis à jour le DOM
+	nextTick(() => {
+		// Sélectionner tous les projets (qui sont maintenant dans le DOM)
+		const projectCards = document.querySelectorAll('.project-card')
 
-	if (projectCards.length === 0) return
-
-	// Réinitialiser l'opacité et d'autres styles d'animation
-	gsap.set(projectCards, {
-		opacity: 0,
-		y: 20,
-		scale: 0.95,
-	})
-
-	// Animer les cartes avec un effet de cascade
-	gsap.to(projectCards, {
-		opacity: 1,
-		y: 0,
-		scale: 1,
-		duration: 0.5,
-		stagger: 0.05,
-		clearProps: 'all',
-		onComplete: () => {
+		if (projectCards.length === 0) {
 			isFiltering.value = false
-		},
+			return
+		}
+
+		// Animation cohérente avec l'animation initiale
+		// Utiliser exactement les mêmes valeurs pour éviter les décalages
+		gsap.fromTo(projectCards, 
+			{
+				opacity: 0,
+				y: 20,
+			},
+			{
+				opacity: 1,
+				y: 0,
+				duration: 0.3,
+				stagger: 0.03,
+				ease: 'power2.out',
+				onComplete: () => {
+					isFiltering.value = false
+				},
+			}
+		)
 	})
 }
 
@@ -235,27 +246,25 @@ const closeProject = () => {
 
 // Animation de la page
 const animateProjects = () => {
-	const tl = gsap.timeline({ defaults: { ease: 'power3.out' } })
+	const tl = gsap.timeline({ defaults: { ease: 'power2.out' } })
 
 	// Titre et description
-	tl.fromTo(headerRef.value, { y: 30, opacity: 0 }, { y: 0, opacity: 1, duration: 0.8 }, 0.3)
+	tl.fromTo(headerRef.value, { y: 30, opacity: 0 }, { y: 0, opacity: 1, duration: 0.6 }, 0.2)
 
 	// Filtres
-	tl.fromTo(filtersRef.value, { y: 20, opacity: 0 }, { y: 0, opacity: 1, duration: 0.6 }, 0.5)
+	tl.fromTo(filtersRef.value, { y: 20, opacity: 0 }, { y: 0, opacity: 1, duration: 0.5 }, 0.3)
 
-	// Grille de projets - avec callback pour marquer la fin d'animation
+	// Grille de projets - sans scale pour éviter les problèmes de layout
 	tl.fromTo(
 		'.project-card',
-		{ y: 30, opacity: 0, scale: 0.95 },
+		{ y: 20, opacity: 0 },
 		{
 			y: 0,
 			opacity: 1,
-			scale: 1,
-			duration: 0.7,
-			stagger: 0.1,
-			clearProps: 'all', // Nettoyer toutes les propriétés d'animation
+			duration: 0.5,
+			stagger: 0.08,
 		},
-		0.7
+		0.4
 	)
 }
 
@@ -419,7 +428,7 @@ watch(
 						class="project-card group"
 						ref="cardRef"
 						@click="openProject(project.id)"
-						:style="{ opacity: 0, animationDelay: `${index * 0.1}s` }"
+						:style="{ opacity: 0 }"
 					>
 						<!-- Ultra modern card design -->
 						<div class="card-container relative h-full">
@@ -672,20 +681,9 @@ watch(
 </template>
 
 <style scoped>
-@keyframes fadeInUp {
-	from {
-		opacity: 0;
-		transform: translateY(30px);
-	}
-	to {
-		opacity: 1;
-		transform: translateY(0);
-	}
-}
-
 .project-card {
-	animation: fadeInUp 0.6s ease-out forwards;
 	cursor: pointer;
+	/* Toutes les animations sont gérées par GSAP */
 }
 
 /* Glow effect animation */
