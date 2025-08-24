@@ -10,11 +10,16 @@ import { PROJECTS } from '@/constants/projects'
 export const useProjectsStore = defineStore('projects', () => {
 	const { t, locale } = useI18n()
 
-	// State
+	// State - with session persistence for filters
 	const projects = ref<Project[]>(PROJECTS)
 	const selectedProjectId = ref<number | null>(null)
-	const filterTechs = ref<string[]>([])
-	const searchQuery = ref('')
+	
+	// Load persisted filters from sessionStorage
+	const savedFilterTechs = sessionStorage.getItem('projectFilterTechs')
+	const savedSearchQuery = sessionStorage.getItem('projectSearchQuery')
+	
+	const filterTechs = ref<string[]>(savedFilterTechs ? JSON.parse(savedFilterTechs) : [])
+	const searchQuery = ref(savedSearchQuery || '')
 
 	// Computed
 	const selectedProject = computed(() => {
@@ -119,15 +124,22 @@ export const useProjectsStore = defineStore('projects', () => {
 
 	const setMultipleTechFilters = (techs: string[]) => {
 		filterTechs.value = techs
+		// Save to sessionStorage
+		sessionStorage.setItem('projectFilterTechs', JSON.stringify(techs))
 	}
 
 	const setSearchQuery = (query: string) => {
 		searchQuery.value = query
+		// Save to sessionStorage
+		sessionStorage.setItem('projectSearchQuery', query)
 	}
 
 	const clearFilters = () => {
 		filterTechs.value = []
 		searchQuery.value = ''
+		// Clear from sessionStorage
+		sessionStorage.removeItem('projectFilterTechs')
+		sessionStorage.removeItem('projectSearchQuery')
 	}
 
 	return {

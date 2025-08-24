@@ -22,14 +22,15 @@
 	"about": {
 		"title": "Über mich",
 		"description": "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.",
-		"experience": "Erfahrung",
+		"experience": "Berufserfahrung",
+		"personalInfo": "Beschreibung",
 		"education": "Ausbildung",
 		"technologies": "Technologien",
 		"topSkills": "Top-Fähigkeiten"
 	},
 	"projects": {
 		"title": "Meine Projekte",
-		"description": "Hier sind einige meiner neuesten Projekte",
+		"description": "Entdecken Sie meine beruflichen und persönlichen Projekte",
 		"searchPlaceholder": "Projekte suchen...",
 		"noResults": "Keine Projekte gefunden, die Ihren Kriterien entsprechen.",
 		"clearFilters": "Filter löschen",
@@ -46,50 +47,60 @@
 		"items": [
 			{
 				"id": 1,
-				"title": "E-Commerce-Plattform",
-				"description": "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris.",
-				"longDescription": "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur."
+				"title": "ProChain - CI/CD Produktionskette",
+				"description": "Neue modulare Software-Produktionskette für Thales, die GCONF_TOOLS ersetzt. Python-Architektur ermöglicht parallele Kompilierung, inkrementelle Produktion und Unabhängigkeit von Jenkins.",
+				"longDescription": "Während meiner Ausbildung bei Thales habe ich ProChain entworfen und implementiert, eine modulare CI/CD-Produktionskette, die die veraltete GCONF_TOOLS-Lösung ersetzt. Diese neue Python-Architektur ermöglicht Build-Parallelisierung, feingliedrige Abhängigkeitsverwaltung pro OS/Architektur und reduziert drastisch die Jenkins-Abhängigkeit. Das System verwaltet Codebasen mit mehreren Millionen Zeilen mit ITAR-Nachverfolgbarkeit und Multi-Platform-Support (Linux, Windows). Ergebnisse: 20% Reduzierung der vollständigen Kompilierungszeit und bis zu 80% im Delta-Modus."
 			},
 			{
 				"id": 2,
-				"title": "Social Media Dashboard",
-				"description": "Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat.",
-				"longDescription": "Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident."
+				"title": "RiemannOpt - Riemannsche Optimierungsbibliothek",
+				"description": "Hochperformante Rust-Bibliothek für die Optimierung auf Riemannschen Mannigfaltigkeiten. Implementierung geodätischer Gradientenabstieg und Retraktionsalgorithmen für maschinelles Lernen.",
+				"longDescription": "RiemannOpt ist eine in Rust entwickelte Optimierungsbibliothek, spezialisiert auf Optimierungsverfahren auf Riemannschen Mannigfaltigkeiten. Sie implementiert hochmoderne Algorithmen wie Riemannschen Gradientenabstieg, Retraktionsverfahren und Paralleltransport. Die Bibliothek bietet außergewöhnliche Performance dank Rust und findet Anwendung in maschinellem Lernen, Computer Vision und Signalverarbeitung. Sie enthält Optimierungen für Grassmann- und Stiefel-Mannigfaltigkeiten sowie SPD-Matrizen."
 			},
 			{
 				"id": 3,
-				"title": "KI-gestützte Analytik",
-				"description": "Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur.",
-				"longDescription": "Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum."
+				"title": "MinePP - Minecraft-Klon in C++",
+				"description": "Voxel-Spielengine von Grund auf in modernem C++ mit OpenGL entwickelt. Prozedurale Geländegenerierung, optimiertes Chunk-System und benutzerdefinierte Physik-Engine.",
+				"longDescription": "MinePP ist ein Minecraft-Klon, der vollständig in modernem C++ (C++20) entwickelt wurde und OpenGL für 3D-Rendering verwendet. Das Projekt implementiert ein Chunk-System mit Frustum-Culling, prozedurale Geländegenerierung via Perlin-Rauschen, eine benutzerdefinierte Physik-Engine mit AABB-Kollisionserkennung und ein dynamisches Beleuchtungssystem. Die Architektur ist erweiterbar mit einem ECS (Entity Component System) und unterstützt Multithreading für die Geländegenerierung."
 			},
 			{
 				"id": 4,
-				"title": "Mobile Fitness-App",
-				"description": "Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.",
-				"longDescription": "Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum. Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua."
+				"title": "Wazuh AI Assistant - Cybersicherheits-API",
+				"description": "On-Premise REST-API, die ein LLM zur Synthese von Wazuh-Berichten integriert. Containerisierte Lösung, die C3-Sicherheitsbeschränkungen erfüllt und Multi-Modell-Support bietet.",
+				"longDescription": "Während meines Praktikums in Rumänien bei Thales entwickelt, besteht dieses Projekt aus einer sicheren REST-API, die automatische Analyse und Synthese von Wazuh-Sicherheitsberichten über ein lokal gehostetes LLM ermöglicht. Die vollständig mit Docker containerisierte Lösung unterstützt mehrere Modelle (TinyLlama, Qwen, Mistral 7B) und integriert Redis-Cache für Performance-Optimierung. Die Architektur umfasst PostgreSQL für Kontoverwaltung, Qdrant für Vektorsuche in CVEs und Nginx für TLS-Terminierung. Konform mit C3-Sicherheitsanforderungen."
 			},
 			{
 				"id": 5,
-				"title": "Smart Home IoT-Plattform",
-				"description": "Sed ut perspiciatis unde omnis iste natus error sit voluptatem accusantium doloremque laudantium.",
-				"longDescription": "Sed ut perspiciatis unde omnis iste natus error sit voluptatem accusantium doloremque laudantium, totam rem aperiam, eaque ipsa quae ab illo inventore veritatis et quasi architecto beatae vitae dicta sunt explicabo."
+				"title": "Persönliches Portfolio",
+				"description": "Moderne Portfolio-Website entwickelt mit Vue 3 und TypeScript. Responsives Design, flüssige Animationen, mehrsprachiger Support und Dark Mode.",
+				"longDescription": "Persönliches Portfolio entwickelt mit den neuesten Webtechnologien. Verwendet Vue 3 mit Composition API, TypeScript für starke Typisierung und Pinia für Zustandsverwaltung. Das Design ist vollständig responsiv mit Tailwind CSS, enthält benutzerdefinierte Animationen, ein Licht-/Dunkel-Theme-System und mehrsprachigen Support (i18n) für 6 Sprachen. Optimiert für Performance mit Lazy Loading und Code Splitting."
 			},
 			{
 				"id": 6,
-				"title": "Blockchain-Wallet",
-				"description": "Nemo enim ipsam voluptatem quia voluptas sit aspernatur aut odit aut fugit, sed quia consequuntur.",
-				"longDescription": "Nemo enim ipsam voluptatem quia voluptas sit aspernatur aut odit aut fugit, sed quia consequuntur magni dolores eos qui ratione voluptatem sequi nesciunt."
+				"title": "SBOM/CVE Generator Modul",
+				"description": "Tool zur Abhängigkeitsanalyse und SBOM-Generierung für die Schwachstellenerkennung. Parst CMake- und vcxproj-Dateien zur Identifikation tatsächlicher Abhängigkeiten.",
+				"longDescription": "Bei Thales entwickeltes Modul zur automatischen Generierung von Software Bill of Materials (SBOM) und CVE-Erkennung in C++/Java-Projekten. Das Tool analysiert Build-Dateien (Makefiles, vcxproj) zur Extraktion tatsächlicher statt deklarierter Abhängigkeiten und gewährleistet maximale Genauigkeit. Es produziert angereicherte JSON-Dateien für SBOM-Generierung im Standardformat und ermöglicht Integration mit Schwachstellen-Scannern. Kritische Lösung für Software-Supply-Chain-Compliance und -Sicherheit."
 			}
 		]
 	},
 	"contact": {
 		"title": "Kontaktiere mich",
 		"subtitle": "Zögere nicht, mich bei Fragen, Kooperationsmöglichkeiten oder einfach nur zum Hallo sagen zu kontaktieren!",
+		"getInTouchTitle": "Kontakt aufnehmen",
 		"getInTouch": "Ich werde mich so schnell wie möglich bei dir melden.",
+		"emailLabel": "E-Mail",
+		"locationLabel": "Standort",
+		"locationValue": "Paris, Frankreich",
+		"connectWithMe": "Vernetze dich mit mir",
+		"sendMessageTitle": "Schreib mir eine Nachricht",
 		"name": "Name",
+		"namePlaceholder": "Dein Name",
 		"email": "E-Mail",
+		"emailPlaceholder": "deine.email@beispiel.com",
 		"message": "Nachricht",
+		"messagePlaceholder": "Deine Nachricht...",
 		"send": "Nachricht senden",
+		"sending": "Wird gesendet...",
 		"messageSent": "Nachricht erfolgreich gesendet!"
 	},
 	"footer": {

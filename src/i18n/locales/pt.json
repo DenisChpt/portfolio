@@ -22,14 +22,15 @@
 	"about": {
 		"title": "Sobre mim",
 		"description": "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.",
-		"experience": "Experiência",
+		"experience": "Experiência profissional",
+		"personalInfo": "Descrição",
 		"education": "Educação",
 		"technologies": "Tecnologias",
 		"topSkills": "Principais Habilidades"
 	},
 	"projects": {
 		"title": "Meus Projetos",
-		"description": "Aqui estão alguns dos meus projetos recentes",
+		"description": "Explore meus projetos profissionais e pessoais",
 		"searchPlaceholder": "Buscar projetos...",
 		"noResults": "Nenhum projeto encontrado com seus critérios.",
 		"clearFilters": "Limpar Filtros",
@@ -46,50 +47,60 @@
 		"items": [
 			{
 				"id": 1,
-				"title": "Plataforma de E-commerce",
-				"description": "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris.",
-				"longDescription": "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur."
+				"title": "ProChain - Cadeia de Produção CI/CD",
+				"description": "Nova cadeia de produção de software modular para a Thales, substituindo GCONF_TOOLS. Arquitetura Python permitindo compilação paralela, produção incremental e independência do Jenkins.",
+				"longDescription": "Durante meu estágio na Thales, projetei e implementei o ProChain, uma cadeia de produção CI/CD modular que substitui a solução legada GCONF_TOOLS. Esta nova arquitetura Python permite paralelização de builds, gerenciamento refinado de dependências por SO/arquitetura e reduz drasticamente a dependência do Jenkins. O sistema gerencia projetos com milhões de linhas de código com rastreabilidade ITAR e suporte multiplataforma (Linux, Windows). Resultados: redução de 20% no tempo de compilação no modo completo e até 80% no modo delta."
 			},
 			{
 				"id": 2,
-				"title": "Painel de Controle para Redes Sociais",
-				"description": "Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat.",
-				"longDescription": "Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident."
+				"title": "RiemannOpt - Biblioteca de Otimização Riemanniana",
+				"description": "Biblioteca Rust de alta performance para otimização em variedades riemannianas. Implementação de algoritmos de descida de gradiente geodésica e retração para aprendizado de máquina.",
+				"longDescription": "RiemannOpt é uma biblioteca de otimização desenvolvida em Rust, especializada em métodos de otimização em variedades riemannianas. Implementa algoritmos de ponta como descida de gradiente riemanniana, métodos de retração e transporte paralelo. A biblioteca oferece performance excepcional graças ao Rust e encontra aplicações em aprendizado de máquina, visão computacional e processamento de sinais. Inclui otimizações para variedades de Grassmann, Stiefel e matrizes SPD."
 			},
 			{
 				"id": 3,
-				"title": "Análise Impulsionada por IA",
-				"description": "Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur.",
-				"longDescription": "Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum."
+				"title": "MinePP - Clone do Minecraft em C++",
+				"description": "Motor de jogo voxel desenvolvido do zero em C++ moderno com OpenGL. Geração procedural de terreno, sistema de chunks otimizado e motor físico personalizado.",
+				"longDescription": "MinePP é um clone do Minecraft desenvolvido inteiramente em C++ moderno (C++20), usando OpenGL para renderização 3D. O projeto implementa um sistema de chunks com frustum culling, geração procedural de terreno via ruído de Perlin, motor físico personalizado com detecção de colisão AABB e sistema de iluminação dinâmica. A arquitetura é projetada para ser extensível com um sistema ECS (Entity Component System) e suporta multithreading para geração de terreno."
 			},
 			{
 				"id": 4,
-				"title": "Aplicativo Móvel de Fitness",
-				"description": "Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.",
-				"longDescription": "Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum. Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua."
+				"title": "Wazuh AI Assistant - API de Cibersegurança",
+				"description": "API REST on-premise integrando um LLM para sintetizar relatórios do Wazuh. Solução containerizada respeitando restrições de segurança C3 com suporte multi-modelos.",
+				"longDescription": "Desenvolvido durante meu estágio na Romênia na Thales, este projeto consiste em uma API REST segura permitindo análise e síntese automática de relatórios de segurança do Wazuh via LLM hospedado localmente. A solução, totalmente containerizada com Docker, suporta múltiplos modelos (TinyLlama, Qwen, Mistral 7B) e integra cache Redis para otimização de performance. A arquitetura inclui PostgreSQL para gerenciamento de contas, Qdrant para busca vetorial em CVEs e Nginx para terminação TLS. Conforme com requisitos de segurança C3."
 			},
 			{
 				"id": 5,
-				"title": "Plataforma IoT para Casa Inteligente",
-				"description": "Sed ut perspiciatis unde omnis iste natus error sit voluptatem accusantium doloremque laudantium.",
-				"longDescription": "Sed ut perspiciatis unde omnis iste natus error sit voluptatem accusantium doloremque laudantium, totam rem aperiam, eaque ipsa quae ab illo inventore veritatis et quasi architecto beatae vitae dicta sunt explicabo."
+				"title": "Portfólio Pessoal",
+				"description": "Site portfólio moderno desenvolvido com Vue 3 e TypeScript. Design responsivo, animações fluidas, suporte multilíngue e modo escuro.",
+				"longDescription": "Portfólio pessoal desenvolvido com as mais recentes tecnologias web. Usa Vue 3 com Composition API, TypeScript para tipagem forte e Pinia para gerenciamento de estado. O design é totalmente responsivo com Tailwind CSS, inclui animações personalizadas, sistema de tema claro/escuro e suporte multilíngue (i18n) para 6 idiomas. Otimizado para performance com lazy loading e code splitting."
 			},
 			{
 				"id": 6,
-				"title": "Carteira Blockchain",
-				"description": "Nemo enim ipsam voluptatem quia voluptas sit aspernatur aut odit aut fugit, sed quia consequuntur.",
-				"longDescription": "Nemo enim ipsam voluptatem quia voluptas sit aspernatur aut odit aut fugit, sed quia consequuntur magni dolores eos qui ratione voluptatem sequi nesciunt."
+				"title": "Módulo SBOM/CVE Generator",
+				"description": "Ferramenta de análise de dependências e geração de SBOM para detecção de vulnerabilidades. Faz parsing de arquivos CMake e vcxproj para identificar dependências reais.",
+				"longDescription": "Módulo desenvolvido na Thales para gerar automaticamente Software Bill of Materials (SBOM) e detectar CVEs em projetos C++/Java. A ferramenta analisa arquivos de build (Makefiles, vcxproj) para extrair dependências reais ao invés de declaradas, garantindo precisão máxima. Produz arquivos JSON enriquecidos usados para geração de SBOM em formato padrão, permitindo integração com scanners de vulnerabilidades. Solução crítica para conformidade e segurança da cadeia de suprimentos de software."
 			}
 		]
 	},
 	"contact": {
 		"title": "Entre em Contato",
 		"subtitle": "Sinta-se à vontade para entrar em contato comigo para qualquer pergunta, oportunidades de colaboração ou apenas para dizer olá!",
+		"getInTouchTitle": "Entre em Contato",
 		"getInTouch": "Responderei o mais rápido possível.",
+		"emailLabel": "Email",
+		"locationLabel": "Localização",
+		"locationValue": "Paris, França",
+		"connectWithMe": "Conecte-se Comigo",
+		"sendMessageTitle": "Envie-me uma Mensagem",
 		"name": "Nome",
+		"namePlaceholder": "Seu nome",
 		"email": "E-mail",
+		"emailPlaceholder": "seu.email@exemplo.com",
 		"message": "Mensagem",
+		"messagePlaceholder": "Sua mensagem...",
 		"send": "Enviar Mensagem",
+		"sending": "Enviando...",
 		"messageSent": "Mensagem enviada com sucesso!"
 	},
 	"footer": {

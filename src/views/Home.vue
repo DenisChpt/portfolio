@@ -59,7 +59,7 @@ const featuredProjects = computed(() => projectsStore.featuredProjects)
 						class="group relative flex"
 						:style="{ animationDelay: `${index * 0.1}s` }"
 					>
-						<router-link :to="`/projects#${project.id}`" class="flex w-full">
+						<router-link :to="{ name: 'projects', query: { project: project.id } }" class="flex w-full">
 							<div class="relative bg-gray-800/30 backdrop-blur-sm rounded-2xl border border-gray-700/50 overflow-hidden transition-all duration-500 hover:border-indigo-500/50 hover:shadow-2xl hover:shadow-indigo-500/10 hover:-translate-y-2 flex flex-col w-full">
 								<!-- Project Image with overlay -->
 								<div class="relative h-48 overflow-hidden flex-shrink-0">

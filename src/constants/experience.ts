@@ -32,19 +32,6 @@ export const EXPERIENCES: Experience[] = [
 		],
 		opacity: 0.9,
 	},
-	{
-		company: 'Freelance',
-		role: 'Développeur Full Stack',
-		period: '2022 - 2023',
-		description: 'Développement de solutions web personnalisées pour divers clients avec focus sur la performance et l\'expérience utilisateur.',
-		technologies: ['Vue.js', 'TypeScript', 'Node.js', 'PostgreSQL', 'Docker'],
-		highlights: [
-			'Création d\'applications web modernes avec Vue 3 et TypeScript',
-			'Optimisation SEO et performances (Core Web Vitals)',
-			'Mise en place de pipelines CI/CD avec GitHub Actions',
-		],
-		opacity: 0.8,
-	},
 ]
 
 /**

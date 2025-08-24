@@ -32,7 +32,7 @@ usePageAnimation('.contact-window', 0.2)
 </script>
 
 <template>
-	<div class="min-h-screen pt-24 pb-16">
+	<div class="min-h-screen pt-32 pb-16">
 		<!-- Animated background -->
 		<div class="fixed inset-0 -z-10">
 			<div class="absolute inset-0 bg-gradient-to-br from-gray-900 via-indigo-900/10 to-gray-900"></div>
@@ -59,7 +59,7 @@ usePageAnimation('.contact-window', 0.2)
 				<div class="space-y-8">
 					<div class="bg-gray-800/30 backdrop-blur-sm rounded-2xl border border-gray-700/50 p-8">
 						<h2 class="text-2xl font-bold text-transparent bg-clip-text bg-gradient-to-r from-indigo-400 to-purple-400 mb-6">
-							Get In Touch
+							{{ t('contact.getInTouchTitle') }}
 						</h2>
 						<p class="text-gray-300 mb-8">
 							{{ t('contact.getInTouch') }}
@@ -71,7 +71,7 @@ usePageAnimation('.contact-window', 0.2)
 									<IconEmail />
 								</div>
 								<div>
-									<p class="text-sm text-gray-400">Email</p>
+									<p class="text-sm text-gray-400">{{ t('contact.emailLabel') }}</p>
 									<a href="mailto:denis.chaput77@gmail.com" class="text-gray-200 hover:text-indigo-300 transition-colors">
 										denis.chaput77@gmail.com
 									</a>
@@ -83,8 +83,8 @@ usePageAnimation('.contact-window', 0.2)
 									<IconLocation />
 								</div>
 								<div>
-									<p class="text-sm text-gray-400">Location</p>
-									<p class="text-gray-200">Paris, France</p>
+									<p class="text-sm text-gray-400">{{ t('contact.locationLabel') }}</p>
+									<p class="text-gray-200">{{ t('contact.locationValue') }}</p>
 								</div>
 							</div>
 						</div>
@@ -93,7 +93,7 @@ usePageAnimation('.contact-window', 0.2)
 					<!-- Social Links -->
 					<div class="bg-gray-800/30 backdrop-blur-sm rounded-2xl border border-gray-700/50 p-8">
 						<h2 class="text-2xl font-bold text-transparent bg-clip-text bg-gradient-to-r from-indigo-400 to-purple-400 mb-6">
-							Connect With Me
+							{{ t('contact.connectWithMe') }}
 						</h2>
 						<div class="flex gap-4">
 							<a
@@ -127,7 +127,7 @@ usePageAnimation('.contact-window', 0.2)
 				<!-- Contact Form -->
 				<div class="bg-gray-800/30 backdrop-blur-sm rounded-2xl border border-gray-700/50 p-8">
 					<h2 class="text-2xl font-bold text-transparent bg-clip-text bg-gradient-to-r from-indigo-400 to-purple-400 mb-6">
-						Send Me a Message
+						{{ t('contact.sendMessageTitle') }}
 					</h2>
 					<form @submit="handleSubmit" class="space-y-6">
 						<div
@@ -147,7 +147,7 @@ usePageAnimation('.contact-window', 0.2)
 								type="text"
 								id="name"
 								class="w-full px-4 py-3 bg-gray-900/50 border border-gray-700/50 rounded-xl text-gray-200 placeholder-gray-500 focus:outline-none focus:border-indigo-500/50 focus:ring-2 focus:ring-indigo-500/20 transition-all duration-300"
-								placeholder="Your name"
+								:placeholder="t('contact.namePlaceholder')"
 								required
 								:disabled="isLoading"
 								aria-required="true"
@@ -163,7 +163,7 @@ usePageAnimation('.contact-window', 0.2)
 								type="email"
 								id="email"
 								class="w-full px-4 py-3 bg-gray-900/50 border border-gray-700/50 rounded-xl text-gray-200 placeholder-gray-500 focus:outline-none focus:border-indigo-500/50 focus:ring-2 focus:ring-indigo-500/20 transition-all duration-300"
-								placeholder="your.email@example.com"
+								:placeholder="t('contact.emailPlaceholder')"
 								required
 								:disabled="isLoading"
 								aria-required="true"
@@ -178,7 +178,7 @@ usePageAnimation('.contact-window', 0.2)
 								v-model="form.message"
 								id="message"
 								class="w-full px-4 py-3 bg-gray-900/50 border border-gray-700/50 rounded-xl text-gray-200 placeholder-gray-500 focus:outline-none focus:border-indigo-500/50 focus:ring-2 focus:ring-indigo-500/20 transition-all duration-300 resize-none"
-								placeholder="Your message..."
+								:placeholder="t('contact.messagePlaceholder')"
 								rows="5"
 								required
 								:disabled="isLoading"
@@ -198,7 +198,7 @@ usePageAnimation('.contact-window', 0.2)
 										<circle class="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" stroke-width="4"></circle>
 										<path class="opacity-75" fill="currentColor" d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4zm2 5.291A7.962 7.962 0 014 12H0c0 3.042 1.135 5.824 3 7.938l3-2.647z"></path>
 									</svg>
-									Sending...
+									{{ t('contact.sending') }}
 								</span>
 							</button>
 						</div>

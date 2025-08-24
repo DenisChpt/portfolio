@@ -22,7 +22,8 @@
 	"about": {
 		"title": "About Me",
 		"description": "Engineering apprentice at Thales, specialized in CI/CD systems and software production chain optimization. Passionate about cutting-edge technologies, performance optimization, and complex technical challenges.",
-		"experience": "Experience",
+		"experience": "Professional Experience",
+		"personalInfo": "Description",
 		"education": "Education",
 		"technologies": "Technologies",
 		"topSkills": "Top Skills"
@@ -85,11 +86,21 @@
 	"contact": {
 		"title": "Contact Me",
 		"subtitle": "Feel free to reach out to me for any questions, collaboration opportunities, or just to say hello!",
+		"getInTouchTitle": "Get In Touch",
 		"getInTouch": "I'll get back to you as soon as possible.",
+		"emailLabel": "Email",
+		"locationLabel": "Location",
+		"locationValue": "Paris, France",
+		"connectWithMe": "Connect With Me",
+		"sendMessageTitle": "Send Me a Message",
 		"name": "Name",
+		"namePlaceholder": "Your name",
 		"email": "Email",
+		"emailPlaceholder": "your.email@example.com",
 		"message": "Message",
+		"messagePlaceholder": "Your message...",
 		"send": "Send Message",
+		"sending": "Sending...",
 		"messageSent": "Message sent successfully!"
 	},
 	"footer": {

@@ -22,7 +22,8 @@
 	"about": {
 		"title": "À propos de moi",
 		"description": "Ingénieur en alternance chez Thales, spécialisé dans les systèmes CI/CD et l'optimisation des chaînes de production logicielle. Passionné par les technologies de pointe, l'optimisation de performances et les défis techniques complexes.",
-		"experience": "Expérience",
+		"experience": "Expérience professionnelle",
+		"personalInfo": "Description",
 		"education": "Formation",
 		"technologies": "Technologies",
 		"topSkills": "Compétences Principales"
@@ -85,11 +86,21 @@
 	"contact": {
 		"title": "Me Contacter",
 		"subtitle": "N'hésitez pas à me contacter pour toute question, opportunité de collaboration, ou simplement pour dire bonjour !",
+		"getInTouchTitle": "Contactez-moi",
 		"getInTouch": "Je vous répondrai dès que possible.",
+		"emailLabel": "Email",
+		"locationLabel": "Localisation",
+		"locationValue": "Paris, France",
+		"connectWithMe": "Restons en contact",
+		"sendMessageTitle": "Envoyez-moi un message",
 		"name": "Nom",
+		"namePlaceholder": "Votre nom",
 		"email": "Email",
+		"emailPlaceholder": "votre.email@exemple.com",
 		"message": "Message",
+		"messagePlaceholder": "Votre message...",
 		"send": "Envoyer le message",
+		"sending": "Envoi en cours...",
 		"messageSent": "Message envoyé avec succès !"
 	},
 	"footer": {
