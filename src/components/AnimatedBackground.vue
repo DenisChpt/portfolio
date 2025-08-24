@@ -129,9 +129,6 @@ function initBackgroundAnimation() {
 	// Animation
 	function animate() {
 		ctx!.clearRect(0, 0, canvas.width, canvas.height)
-
-		// Dessiner le fond avec un dégradé constant au lieu d'un dégradé linéaire
-		// Le voile plus clair était probablement causé par ce dégradé
 		ctx!.fillStyle = '#090A0F';
 		ctx!.fillRect(0, 0, canvas.width, canvas.height)
 
@@ -155,12 +152,9 @@ function initBackgroundAnimation() {
 }
 
 onMounted(() => {
-	// Léère temporisation pour s'assurer que le DOM est prêt
-	setTimeout(() => {
-		if (canvasRef.value) {
-			initBackgroundAnimation()
-		}
-	}, 100)
+	if (canvasRef.value) {
+		initBackgroundAnimation()
+	}
 })
 
 onBeforeUnmount(() => {

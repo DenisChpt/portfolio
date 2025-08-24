@@ -13,7 +13,7 @@ export const useProjectsStore = defineStore('projects', () => {
 	// State
 	const projects = ref<Project[]>(PROJECTS)
 	const selectedProjectId = ref<number | null>(null)
-	const filterTech = ref<string | null>(null)
+	const filterTechs = ref<string[]>([])
 	const searchQuery = ref('')
 
 	// Computed
@@ -51,9 +51,11 @@ export const useProjectsStore = defineStore('projects', () => {
 			}
 		})
 
-		// Apply tech filter if active
-		if (filterTech.value) {
-			result = result.filter((project) => project.tech.includes(filterTech.value!))
+		// Apply tech filters if active (project must have ANY of the selected techs)
+		if (filterTechs.value.length > 0) {
+			result = result.filter((project) => 
+				filterTechs.value.some(tech => project.tech.includes(tech))
+			)
 		}
 
 		// Apply search filter if there's a query
@@ -106,8 +108,8 @@ export const useProjectsStore = defineStore('projects', () => {
 		selectedProjectId.value = id
 	}
 
-	const setTechFilter = (tech: string | null) => {
-		filterTech.value = tech
+	const setMultipleTechFilters = (techs: string[]) => {
+		filterTechs.value = techs
 	}
 
 	const setSearchQuery = (query: string) => {
@@ -115,21 +117,21 @@ export const useProjectsStore = defineStore('projects', () => {
 	}
 
 	const clearFilters = () => {
-		filterTech.value = null
+		filterTechs.value = []
 		searchQuery.value = ''
 	}
 
 	return {
 		projects,
 		selectedProjectId,
-		filterTech,
+		filterTechs,
 		searchQuery,
 		selectedProject,
 		filteredProjects,
 		featuredProjects,
 		allTechnologies,
 		selectProject,
-		setTechFilter,
+		setMultipleTechFilters,
 		setSearchQuery,
 		clearFilters,
 	}
