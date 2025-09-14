@@ -4,6 +4,25 @@ export default {
     "./index.html",
     "./src/**/*.{vue,js,ts,jsx,tsx}",
   ],
+  safelist: [
+    // Skill level badge colors
+    'from-blue-500',
+    'to-blue-600',
+    'border-blue-500/30',
+    'shadow-blue-500/20',
+    'from-purple-500',
+    'to-purple-500',
+    'to-blue-500',
+    'border-purple-500/30',
+    'shadow-purple-500/20',
+    'from-pink-500',
+    'to-pink-500',
+    'border-pink-500/30',
+    'shadow-pink-500/20',
+    'from-pink-400',
+    'border-pink-400/30',
+    'shadow-pink-400/20',
+  ],
   theme: {
     extend: {
       colors: {
