@@ -149,7 +149,7 @@ const education = computed((): EducationItem[] => {
 												{{ t('about.programmingLanguages') }}
 											</h2>
 											<div class="space-y-3">
-												<div v-for="(skill, skillIndex) in programmingSkills" :key="skill.name" 
+												<div v-for="skill in programmingSkills" :key="skill.name" 
 													class="flex items-center justify-between p-3 bg-gray-900/30 rounded-xl border border-gray-700/30 hover:bg-gray-900/50 transition-all duration-300 group">
 													<span class="text-gray-200 font-medium text-lg group-hover:text-indigo-300 transition-colors">
 														{{ skill.name }}

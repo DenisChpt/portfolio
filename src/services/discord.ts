@@ -2,20 +2,6 @@
  * Discord webhook service for contact form submissions
  */
 
-interface DiscordEmbed {
-	title: string
-	color: number
-	fields: Array<{
-		name: string
-		value: string
-		inline?: boolean
-	}>
-	timestamp: string
-	footer?: {
-		text: string
-	}
-}
-
 interface ContactMessage {
 	name: string
 	email: string

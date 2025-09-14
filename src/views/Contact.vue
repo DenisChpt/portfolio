@@ -35,7 +35,7 @@ const submitToDiscord = async (values: ContactForm) => {
 }
 
 // Use our form handling composable with Discord integration
-const { form, isLoading, isSuccess, error, handleSubmit } = useFormSubmit<ContactForm>(
+const { form, isLoading, isSuccess, handleSubmit } = useFormSubmit<ContactForm>(
 	initialValues,
 	submitToDiscord,
 	{
