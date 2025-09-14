@@ -4,21 +4,18 @@ import { useI18n } from 'vue-i18n'
 import { useRoute, useRouter } from 'vue-router'
 import { gsap } from 'gsap'
 import { useProjectsStore } from '@/stores/projectsStore'
-import Card from '@/components/Card.vue'
-import Button from '@/components/Button.vue'
-
 const { t } = useI18n()
 const projectsStore = useProjectsStore()
 const route = useRoute()
 const router = useRouter()
 
-// Références pour l'animation
+// References for animation
 const headerRef = ref(null)
 const filtersRef = ref(null)
 const projectsGridRef = ref(null)
 const cardRef = ref(null)
 
-// Variable pour contrôler la visibilité initiale
+// Variable to control initial visibility
 const contentReady = ref(false)
 
 // Search and filters - initialize from store to maintain state
@@ -66,7 +63,7 @@ const getStatusColor = (status?: string) => {
 	return statusColors[status || 'active'] || statusColors['active']
 }
 
-// Référence pour le modal
+// Reference for the modal
 const projectDetailsRef = ref(null)
 const projectImageRef = ref<HTMLElement | null>(null)
 const modalBackdropRef = ref<HTMLElement | null>(null)
@@ -98,30 +95,30 @@ const handleSearch = async () => {
 	isFiltering.value = true
 	projectsStore.setSearchQuery(searchQuery.value)
 	
-	// Permettre au DOM de se mettre à jour avant d'animer
+	// Allow DOM to update before animating
 	await nextTick()
 	
-	// Animation des éléments filtrés
+	// Animation of filtered elements
 	animateFilteredProjects()
 }
 
 const handleTechFilter = async (tech: string) => {
 	isFiltering.value = true
 
-	// Toggle la sélection de la techno
+	// Toggle the technology selection
 	if (selectedTechs.value.has(tech)) {
 		selectedTechs.value.delete(tech)
 	} else {
 		selectedTechs.value.add(tech)
 	}
 
-	// Mettre à jour le filtre dans le store avec toutes les technos sélectionnées
+	// Update the filter in the store with all selected technologies
 	projectsStore.setMultipleTechFilters(Array.from(selectedTechs.value))
 
-	// Permettre au DOM de se mettre à jour avant d'animer
+	// Allow DOM to update before animating
 	await nextTick()
 
-	// Animation des éléments filtrés
+	// Animation of filtered elements
 	animateFilteredProjects()
 }
 
@@ -131,18 +128,18 @@ const clearFilters = async () => {
 	selectedTechs.value.clear()
 	projectsStore.clearFilters()
 
-	// Permettre au DOM de se mettre à jour avant d'animer
+	// Allow DOM to update before animating
 	await nextTick()
 
-	// Animation des éléments filtrés
+	// Animation of filtered elements
 	animateFilteredProjects()
 }
 
-// Animation spécifique pour les projets filtrés
+// Specific animation for filtered projects
 const animateFilteredProjects = () => {
-	// Attendre que Vue ait mis à jour le DOM
+	// Wait for Vue to update the DOM
 	nextTick(() => {
-		// Sélectionner tous les projets (qui sont maintenant dans le DOM)
+		// Select all projects (which are now in the DOM)
 		const projectCards = document.querySelectorAll('.project-card')
 
 		if (projectCards.length === 0) {
@@ -150,8 +147,8 @@ const animateFilteredProjects = () => {
 			return
 		}
 
-		// Animation cohérente avec l'animation initiale
-		// Utiliser exactement les mêmes valeurs pour éviter les décalages
+		// Animation consistent with the initial animation
+		// Use exactly the same values to avoid offsets
 		gsap.fromTo(projectCards, 
 			{
 				opacity: 0,
@@ -175,9 +172,9 @@ const animateFilteredProjects = () => {
 const openProject = (id: number) => {
 	projectsStore.selectProject(id)
 
-	// Animer l'apparition du modal et du backdrop
+	// Animate the modal and backdrop appearance
 	nextTick(() => {
-		// Animation du backdrop (fond sombre)
+		// Animation of the backdrop (dark background)
 		if (modalBackdropRef.value) {
 			gsap.fromTo(
 				modalBackdropRef.value,
@@ -192,7 +189,7 @@ const openProject = (id: number) => {
 			)
 		}
 
-		// Animation du modal depuis le bas
+		// Animation of the modal from the bottom
 		if (projectDetailsRef.value) {
 			gsap.fromTo(
 				projectDetailsRef.value,
@@ -211,8 +208,14 @@ const openProject = (id: number) => {
 	})
 }
 
+const handlePortfolioClick = (event: Event) => {
+	// For portfolio project, refresh the page instead of opening in new tab
+	event.preventDefault()
+	window.location.reload()
+}
+
 const closeProject = () => {
-	// Animer la disparition du modal et du backdrop
+	// Animate the disappearance of the modal and backdrop
 	if (modalBackdropRef.value) {
 		gsap.to(modalBackdropRef.value, {
 			opacity: 0,
@@ -229,7 +232,7 @@ const closeProject = () => {
 			ease: 'power2.in',
 			onComplete: () => {
 				projectsStore.selectProject(null)
-				// Nettoyer le paramètre query si présent
+				// Clean up query parameter if present
 				if (route.query.project) {
 					router.replace({ name: 'projects', query: {} })
 				}
@@ -237,24 +240,24 @@ const closeProject = () => {
 		})
 	} else {
 		projectsStore.selectProject(null)
-		// Nettoyer le paramètre query si présent
+		// Clean up query parameter if present
 		if (route.query.project) {
 			router.replace({ name: 'projects', query: {} })
 		}
 	}
 }
 
-// Animation de la page
+// Page animation
 const animateProjects = () => {
 	const tl = gsap.timeline({ defaults: { ease: 'power2.out' } })
 
-	// Titre et description
+	// Title and description
 	tl.fromTo(headerRef.value, { y: 30, opacity: 0 }, { y: 0, opacity: 1, duration: 0.6 }, 0.2)
 
-	// Filtres
+	// Filters
 	tl.fromTo(filtersRef.value, { y: 20, opacity: 0 }, { y: 0, opacity: 1, duration: 0.5 }, 0.3)
 
-	// Grille de projets - sans scale pour éviter les problèmes de layout
+	// Projects grid - without scale to avoid layout problems
 	tl.fromTo(
 		'.project-card',
 		{ y: 20, opacity: 0 },
@@ -269,43 +272,43 @@ const animateProjects = () => {
 }
 
 onMounted(() => {
-	// On cache le contenu initialement
+	// Hide content initially
 	contentReady.value = false
 
-	// On utilise un timeout pour s'assurer que le DOM est prêt et que tout est masqué
+	// Use a timeout to ensure DOM is ready and everything is hidden
 	setTimeout(() => {
-		// Maintenant on peut rendre le contenu visible
+		// Now we can make the content visible
 		contentReady.value = true
 
-		// Et lancer l'animation après que le contenu soit rendu
+		// And launch the animation after content is rendered
 		setTimeout(() => {
 			animateProjects()
 			
-			// Vérifier si on doit ouvrir un projet spécifique
+			// Check if we need to open a specific project
 			if (route.query.project) {
 				const projectId = Number(route.query.project)
 				if (!isNaN(projectId)) {
-					// Attendre que l'animation initiale soit terminée avant d'ouvrir le projet
+					// Wait for initial animation to finish before opening the project
 					setTimeout(() => {
 						openProject(projectId)
-					}, 1500) // Délai pour laisser l'animation de la page se terminer
+					}, 1500) // Delay to let the page animation finish
 				}
 			}
-		}, 50) // Un petit délai pour être sûr que la transition d'opacité est terminée
+		}, 50) // Small delay to ensure opacity transition is complete
 	}, 50)
 })
 
-// Observer les changements dans les projets filtrés
+// Watch for changes in filtered projects
 watch(
 	() => projectsStore.filteredProjects,
 	(_, oldProjects) => {
-		// Ne pas animer si le contenu n'est pas encore prêt
+		// Don't animate if content is not ready yet
 		if (!contentReady.value) return
 
-		// Ne pas animer à l'initialisation ou si l'animation est déjà gérée par handleTechFilter
+		// Don't animate at initialization or if animation is already handled by handleTechFilter
 		if (!oldProjects || isFiltering.value) return
 
-		// Animer les modifications de filtres
+		// Animate filter changes
 		nextTick(() => {
 			animateFilteredProjects()
 		})
@@ -523,7 +526,7 @@ watch(
 			</div>
 		</div>
 
-		<!-- Project Details Modal avec style glassmorphism moderne -->
+		<!-- Project Details Modal with modern glassmorphism style -->
 		<div
 			v-if="projectsStore.selectedProject"
 			class="fixed inset-0 z-50 flex items-center justify-center p-4"
@@ -637,9 +640,10 @@ watch(
 						<a
 							v-if="projectsStore.selectedProject.liveUrl"
 							:href="projectsStore.selectedProject.liveUrl"
-							target="_blank"
-							rel="noopener noreferrer"
+							:target="projectsStore.selectedProject.id === 5 ? '_self' : '_blank'"
+							:rel="projectsStore.selectedProject.id === 5 ? '' : 'noopener noreferrer'"
 							class="group relative inline-flex items-center px-6 py-3 overflow-hidden rounded-full bg-gradient-to-r from-indigo-500 to-purple-500 text-white font-medium shadow-lg transition-all duration-300 hover:scale-105 hover:shadow-xl hover:shadow-indigo-500/25"
+							@click="projectsStore.selectedProject.id === 5 ? handlePortfolioClick($event) : null"
 						>
 							<span class="relative z-10 flex items-center">
 								<svg
@@ -683,7 +687,7 @@ watch(
 <style scoped>
 .project-card {
 	cursor: pointer;
-	/* Toutes les animations sont gérées par GSAP */
+	/* All animations are handled by GSAP */
 }
 
 /* Glow effect animation */
@@ -759,14 +763,14 @@ watch(
 	transform-origin: center center;
 }
 
-/* Configuration de la grille de projets avec scrolling */
+/* Project grid configuration with scrolling */
 .projects-grid {
 	display: grid;
 	grid-template-columns: repeat(1, minmax(0, 1fr));
 	gap: 2rem;
 	padding: 0.25rem 0.25rem;
 	height: auto;
-	max-height: 60vh; /* Hauteur fixe pour forcer l'apparition du scroll */
+	max-height: 60vh; /* Fixed height to force scroll appearance */
 	overflow-y: auto;
 }
 
@@ -782,14 +786,14 @@ watch(
 	}
 }
 
-/* Amélioration des styles de scrollbar pour la grille de projets */
+/* Improved scrollbar styles for projects grid */
 .projects-grid {
 	scrollbar-width: thin;
 	scrollbar-color: rgba(99, 102, 241, 0.3) rgba(30, 41, 59, 0.5);
 }
 
 .projects-grid::-webkit-scrollbar {
-	width: 10px; /* Scrollbar plus large pour être plus visible */
+	width: 10px; /* Wider scrollbar for better visibility */
 }
 
 .projects-grid::-webkit-scrollbar-track {

@@ -4,13 +4,13 @@ import { useRouter } from 'vue-router'
 import { gsap } from 'gsap'
 import { CSSPlugin } from 'gsap/CSSPlugin'
 
-// Enregistrement des plugins nécessaires
+// Register necessary plugins
 gsap.registerPlugin(CSSPlugin)
 
-// Configuration globale de GSAP pour améliorer les performances
+// Global GSAP configuration to improve performance
 gsap.defaults({
-	overwrite: 'auto', // Prévenir les conflits d'animation
-	lazy: false, // Éviter les retards dans le démarrage des animations
+	overwrite: 'auto', // Prevent animation conflicts
+	lazy: false, // Avoid delays in animation startup
 })
 
 const router = useRouter()
@@ -29,13 +29,13 @@ const isHovered = ref(false)
 const mouseX = ref(0)
 const mouseY = ref(0)
 
-const baseRadius = 150 // Rayon de base augmenté pour le cercle
-// Ces coefficients déterminent la taille du gap par rapport à la circonférence.
-const dashFactor = 0.04 // pour l'état statique (ajusté)
-const offsetFactor = 1e-5 // pour l'état hover (réduit pour plus de fluidité)
+const baseRadius = 150 // Increased base radius for the circle
+// These coefficients determine the gap size relative to the circumference.
+const dashFactor = 0.04 // for static state (adjusted)
+const offsetFactor = 1e-5 // for hover state (reduced for more fluidity)
 
-const dashArray = ref('') // Vide au début, sera défini dynamiquement
-const dashOffset = ref('') // Vide au début, sera défini dynamiquement
+const dashArray = ref('') // Empty at start, will be defined dynamically
+const dashOffset = ref('') // Empty at start, will be defined dynamically
 
 const emit = defineEmits<{
 	'loading-complete': []
@@ -43,7 +43,7 @@ const emit = defineEmits<{
 
 const circleRotation = ref<gsap.core.Tween | null>(null)
 
-// Calcule les valeurs initiales pour le cercle de progression
+// Calculate initial values for the progress circle
 function initProgressCircle() {
 	if (!progressCircle.value) return
 
@@ -51,27 +51,27 @@ function initProgressCircle() {
 	const staticDash = circumference * (0.5 - dashFactor)
 	const staticGap = circumference * dashFactor
 
-	// Définit le motif initial
+	// Define the initial pattern
 	const staticValue = `${staticDash.toFixed(4)} ${staticGap.toFixed(4)} ${staticDash.toFixed(
 		4
 	)} ${staticGap.toFixed(4)}`
 	const staticOffset = staticDash.toFixed(4)
 
-	// Enregistre les valeurs pour le rendu initial
+	// Save values for initial rendering
 	dashArray.value = staticValue
 	dashOffset.value = staticOffset
 
-	// Réglage des propriétés initiales par GSAP plutôt que par CSS pour plus de fluidité
+	// Setting initial properties via GSAP rather than CSS for more fluidity
 	gsap.set(progressCircle.value, {
 		strokeDasharray: staticValue,
 		strokeDashoffset: staticOffset,
 	})
 
-	// Stocke également ces valeurs comme propriétés CSS pour référence future
-	setProgressCircleProperties(0) // Initialiser à 0% plutôt qu'à 100%
+	// Also store these values as CSS properties for future reference
+	setProgressCircleProperties(0) // Initialize at 0% rather than 100%
 }
 
-// Met à jour le dash offset en fonction de la progression
+// Update dash offset based on progress
 function setProgressCircle(value: number) {
 	if (!progressCircle.value) return
 
@@ -79,33 +79,33 @@ function setProgressCircle(value: number) {
 	const offset = circumference - (value / 100) * circumference
 	dashOffset.value = offset.toFixed(4)
 
-	// Mettre à jour les propriétés CSS en même temps pour garder la cohérence
+	// Update CSS properties at the same time to maintain consistency
 	setProgressCircleProperties(value)
 }
 
 /**
- * Calcule dynamiquement les valeurs du dash array pour l'état final et les stocke
- * comme propriétés CSS sur les éléments du cercle.
+ * Dynamically calculate dash array values for final state and store them
+ * as CSS properties on circle elements.
  */
 function setProgressCircleProperties(e: number = 100) {
 	if (!progressCircle.value || !progressOutline.value) return
 
-	// Rayon courant (maintenant 150)
+	// Current radius (now 150)
 	const currentR = progressCircle.value.r.baseVal.value
-	// Pour l'effet hover, on réduit le rayon (moins radical)
+	// For hover effect, reduce the radius (less radical)
 	const hoverR = currentR * 0.96
 
-	// Circonférence totale pour l'état statique et hover
+	// Total circumference for static and hover states
 	const fullCircumference = Math.PI * (currentR * 2)
 	const hoverCircumference = Math.PI * (hoverR * 2)
 
-	// Calculs plus précis pour éviter les sauts visuels
+	// More precise calculations to avoid visual jumps
 	const staticDash = fullCircumference * (0.5 - dashFactor * (e / 100))
 	const staticGap = fullCircumference * dashFactor * (e / 100)
 	const hoverDash = hoverCircumference * (0.5 - offsetFactor * (e / 100))
 	const hoverGap = hoverCircumference * offsetFactor * (e / 100)
 
-	// Créer un motif à 4 valeurs: dash gap dash gap (avec plus de précision)
+	// Create a 4-value pattern: dash gap dash gap (with more precision)
 	const staticValue = `${staticDash.toFixed(4)} ${staticGap.toFixed(4)} ${staticDash.toFixed(
 		4
 	)} ${staticGap.toFixed(4)}`
@@ -113,7 +113,7 @@ function setProgressCircleProperties(e: number = 100) {
 		4
 	)} ${hoverGap.toFixed(4)}`
 
-	// Enregistrer ces valeurs dans des variables CSS sur l'élément progressCircle
+	// Save these values in CSS variables on the progressCircle element
 	progressCircle.value.style.setProperty('--circle-dash-array-static', staticValue)
 	progressCircle.value.style.setProperty('--circle-dash-offset-static', `${staticDash.toFixed(4)}`)
 	progressCircle.value.style.setProperty('--circle-dash-array-hover', hoverValue)
@@ -121,14 +121,14 @@ function setProgressCircleProperties(e: number = 100) {
 	progressCircle.value.style.setProperty('--circle-r1-hover', `${hoverR}px`)
 	progressOutline.value.style.setProperty('--circle-r2-hover', `${hoverR * 1.065}px`)
 
-	// Après que le chargement est terminé, on met à jour les valeurs initiales
-	// pour qu'elles correspondent aux valeurs statiques stockées
+	// After loading is complete, update initial values
+	// so they match the stored static values
 	if (e === 100 && ctaActive.value) {
-		// Assurons-nous que les valeurs dans le template correspondent aux valeurs CSS
+		// Ensure template values match CSS values
 		dashArray.value = staticValue
 		dashOffset.value = staticDash.toFixed(4)
 
-		// Appliquer directement les valeurs au cercle de progression pour éviter le saut
+		// Apply values directly to progress circle to avoid jumping
 		if (progressCircle.value) {
 			gsap.set(progressCircle.value, {
 				strokeDasharray: staticValue,
@@ -176,7 +176,7 @@ function simulateProgress() {
 					duration: 0.5,
 					ease: 'power2.in',
 					onComplete: () => {
-						// Transition en douceur pour finaliser le cercle avant d'activer le CTA
+						// Smooth transition to finalize circle before activating CTA
 						if (!progressCircle.value) return
 						const finalValue =
 							progressCircle.value.style.getPropertyValue('--circle-dash-array-static') ||
@@ -191,14 +191,14 @@ function simulateProgress() {
 							duration: 0.3,
 							ease: 'power2.out',
 							onComplete: () => {
-								// S'assurer que les valeurs réactives sont synchronisées
+								// Ensure reactive values are synchronized
 								dashArray.value = finalValue
 								dashOffset.value = finalOffset
 
-								// Activer le CTA seulement après la transition du cercle
+								// Activate CTA only after circle transition
 								ctaActive.value = true
 
-								// Utiliser querySelector pour s'assurer que l'élément existe
+								// Use querySelector to ensure element exists
 								const ctaTextInner = document.querySelector('.preloader-cta-text-inner')
 								if (ctaTextInner) {
 									gsap.fromTo(
@@ -230,7 +230,7 @@ function simulateProgress() {
 function handleEnter() {
 	if (!progressContainer.value || !loaderContainer.value) return
 
-	// Animation du cercle
+	// Circle animation
 	gsap.to(progressContainer.value, {
 		scale: 1.3,
 		opacity: 0,
@@ -238,7 +238,7 @@ function handleEnter() {
 		ease: 'expo.out',
 	})
 
-	// Fade out instantané du contenu du loader sans changer le fond
+	// Instant fade out of loader content without changing background
 	gsap.to(loaderContainer.value, {
 		opacity: 0,
 		duration: 0.8,
@@ -246,12 +246,12 @@ function handleEnter() {
 		onComplete: () => {
 			loading.value = false
 			emit('loading-complete')
-			router.push('/') // Navigation vers la page d'accueil
+			router.push('/') // Navigate to home page
 		},
 	})
 }
 
-// Fonction pour vérifier si la souris est dans la zone clickable
+// Function to check if mouse is in clickable area
 function checkMousePosition() {
 	const clickableArea = document.querySelector('.preloader-clickable-area')
 	if (!clickableArea || !ctaActive.value) return
@@ -270,7 +270,7 @@ function checkMousePosition() {
 	}
 }
 
-// Tracker la position de la souris
+// Track mouse position
 function trackMousePosition(event: MouseEvent) {
 	mouseX.value = event.clientX
 	mouseY.value = event.clientY
@@ -279,32 +279,32 @@ function trackMousePosition(event: MouseEvent) {
 function handleCircleHover(isEntering: boolean) {
 	if (!ctaActive.value || !progressCircle.value || !progressOutline.value) return
 
-	// Stocker les références dans des variables locales
+	// Store references in local variables
 	const circle = progressCircle.value
 	const outline = progressOutline.value
 
 	isHovered.value = isEntering
 
-	// Amélioration 1: Durée d'animation plus longue pour une transition plus douce
+	// Improvement 1: Longer animation duration for smoother transition
 	const duration = 1.2
 
-	// Amélioration 2: Utiliser un ease plus sophistiqué pour une animation plus fluide
+	// Improvement 2: Use more sophisticated ease for smoother animation
 	const ease = 'elastic.out(0.5, 0.3)'
 
 	if (isEntering) {
-		// Récupération des valeurs dynamiques calculées pour le hover
+		// Retrieve calculated dynamic values for hover
 		const hoverDashArray =
 			circle.style.getPropertyValue('--circle-dash-array-hover') || '325.27 36.09 325.27 36.09'
 		const hoverDashOffset = circle.style.getPropertyValue('--circle-dash-offset-hover') || '325.27'
 		const hoverR = circle.style.getPropertyValue('--circle-r1-hover') || '145px'
 		const outlineR = circle.style.getPropertyValue('--circle-r2-hover') || '160px'
 
-		// Amélioration 3: Utiliser une timeline GSAP pour coordonner les animations
+		// Improvement 3: Use GSAP timeline to coordinate animations
 		const tl = gsap.timeline({
 			defaults: { duration, ease },
 		})
 
-		// Animation de l'outline (cercle extérieur)
+		// Animation of outline (outer circle)
 		tl.to(
 			outline,
 			{
@@ -315,7 +315,7 @@ function handleCircleHover(isEntering: boolean) {
 			0
 		)
 
-		// Animation du cercle principal
+		// Animation of main circle
 		tl.to(
 			circle,
 			{
@@ -326,7 +326,7 @@ function handleCircleHover(isEntering: boolean) {
 			0
 		)
 
-		// Animation des propriétés de stroke
+		// Animation of stroke properties
 		tl.to(
 			circle,
 			{
@@ -341,7 +341,7 @@ function handleCircleHover(isEntering: boolean) {
 			0
 		)
 
-		// Animation du texte
+		// Text animation
 		tl.to(
 			'.preloader-cta-text-static',
 			{
@@ -371,7 +371,7 @@ function handleCircleHover(isEntering: boolean) {
 		const staticDashOffset =
 			circle.style.getPropertyValue('--circle-dash-offset-static') || '339.29'
 
-		// Utiliser une timeline pour la sortie également
+		// Use timeline for exit as well
 		const tl = gsap.timeline({
 			defaults: { duration, ease },
 		})
@@ -437,13 +437,13 @@ function handleCircleHover(isEntering: boolean) {
 }
 
 onMounted(() => {
-	// Ajouter un écouteur pour tracker la position de la souris
+	// Add listener to track mouse position
 	window.addEventListener('mousemove', trackMousePosition)
 
-	// S'assurer que les refs sont bien définies avant d'initialiser
+	// Ensure refs are properly defined before initializing
 	setTimeout(() => {
 		if (progressCircle.value && progressOutline.value) {
-			initProgressCircle() // Initialise les valeurs du cercle
+			initProgressCircle() // Initialize circle values
 		}
 
 		if (progressContainer.value && progressCircles.value) {
@@ -455,7 +455,7 @@ onMounted(() => {
 })
 
 onBeforeUnmount(() => {
-	// Nettoyer les animations en cours
+	// Clean up running animations
 	if (circleRotation.value) {
 		circleRotation.value.kill()
 	}
@@ -556,9 +556,9 @@ onBeforeUnmount(() => {
 
 .loader-container {
 	color: #bcbcbc;
-	background: transparent !important; /* Fond transparent pour voir AnimatedBackground */
+	background: transparent !important; /* Transparent background to see AnimatedBackground */
 
-	/* Ajout du fond avec gradient animé similaire aux autres pages */
+	/* Add background with animated gradient similar to other pages */
 	&::before {
 		content: '';
 		position: fixed;
@@ -570,7 +570,7 @@ onBeforeUnmount(() => {
 		z-index: -1;
 	}
 
-	/* Bulles de gradient animées */
+	/* Animated gradient bubbles */
 	&::after {
 		content: '';
 		position: fixed;

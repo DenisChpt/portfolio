@@ -1,13 +1,15 @@
 <script setup lang="ts">
+import { ref } from 'vue'
 import { useI18n } from 'vue-i18n'
 import { usePageAnimation } from '@/composables/useAnimation'
 import { useFormSubmit } from '@/composables/useFormSubmit'
 import { ContactForm } from '@/types/project'
-import Card from '@/components/Card.vue'
-import Button from '@/components/Button.vue'
-import { IconEmail, IconLocation, IconGithub, IconLinkedin, IconTwitter } from '@/components/icons'
+import { IconEmail, IconLocation, IconGithub, IconLinkedin } from '@/components/icons'
+import { sendToDiscord, validateContactForm } from '@/services/discord'
+import { config } from '@/config'
 
 const { t } = useI18n()
+const errorMessage = ref<string>('')
 
 // Initial form values
 const initialValues: ContactForm = {
@@ -16,14 +18,35 @@ const initialValues: ContactForm = {
 	message: '',
 }
 
-// Use our form handling composable
-const { form, isLoading, isSuccess, handleSubmit } = useFormSubmit<ContactForm>(
+// Function to handle actual Discord submission
+const submitToDiscord = async (values: ContactForm) => {
+	// Validate form data
+	const validationError = validateContactForm(values)
+	if (validationError) {
+		errorMessage.value = validationError
+		throw new Error(validationError)
+	}
+	
+	// Clear any previous error
+	errorMessage.value = ''
+	
+	// Send to Discord
+	await sendToDiscord(values)
+}
+
+// Use our form handling composable with Discord integration
+const { form, isLoading, isSuccess, error, handleSubmit } = useFormSubmit<ContactForm>(
 	initialValues,
-	undefined, // No actual API call, using simulation
+	submitToDiscord,
 	{
 		resetAfter: true,
 		resetDelay: 3000,
-		simulateDelay: 1500,
+		onError: (err) => {
+			console.error('Form submission error:', err)
+			if (!errorMessage.value) {
+				errorMessage.value = 'Failed to send message. Please try again later.'
+			}
+		},
 	}
 )
 
@@ -72,8 +95,8 @@ usePageAnimation('.contact-window', 0.2)
 								</div>
 								<div>
 									<p class="text-sm text-gray-400">{{ t('contact.emailLabel') }}</p>
-									<a href="mailto:denis.chaput77@gmail.com" class="text-gray-200 hover:text-indigo-300 transition-colors">
-										denis.chaput77@gmail.com
+									<a :href="`mailto:${config.email}`" class="text-gray-200 hover:text-indigo-300 transition-colors">
+										{{ config.email }}
 									</a>
 								</div>
 							</div>
@@ -97,7 +120,7 @@ usePageAnimation('.contact-window', 0.2)
 						</h2>
 						<div class="flex gap-4">
 							<a
-								href="https://github.com/DenisChpt"
+								:href="config.github.url"
 								target="_blank"
 								rel="noopener noreferrer"
 								class="group w-12 h-12 rounded-xl bg-gray-900/50 border border-gray-700/50 flex items-center justify-center text-gray-400 hover:border-indigo-500/50 hover:text-indigo-300 hover:bg-indigo-500/10 transition-all duration-300"
@@ -106,7 +129,7 @@ usePageAnimation('.contact-window', 0.2)
 							</a>
 
 							<a
-								href="https://www.linkedin.com/in/denis-chaput/"
+								:href="config.linkedin.url"
 								target="_blank"
 								rel="noopener noreferrer"
 								class="group w-12 h-12 rounded-xl bg-gray-900/50 border border-gray-700/50 flex items-center justify-center text-gray-400 hover:border-indigo-500/50 hover:text-indigo-300 hover:bg-indigo-500/10 transition-all duration-300"
@@ -115,10 +138,10 @@ usePageAnimation('.contact-window', 0.2)
 							</a>
 
 							<a
-								href="#"
+								:href="`mailto:${config.email}`"
 								class="group w-12 h-12 rounded-xl bg-gray-900/50 border border-gray-700/50 flex items-center justify-center text-gray-400 hover:border-indigo-500/50 hover:text-indigo-300 hover:bg-indigo-500/10 transition-all duration-300"
 							>
-								<IconTwitter class="w-5 h-5" />
+								<IconEmail class="w-5 h-5" />
 							</a>
 						</div>
 					</div>
@@ -186,10 +209,20 @@ usePageAnimation('.contact-window', 0.2)
 							></textarea>
 						</div>
 
+						<!-- Error Message -->
+						<div v-if="errorMessage && !isSuccess" class="p-4 bg-red-500/10 border border-red-500/30 rounded-xl">
+							<p class="text-red-400 text-sm">{{ errorMessage }}</p>
+						</div>
+
+						<!-- Success Message -->
+						<div v-if="isSuccess" class="p-4 bg-green-500/10 border border-green-500/30 rounded-xl">
+							<p class="text-green-400 text-sm">{{ t('contact.messageSent') }}</p>
+						</div>
+
 						<div class="flex justify-end">
 							<button
 								type="submit"
-								:disabled="isLoading"
+								:disabled="isLoading || isSuccess"
 								class="px-8 py-3 bg-gradient-to-r from-indigo-500 to-purple-500 text-white font-medium rounded-xl hover:shadow-lg hover:shadow-indigo-500/25 transition-all duration-300 disabled:opacity-50 disabled:cursor-not-allowed"
 							>
 								<span v-if="!isLoading">{{ t('contact.send') }}</span>

@@ -1,3 +1,14 @@
+/**
+ * Internationalization Configuration
+ * 
+ * Manages multi-language support for the portfolio:
+ * - Supported languages: English (default), French, German, Spanish, Portuguese, Arabic
+ * - Automatic locale detection from browser preferences
+ * - RTL support for Arabic
+ * 
+ * @module i18n
+ */
+
 import { createI18n } from 'vue-i18n'
 import en from './locales/en.json'
 import fr from './locales/fr.json'

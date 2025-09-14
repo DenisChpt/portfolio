@@ -9,7 +9,7 @@
 	"home": {
 		"title": "Bienvenue sur Mon Portfolio",
 		"subtitle": "Ingénieur Mathématique et Informatique",
-		"passion": "Passionné par l'optimisation, les algorithmes avancés et les défis techniques complexes",
+		"passion": "Spécialisé en optimisation mathématique, intelligence artificielle et développement de solutions innovantes.",
 		"terminal": {
 			"commandWhoAmI": "whoami",
 			"developerInfo": "Denis Chaput • Ingénieur Mathématique et Informatique • Thales",
@@ -21,12 +21,49 @@
 	},
 	"about": {
 		"title": "À propos de moi",
-		"description": "Ingénieur en alternance chez Thales, spécialisé dans les systèmes CI/CD et l'optimisation des chaînes de production logicielle. Passionné par les technologies de pointe, l'optimisation de performances et les défis techniques complexes.",
+		"description": "Ingénieur diplômé passionné par les mathématiques, l'informatique et la résolution de défis complexes.",
 		"experience": "Expérience professionnelle",
 		"personalInfo": "Description",
+		"profile": "Profil",
+		"currentPosition": "Poste actuel",
+		"location": "Localisation",
 		"education": "Formation",
 		"technologies": "Technologies",
-		"topSkills": "Compétences Principales"
+		"programmingLanguages": "Langages de programmation",
+		"skillLevels": {
+			"expert": "Expert",
+			"advanced": "Avancé",
+			"intermediate": "Intermédiaire",
+			"beginner": "Notions"
+		},
+		"educationItems": [
+			{
+				"institution": "Polytech Paris-Saclay",
+				"degree": "Diplôme d'Ingénieur - Informatique et Ingénierie Mathématique",
+				"period": "2022 - 2025",
+				"description": "Ingénierie Informatique et Mathématiques. Formation en alternance chez Thales."
+			},
+			{
+				"institution": "Formation Indépendante",
+				"degree": "Mathématiques Appliquées & Intelligence Artificielle",
+				"period": "2023 - 2025",
+				"description": "Formation autodidacte approfondie en mathématiques appliquées, machine learning et intelligence artificielle."
+			}
+		],
+		"experienceItems": [
+			{
+				"company": "Thales Land & Air Systems",
+				"role": "Ingénieur Développeur CI/CD en Alternance",
+				"period": "Sept 2023 - Août 2025",
+				"description": "Conception et implémentation d'une nouvelle chaîne de production logicielle modulaire remplaçant la solution legacy pour gérer des projets multi-millions de lignes."
+			},
+			{
+				"company": "Thales Romania",
+				"role": "Stagiaire Développeur Cybersécurité",
+				"period": "Juin 2025 - Août 2025",
+				"description": "Développement d'une API REST on-premise intégrant un LLM pour l'analyse automatique des rapports de sécurité, conforme aux exigences C3."
+			}
+		]
 	},
 	"projects": {
 		"title": "Mes Projets",
@@ -47,9 +84,9 @@
 		"items": [
 			{
 				"id": 1,
-				"title": "ProChain - Chaîne de Production CI/CD",
-				"description": "Nouvelle chaîne de production logicielle modulaire pour Thales, remplaçant GCONF_TOOLS. Architecture Python permettant compilation parallèle, production incrémentale et indépendance vis-à-vis de Jenkins.",
-				"longDescription": "Durant mon alternance chez Thales, j'ai conçu et implémenté ProChain, une chaîne de production CI/CD modulaire remplaçant l'ancienne solution GCONF_TOOLS. Cette nouvelle architecture en Python permet la parallélisation des builds, la gestion fine des dépendances par OS/architecture, et réduit drastiquement la dépendance à Jenkins. Le système gère des projets de plusieurs millions de lignes de code avec traçabilité ITAR et support multi-plateformes (Linux, Windows). Résultats : réduction de 20% du temps de compilation en mode full, et jusqu'à 80% en mode delta."
+				"title": "Chaîne de Production CI/CD Modulaire",
+				"description": "Nouvelle chaîne de production logicielle modulaire pour environnement industriel. Architecture Python permettant compilation parallèle et production incrémentale.",
+				"longDescription": "Durant mon alternance chez Thales, j'ai conçu et implémenté une chaîne de production CI/CD modulaire remplaçant l'ancienne solution. Cette nouvelle architecture en Python permet la parallélisation des compilations, la gestion optimisée des dépendances selon l'OS et l'architecture, et améliore l'autonomie vis-à-vis des outils d'intégration continue. Le système gère des projets de grande envergure avec traçabilité complète et support multi-plateformes. Résultats : amélioration significative des temps de compilation, avec des gains allant de 20% à 80% selon le mode d'exécution."
 			},
 			{
 				"id": 2,
@@ -72,8 +109,8 @@
 			{
 				"id": 5,
 				"title": "Portfolio Personnel",
-				"description": "Site portfolio moderne développé avec Vue 3 et TypeScript. Design responsive, animations fluides, support multilingue et mode sombre.",
-				"longDescription": "Portfolio personnel développé avec les dernières technologies web. Utilise Vue 3 avec Composition API, TypeScript pour le typage fort, et Pinia pour la gestion d'état. Le design est entièrement responsive avec Tailwind CSS, inclut des animations personnalisées, un système de thème clair/sombre, et support multilingue (i18n) pour 6 langues. Optimisé pour les performances avec lazy loading et code splitting."
+				"description": "Site portfolio moderne développé avec Vue 3 et TypeScript. Design responsive, animations fluides et support multilingue.",
+				"longDescription": "Portfolio personnel développé avec les dernières technologies web. Utilise Vue 3 avec Composition API, TypeScript pour le typage fort, et Pinia pour la gestion d'état. Le design est entièrement responsive avec Tailwind CSS, inclut des animations personnalisées et support multilingue (i18n) pour 6 langues. Optimisé pour les performances avec lazy loading et code splitting."
 			}
 		]
 	},
@@ -90,7 +127,7 @@
 		"name": "Nom",
 		"namePlaceholder": "Votre nom",
 		"email": "Email",
-		"emailPlaceholder": "votre.email@exemple.com",
+		"emailPlaceholder": "votre.email{'@'}exemple.com",
 		"message": "Message",
 		"messagePlaceholder": "Votre message...",
 		"send": "Envoyer le message",
@@ -102,7 +139,7 @@
 	},
 	"research": {
 		"title": "Publications & Recherche",
-		"description": "Mes travaux de recherche et publications académiques en optimisation, CI/CD, et cybersécurité.",
+		"description": "Mes travaux de recherche indépendants (et futures publications académiques).",
 		"searchPlaceholder": "Rechercher des publications...",
 		"sortByDate": "Trier par date",
 		"sortByCitations": "Trier par citations",
@@ -110,6 +147,9 @@
 		"featured": "En vedette",
 		"citations": "citations",
 		"downloadPdf": "Télécharger PDF",
-		"noResults": "Aucune publication trouvée."
+		"noResults": "Aucune publication trouvée.",
+		"notAvailableTitle": "Publications à venir",
+		"notAvailableMessage": "Les papiers de recherche ne sont pas encore disponibles. Ils seront publiés prochainement.",
+		"papers": []
 	}
 }

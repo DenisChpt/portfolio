@@ -23,7 +23,7 @@ defineProps<{
 <style scoped>
 .content-panel {
 	width: 100%;
-	/* Fond plus transparent pour laisser voir l'arrière-plan animé */
+	/* More transparent background to show animated background */
 	background: rgba(16, 24, 39, 0.3);
 	border: 1px solid rgba(99, 102, 241, 0.15);
 	border-radius: 0.75rem;

@@ -3,7 +3,7 @@ import { computed } from 'vue'
 import { useI18n } from 'vue-i18n'
 import { usePageAnimation } from '@/composables/useAnimation'
 import { useProjectsStore } from '@/stores/projectsStore'
-const { t, locale } = useI18n()
+const { t } = useI18n()
 const projectsStore = useProjectsStore()
 
 // Use our animation composable

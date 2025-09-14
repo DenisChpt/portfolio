@@ -20,7 +20,7 @@ defineProps<{
 				{{ title || 'window' }}
 			</div>
 			<div class="w-6"></div>
-			<!-- Espacement égal de l'autre côté -->
+			<!-- Equal spacing on the other side -->
 		</div>
 
 		<div class="window-content p-6">
@@ -32,8 +32,8 @@ defineProps<{
 <style scoped>
 .content-window {
 	width: 100%;
-	/* Fond déjà très transparent (bg-white/5) */
-	/* Si le fond est encore trop opaque, augmenter la transparence ainsi: */
+	/* Background already very transparent (bg-white/5) */
+	/* If background is still too opaque, increase transparency like this: */
 	background: rgba(255, 255, 255, 0.02) !important;
 }
 
