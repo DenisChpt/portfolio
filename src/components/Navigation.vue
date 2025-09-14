@@ -25,7 +25,7 @@ const reloadPage = (event: Event) => {
 }
 
 const handleScroll = () => {
-	// Utiliser un seuil plus petit pour une transition plus rapide
+	// Use a smaller threshold for faster transition
 	isScrolled.value = window.scrollY > 20
 }
 
@@ -87,7 +87,7 @@ watch(
 					</div>
 				</div>
 
-				<!-- LanguageSelector seul, plus de bouton de thème -->
+				<!-- LanguageSelector only, no theme button -->
 				<div class="hidden sm:ml-6 sm:flex sm:items-center space-x-4">
 					<LanguageSelector />
 				</div>

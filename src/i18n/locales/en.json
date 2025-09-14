@@ -9,7 +9,7 @@
 	"home": {
 		"title": "Welcome to My Portfolio",
 		"subtitle": "Mathematics and Computer Science Engineer",
-		"passion": "Passionate about optimization, advanced algorithms and complex technical challenges",
+		"passion": "Specialized in mathematical optimization, artificial intelligence and innovative solution development.",
 		"terminal": {
 			"commandWhoAmI": "whoami",
 			"developerInfo": "Denis Chaput • Mathematics and Computer Science Engineer • Thales",
@@ -21,12 +21,49 @@
 	},
 	"about": {
 		"title": "About Me",
-		"description": "Engineering apprentice at Thales, specialized in CI/CD systems and software production chain optimization. Passionate about cutting-edge technologies, performance optimization, and complex technical challenges.",
+		"description": "Graduate engineer passionate about mathematics, computer science and solving complex challenges.",
 		"experience": "Professional Experience",
 		"personalInfo": "Description",
+		"profile": "Profile",
+		"currentPosition": "Current Position",
+		"location": "Location",
 		"education": "Education",
 		"technologies": "Technologies",
-		"topSkills": "Top Skills"
+		"programmingLanguages": "Programming Languages",
+		"skillLevels": {
+			"expert": "Expert",
+			"advanced": "Advanced",
+			"intermediate": "Intermediate",
+			"beginner": "Beginner"
+		},
+		"educationItems": [
+			{
+				"institution": "Polytech Paris-Saclay",
+				"degree": "Engineering Degree - Computer Science and Mathematical Engineering",
+				"period": "2022 - 2025",
+				"description": "Computer and Mathematical Engineering. Work-study program at Thales."
+			},
+			{
+				"institution": "Independent Study",
+				"degree": "Applied Mathematics & Artificial Intelligence",
+				"period": "2023 - 2025",
+				"description": "In-depth self-taught training in applied mathematics, machine learning and artificial intelligence."
+			}
+		],
+		"experienceItems": [
+			{
+				"company": "Thales Land & Air Systems",
+				"role": "CI/CD Developer Engineer Apprentice",
+				"period": "Sept 2023 - Aug 2025",
+				"description": "Design and implementation of a new modular software production chain replacing the legacy solution to manage multi-million line projects."
+			},
+			{
+				"company": "Thales Romania",
+				"role": "Cybersecurity Developer Intern",
+				"period": "June 2025 - Aug 2025",
+				"description": "Development of an on-premise REST API integrating an LLM for automatic analysis of security reports, compliant with C3 requirements."
+			}
+		]
 	},
 	"projects": {
 		"title": "My Projects",
@@ -47,9 +84,9 @@
 		"items": [
 			{
 				"id": 1,
-				"title": "ProChain - CI/CD Production Chain",
-				"description": "New modular software production chain for Thales, replacing GCONF_TOOLS. Python architecture enabling parallel compilation, incremental production, and independence from Jenkins.",
-				"longDescription": "During my apprenticeship at Thales, I designed and implemented ProChain, a modular CI/CD production chain replacing the legacy GCONF_TOOLS solution. This new Python architecture enables build parallelization, fine-grained dependency management per OS/architecture, and drastically reduces Jenkins dependency. The system handles multi-million line codebases with ITAR traceability and multi-platform support (Linux, Windows). Results: 20% reduction in full compilation time, and up to 80% in delta mode."
+				"title": "Modular CI/CD Production Chain",
+				"description": "New modular software production chain for industrial environment. Python architecture enabling parallel compilation and incremental production.",
+				"longDescription": "During my apprenticeship at Thales, I designed and implemented a modular CI/CD production chain replacing the legacy solution. This new Python architecture enables build parallelization, optimized dependency management per OS/architecture, and improves autonomy from continuous integration tools. The system handles large-scale projects with complete traceability and multi-platform support. Results: significant improvement in compilation times, with gains ranging from 20% to 80% depending on execution mode."
 			},
 			{
 				"id": 2,
@@ -72,8 +109,8 @@
 			{
 				"id": 5,
 				"title": "Personal Portfolio",
-				"description": "Modern portfolio website developed with Vue 3 and TypeScript. Responsive design, smooth animations, multilingual support, and dark mode.",
-				"longDescription": "Personal portfolio developed with the latest web technologies. Uses Vue 3 with Composition API, TypeScript for strong typing, and Pinia for state management. The design is fully responsive with Tailwind CSS, includes custom animations, a light/dark theme system, and multilingual support (i18n) for 6 languages. Optimized for performance with lazy loading and code splitting."
+				"description": "Modern portfolio website developed with Vue 3 and TypeScript. Responsive design, smooth animations, and multilingual support.",
+				"longDescription": "Personal portfolio developed with the latest web technologies. Uses Vue 3 with Composition API, TypeScript for strong typing, and Pinia for state management. The design is fully responsive with Tailwind CSS, includes custom animations and multilingual support (i18n) for 6 languages. Optimized for performance with lazy loading and code splitting."
 			}
 		]
 	},
@@ -90,7 +127,7 @@
 		"name": "Name",
 		"namePlaceholder": "Your name",
 		"email": "Email",
-		"emailPlaceholder": "your.email@example.com",
+		"emailPlaceholder": "your.email{'@'}example.com",
 		"message": "Message",
 		"messagePlaceholder": "Your message...",
 		"send": "Send Message",
@@ -102,7 +139,7 @@
 	},
 	"research": {
 		"title": "Publications & Research",
-		"description": "My research work and academic publications in optimization, CI/CD, and cybersecurity.",
+		"description": "My independent research work (and future academic publications).",
 		"searchPlaceholder": "Search publications...",
 		"sortByDate": "Sort by date",
 		"sortByCitations": "Sort by citations",
@@ -110,6 +147,9 @@
 		"featured": "Featured",
 		"citations": "citations",
 		"downloadPdf": "Download PDF",
-		"noResults": "No publications found."
+		"noResults": "No publications found.",
+		"notAvailableTitle": "Publications Coming Soon",
+		"notAvailableMessage": "Research papers are not yet available. They will be published soon.",
+		"papers": []
 	}
 }

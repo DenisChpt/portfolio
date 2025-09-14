@@ -2,16 +2,28 @@
 import { ref, computed } from 'vue'
 import { useI18n } from 'vue-i18n'
 import { usePageAnimation } from '@/composables/useAnimation'
-import { 
-	RESEARCH_PAPERS, 
-	filterResearchByTopic, 
-	sortResearchByDate,
-	sortResearchByCitations 
-} from '@/constants/research'
-import type { ResearchPaper } from '@/types/research'
 import { IconCalendar, IconUsers, IconTag, IconDownload, IconExternalLink, IconQuote } from '@/components/icons'
 
-const { t } = useI18n()
+/**
+ * Research paper interface
+ */
+interface ResearchPaper {
+	id: number
+	title: string
+	authors: string[]
+	abstract: string
+	publicationDate: string
+	journal?: string
+	conference?: string
+	arxivUrl?: string
+	pdfUrl?: string
+	doi?: string
+	topics: string[]
+	featured?: boolean
+	citations?: number
+}
+
+const { t, tm } = useI18n()
 
 // Animation
 usePageAnimation('.research-section', 0.1)
@@ -21,41 +33,59 @@ const selectedTopic = ref<string>('all')
 const sortBy = ref<'date' | 'citations'>('date')
 const searchQuery = ref('')
 
+/**
+ * Get research papers from i18n configuration
+ */
+const researchPapers = computed((): ResearchPaper[] => {
+	const papers = tm('research.papers') as any
+	return Array.isArray(papers) ? papers : []
+})
+
 // Get unique topics from all papers
 const availableTopics = computed(() => {
 	const topics = new Set<string>()
 	topics.add('all')
-	RESEARCH_PAPERS.forEach(paper => {
-		paper.topics.forEach(topic => topics.add(topic))
+	researchPapers.value.forEach(paper => {
+		if (paper.topics && Array.isArray(paper.topics)) {
+			paper.topics.forEach(topic => topics.add(topic))
+		}
 	})
 	return Array.from(topics)
 })
 
 // Filter and sort papers
 const filteredPapers = computed(() => {
-	let papers = [...RESEARCH_PAPERS]
+	let papers = [...researchPapers.value]
 	
 	// Filter by topic
 	if (selectedTopic.value !== 'all') {
-		papers = filterResearchByTopic(papers, selectedTopic.value)
+		papers = papers.filter(paper => 
+			paper.topics && paper.topics.some(t => 
+				t.toLowerCase().includes(selectedTopic.value.toLowerCase())
+			)
+		)
 	}
 	
 	// Filter by search query
 	if (searchQuery.value) {
 		const query = searchQuery.value.toLowerCase()
 		papers = papers.filter(paper =>
-			paper.title.toLowerCase().includes(query) ||
-			paper.abstract.toLowerCase().includes(query) ||
-			paper.authors.some(author => author.toLowerCase().includes(query)) ||
-			paper.topics.some(topic => topic.toLowerCase().includes(query))
+			(paper.title && paper.title.toLowerCase().includes(query)) ||
+			(paper.abstract && paper.abstract.toLowerCase().includes(query)) ||
+			(paper.authors && paper.authors.some(author => author.toLowerCase().includes(query))) ||
+			(paper.topics && paper.topics.some(topic => topic.toLowerCase().includes(query)))
 		)
 	}
 	
 	// Sort papers
 	if (sortBy.value === 'date') {
-		papers = sortResearchByDate(papers)
+		papers = [...papers].sort((a, b) => {
+			const dateA = a.publicationDate ? new Date(a.publicationDate).getTime() : 0
+			const dateB = b.publicationDate ? new Date(b.publicationDate).getTime() : 0
+			return dateB - dateA
+		})
 	} else {
-		papers = sortResearchByCitations(papers)
+		papers = [...papers].sort((a, b) => (b.citations || 0) - (a.citations || 0))
 	}
 	
 	return papers
@@ -68,7 +98,7 @@ const formatDate = (dateString: string) => {
 }
 
 // Get publication venue
-const getVenue = (paper: ResearchPaper) => {
+const getVenue = (paper: any) => {
 	return paper.journal || paper.conference || 'Preprint'
 }
 </script>
@@ -150,7 +180,20 @@ const getVenue = (paper: ResearchPaper) => {
 				</div>
 
 				<!-- Research Papers Grid -->
-				<div v-if="filteredPapers.length > 0" class="grid gap-6">
+				<div v-if="researchPapers.length === 0" class="text-center py-16 bg-gray-800/30 backdrop-blur-sm rounded-2xl border border-gray-700/50">
+					<svg
+						xmlns="http://www.w3.org/2000/svg"
+						class="h-16 w-16 mx-auto text-indigo-500/50 mb-4"
+						fill="none"
+						viewBox="0 0 24 24"
+						stroke="currentColor"
+					>
+						<path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="M12 8v4m0 4h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z" />
+					</svg>
+					<h3 class="text-xl font-semibold text-gray-300 mb-2">{{ t('research.notAvailableTitle') }}</h3>
+					<p class="text-gray-400 max-w-md mx-auto">{{ t('research.notAvailableMessage') }}</p>
+				</div>
+				<div v-else-if="filteredPapers.length > 0" class="grid gap-6">
 					<div
 						v-for="(paper, index) in filteredPapers"
 						:key="paper.id"
@@ -246,7 +289,7 @@ const getVenue = (paper: ResearchPaper) => {
 				</div>
 
 				<!-- No Results -->
-				<div v-else class="text-center py-16 bg-gray-800/30 backdrop-blur-sm rounded-2xl border border-gray-700/50">
+				<div v-else-if="researchPapers.length > 0" class="text-center py-16 bg-gray-800/30 backdrop-blur-sm rounded-2xl border border-gray-700/50">
 					<svg
 						xmlns="http://www.w3.org/2000/svg"
 						class="h-16 w-16 mx-auto text-indigo-500/50 mb-4"

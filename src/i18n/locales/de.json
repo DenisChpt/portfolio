@@ -9,7 +9,7 @@
 	"home": {
 		"title": "Willkommen in meinem Portfolio",
 		"subtitle": "Ingenieur für Mathematik und Informatik",
-		"passion": "Leidenschaftlich über Optimierung, fortgeschrittene Algorithmen und komplexe technische Herausforderungen",
+		"passion": "Spezialisiert auf mathematische Optimierung, künstliche Intelligenz und die Entwicklung innovativer Lösungen.",
 		"terminal": {
 			"commandWhoAmI": "whoami",
 			"developerInfo": "Denis Chaput • Ingenieur für Mathematik und Informatik • Thales",
@@ -21,12 +21,49 @@
 	},
 	"about": {
 		"title": "Über mich",
-		"description": "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.",
+		"description": "Absolvent Ingenieur leidenschaftlich über Mathematik, Informatik und das Lösen komplexer Herausforderungen.",
 		"experience": "Berufserfahrung",
 		"personalInfo": "Beschreibung",
+		"profile": "Profil",
+		"currentPosition": "Aktuelle Position",
+		"location": "Standort",
 		"education": "Ausbildung",
 		"technologies": "Technologien",
-		"topSkills": "Top-Fähigkeiten"
+		"programmingLanguages": "Programmiersprachen",
+		"skillLevels": {
+			"expert": "Experte",
+			"advanced": "Fortgeschritten",
+			"intermediate": "Mittel",
+			"beginner": "Grundkenntnisse"
+		},
+		"educationItems": [
+			{
+				"institution": "Polytech Paris-Saclay",
+				"degree": "Ingenieurstudium - Informatik und Mathematische Ingenieurwissenschaften",
+				"period": "2022 - 2025",
+				"description": "Informatik und Mathematische Ingenieurwissenschaften. Duales Studium bei Thales."
+			},
+			{
+				"institution": "Selbststudium",
+				"degree": "Angewandte Mathematik & Künstliche Intelligenz",
+				"period": "2023 - 2025",
+				"description": "Tiefgreifende autodidaktische Ausbildung in angewandter Mathematik, maschinellem Lernen und künstlicher Intelligenz."
+			}
+		],
+		"experienceItems": [
+			{
+				"company": "Thales Land & Air Systems",
+				"role": "CI/CD Entwicklungsingenieur Auszubildender",
+				"period": "Sept 2023 - Aug 2025",
+				"description": "Entwurf und Implementierung einer neuen modularen Software-Produktionskette, die die veraltete Lösung zur Verwaltung von Multi-Millionen-Zeilen-Projekten ersetzt."
+			},
+			{
+				"company": "Thales Romania",
+				"role": "Cybersicherheit-Entwickler Praktikant",
+				"period": "Juni 2025 - Aug 2025",
+				"description": "Entwicklung einer lokalen REST-API, die ein LLM für die automatische Analyse von Sicherheitsberichten integriert, konform mit C3-Anforderungen."
+			}
+		]
 	},
 	"projects": {
 		"title": "Meine Projekte",
@@ -47,9 +84,9 @@
 		"items": [
 			{
 				"id": 1,
-				"title": "ProChain - CI/CD Produktionskette",
-				"description": "Neue modulare Software-Produktionskette für Thales, die GCONF_TOOLS ersetzt. Python-Architektur ermöglicht parallele Kompilierung, inkrementelle Produktion und Unabhängigkeit von Jenkins.",
-				"longDescription": "Während meiner Ausbildung bei Thales habe ich ProChain entworfen und implementiert, eine modulare CI/CD-Produktionskette, die die veraltete GCONF_TOOLS-Lösung ersetzt. Diese neue Python-Architektur ermöglicht Build-Parallelisierung, feingliedrige Abhängigkeitsverwaltung pro OS/Architektur und reduziert drastisch die Jenkins-Abhängigkeit. Das System verwaltet Codebasen mit mehreren Millionen Zeilen mit ITAR-Nachverfolgbarkeit und Multi-Platform-Support (Linux, Windows). Ergebnisse: 20% Reduzierung der vollständigen Kompilierungszeit und bis zu 80% im Delta-Modus."
+				"title": "Modulare CI/CD-Produktionskette",
+				"description": "Neue modulare Software-Produktionskette, die die veraltete Lösung ersetzt. Python-Architektur ermöglicht parallele Kompilierung, inkrementelle Produktion und verbesserte Autonomie von CI-Tools.",
+				"longDescription": "Während meiner Ausbildung bei Thales habe ich eine modulare CI/CD-Produktionskette entworfen und implementiert, die die veraltete Lösung ersetzt. Diese neue Python-Architektur ermöglicht Build-Parallelisierung, optimierte Abhängigkeitsverwaltung pro OS/Architektur und verbessert die Autonomie von Continuous-Integration-Tools. Das System verwaltet große Projekte mit vollständiger Nachverfolgbarkeit und Multi-Platform-Support. Ergebnisse: signifikante Verbesserung der Kompilierungszeiten mit Gewinnen von 20% bis 80% je nach Ausführungsmodus."
 			},
 			{
 				"id": 2,
@@ -72,8 +109,8 @@
 			{
 				"id": 5,
 				"title": "Persönliches Portfolio",
-				"description": "Moderne Portfolio-Website entwickelt mit Vue 3 und TypeScript. Responsives Design, flüssige Animationen, mehrsprachiger Support und Dark Mode.",
-				"longDescription": "Persönliches Portfolio entwickelt mit den neuesten Webtechnologien. Verwendet Vue 3 mit Composition API, TypeScript für starke Typisierung und Pinia für Zustandsverwaltung. Das Design ist vollständig responsiv mit Tailwind CSS, enthält benutzerdefinierte Animationen, ein Licht-/Dunkel-Theme-System und mehrsprachigen Support (i18n) für 6 Sprachen. Optimiert für Performance mit Lazy Loading und Code Splitting."
+				"description": "Moderne Portfolio-Website entwickelt mit Vue 3 und TypeScript. Responsives Design, flüssige Animationen und mehrsprachiger Support.",
+				"longDescription": "Persönliches Portfolio entwickelt mit den neuesten Webtechnologien. Verwendet Vue 3 mit Composition API, TypeScript für starke Typisierung und Pinia für Zustandsverwaltung. Das Design ist vollständig responsiv mit Tailwind CSS, enthält benutzerdefinierte Animationen und mehrsprachigen Support (i18n) für 6 Sprachen. Optimiert für Performance mit Lazy Loading und Code Splitting."
 			}
 		]
 	},
@@ -90,7 +127,7 @@
 		"name": "Name",
 		"namePlaceholder": "Dein Name",
 		"email": "E-Mail",
-		"emailPlaceholder": "deine.email@beispiel.com",
+		"emailPlaceholder": "deine.email{'@'}beispiel.com",
 		"message": "Nachricht",
 		"messagePlaceholder": "Deine Nachricht...",
 		"send": "Nachricht senden",
@@ -102,7 +139,7 @@
 	},
 	"research": {
 		"title": "Veröffentlichungen & Forschung",
-		"description": "Meine Forschungsarbeiten und akademischen Veröffentlichungen in Optimierung, CI/CD und Cybersicherheit.",
+		"description": "Meine unabhängigen Forschungsarbeiten (und zukünftige akademische Veröffentlichungen).",
 		"searchPlaceholder": "Publikationen suchen...",
 		"sortByDate": "Nach Datum sortieren",
 		"sortByCitations": "Nach Zitaten sortieren",
@@ -110,6 +147,9 @@
 		"featured": "Hervorgehoben",
 		"citations": "Zitate",
 		"downloadPdf": "PDF herunterladen",
-		"noResults": "Keine Veröffentlichungen gefunden."
+		"noResults": "Keine Veröffentlichungen gefunden.",
+		"notAvailableTitle": "Veröffentlichungen demnächst",
+		"notAvailableMessage": "Forschungsarbeiten sind noch nicht verfügbar. Sie werden in Kürze veröffentlicht.",
+		"papers": []
 	}
 }

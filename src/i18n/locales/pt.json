@@ -9,7 +9,7 @@
 	"home": {
 		"title": "Bem-vindo ao Meu Portfólio",
 		"subtitle": "Engenheiro de Matemática e Informática",
-		"passion": "Apaixonado por otimização, algoritmos avançados e desafios técnicos complexos",
+		"passion": "Especializado em otimização matemática, inteligência artificial e desenvolvimento de soluções inovadoras.",
 		"terminal": {
 			"commandWhoAmI": "whoami",
 			"developerInfo": "Denis Chaput • Engenheiro de Matemática e Informática • Thales",
@@ -21,12 +21,49 @@
 	},
 	"about": {
 		"title": "Sobre mim",
-		"description": "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.",
+		"description": "Engenheiro graduado apaixonado por matemática, ciência da computação e resolução de desafios complexos.",
 		"experience": "Experiência profissional",
 		"personalInfo": "Descrição",
+		"profile": "Perfil",
+		"currentPosition": "Posição Atual",
+		"location": "Localização",
 		"education": "Educação",
 		"technologies": "Tecnologias",
-		"topSkills": "Principais Habilidades"
+		"programmingLanguages": "Linguagens de programação",
+		"skillLevels": {
+			"expert": "Especialista",
+			"advanced": "Avançado",
+			"intermediate": "Intermediário",
+			"beginner": "Noções"
+		},
+		"educationItems": [
+			{
+				"institution": "Polytech Paris-Saclay",
+				"degree": "Diploma de Engenharia - Ciência da Computação e Engenharia Matemática",
+				"period": "2022 - 2025",
+				"description": "Engenharia da Computação e Matemática. Programa de estudos e trabalho na Thales."
+			},
+			{
+				"institution": "Estudo Independente",
+				"degree": "Matemática Aplicada & Inteligência Artificial",
+				"period": "2023 - 2025",
+				"description": "Formação autodidacta aprofundada em matemática aplicada, aprendizado de máquina e inteligência artificial."
+			}
+		],
+		"experienceItems": [
+			{
+				"company": "Thales Land & Air Systems",
+				"role": "Aprendiz Engenheiro Desenvolvedor CI/CD",
+				"period": "Set 2023 - Ago 2025",
+				"description": "Projeto e implementação de uma nova cadeia de produção de software modular substituindo a solução legada para gerenciar projetos multi-milhões de linhas."
+			},
+			{
+				"company": "Thales Romania",
+				"role": "Estagiário Desenvolvedor de Cibersegurança",
+				"period": "Junho 2025 - Ago 2025",
+				"description": "Desenvolvimento de uma API REST local integrando um LLM para análise automática de relatórios de segurança, em conformidade com os requisitos C3."
+			}
+		]
 	},
 	"projects": {
 		"title": "Meus Projetos",
@@ -47,9 +84,9 @@
 		"items": [
 			{
 				"id": 1,
-				"title": "ProChain - Cadeia de Produção CI/CD",
-				"description": "Nova cadeia de produção de software modular para a Thales, substituindo GCONF_TOOLS. Arquitetura Python permitindo compilação paralela, produção incremental e independência do Jenkins.",
-				"longDescription": "Durante meu estágio na Thales, projetei e implementei o ProChain, uma cadeia de produção CI/CD modular que substitui a solução legada GCONF_TOOLS. Esta nova arquitetura Python permite paralelização de builds, gerenciamento refinado de dependências por SO/arquitetura e reduz drasticamente a dependência do Jenkins. O sistema gerencia projetos com milhões de linhas de código com rastreabilidade ITAR e suporte multiplataforma (Linux, Windows). Resultados: redução de 20% no tempo de compilação no modo completo e até 80% no modo delta."
+				"title": "Cadeia de Produção CI/CD Modular",
+				"description": "Nova cadeia de produção de software modular substituindo a solução legada. Arquitetura Python permitindo compilação paralela, produção incremental e melhor autonomia das ferramentas de CI.",
+				"longDescription": "Durante meu estágio na Thales, projetei e implementei uma cadeia de produção CI/CD modular que substitui a solução legada. Esta nova arquitetura Python permite paralelização de builds, gerenciamento otimizado de dependências por SO/arquitetura e melhora a autonomia das ferramentas de integração contínua. O sistema gerencia projetos de grande escala com rastreabilidade completa e suporte multiplataforma. Resultados: melhoria significativa nos tempos de compilação, com ganhos de 20% a 80% dependendo do modo de execução."
 			},
 			{
 				"id": 2,
@@ -72,8 +109,8 @@
 			{
 				"id": 5,
 				"title": "Portfólio Pessoal",
-				"description": "Site portfólio moderno desenvolvido com Vue 3 e TypeScript. Design responsivo, animações fluidas, suporte multilíngue e modo escuro.",
-				"longDescription": "Portfólio pessoal desenvolvido com as mais recentes tecnologias web. Usa Vue 3 com Composition API, TypeScript para tipagem forte e Pinia para gerenciamento de estado. O design é totalmente responsivo com Tailwind CSS, inclui animações personalizadas, sistema de tema claro/escuro e suporte multilíngue (i18n) para 6 idiomas. Otimizado para performance com lazy loading e code splitting."
+				"description": "Site portfólio moderno desenvolvido com Vue 3 e TypeScript. Design responsivo, animações fluidas e suporte multilíngue.",
+				"longDescription": "Portfólio pessoal desenvolvido com as mais recentes tecnologias web. Usa Vue 3 com Composition API, TypeScript para tipagem forte e Pinia para gerenciamento de estado. O design é totalmente responsivo com Tailwind CSS, inclui animações personalizadas e suporte multilíngue (i18n) para 6 idiomas. Otimizado para performance com lazy loading e code splitting."
 			}
 		]
 	},
@@ -90,7 +127,7 @@
 		"name": "Nome",
 		"namePlaceholder": "Seu nome",
 		"email": "E-mail",
-		"emailPlaceholder": "seu.email@exemplo.com",
+		"emailPlaceholder": "seu.email{'@'}exemplo.com",
 		"message": "Mensagem",
 		"messagePlaceholder": "Sua mensagem...",
 		"send": "Enviar Mensagem",
@@ -102,7 +139,7 @@
 	},
 	"research": {
 		"title": "Publicações e Pesquisa",
-		"description": "Meus trabalhos de pesquisa e publicações acadêmicas em otimização, CI/CD e cibersegurança.",
+		"description": "Meu trabalho de pesquisa independente (e futuras publicações acadêmicas).",
 		"searchPlaceholder": "Buscar publicações...",
 		"sortByDate": "Ordenar por data",
 		"sortByCitations": "Ordenar por citações",
@@ -110,6 +147,9 @@
 		"featured": "Destaque",
 		"citations": "citações",
 		"downloadPdf": "Baixar PDF",
-		"noResults": "Nenhuma publicação encontrada."
+		"noResults": "Nenhuma publicação encontrada.",
+		"notAvailableTitle": "Publicações em Breve",
+		"notAvailableMessage": "Os artigos de pesquisa ainda não estão disponíveis. Serão publicados em breve.",
+		"papers": []
 	}
 }

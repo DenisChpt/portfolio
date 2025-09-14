@@ -13,15 +13,15 @@ const handleLoadingComplete = () => {
 </script>
 
 <template>
-	<!-- AnimatedBackground reste visible en permanence -->
+	<!-- AnimatedBackground remains visible permanently -->
 	<AnimatedBackground />
 
-	<!-- Loader par-dessus l'AnimatedBackground -->
+	<!-- Loader on top of AnimatedBackground -->
 	<Loader v-if="isLoading" @loading-complete="handleLoadingComplete" />
 
-	<!-- Le contenu principal n'apparaît que lorsque le chargement est terminé -->
+	<!-- Main content only appears when loading is complete -->
 	<div v-if="!isLoading" class="min-h-screen flex flex-col">
-		<!-- Navigation -->
+		<!-- Navigation bar -->
 		<Navigation />
 
 		<main class="flex-grow">
@@ -37,7 +37,7 @@ const handleLoadingComplete = () => {
 </template>
 
 <style>
-/* Transitions de page */
+/* Page transitions */
 .page-enter-active,
 .page-leave-active {
 	transition: opacity 0.5s ease, transform 0.5s ease;
@@ -90,7 +90,7 @@ html {
 	}
 }
 
-/* Mise à jour du style de fond */
+/* Background style update */
 body {
 	@apply antialiased overflow-x-hidden;
 	background: transparent !important;

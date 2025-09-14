@@ -9,7 +9,7 @@
 	"home": {
 		"title": "Bienvenido a Mi Portafolio",
 		"subtitle": "Ingeniero en Matemáticas e Informática",
-		"passion": "Apasionado por la optimización, los algoritmos avanzados y los desafíos técnicos complejos",
+		"passion": "Especializado en optimización matemática, inteligencia artificial y desarrollo de soluciones innovadoras.",
 		"terminal": {
 			"commandWhoAmI": "whoami",
 			"developerInfo": "Denis Chaput • Ingeniero en Matemáticas e Informática • Thales",
@@ -21,12 +21,49 @@
 	},
 	"about": {
 		"title": "Sobre mí",
-		"description": "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.",
+		"description": "Ingeniero graduado apasionado por las matemáticas, la informática y la resolución de desafíos complejos.",
 		"experience": "Experiencia profesional",
 		"personalInfo": "Descripción",
+		"profile": "Perfil",
+		"currentPosition": "Posición Actual",
+		"location": "Ubicación",
 		"education": "Educación",
 		"technologies": "Tecnologías",
-		"topSkills": "Habilidades Principales"
+		"programmingLanguages": "Lenguajes de programación",
+		"skillLevels": {
+			"expert": "Experto",
+			"advanced": "Avanzado",
+			"intermediate": "Intermedio",
+			"beginner": "Nociones"
+		},
+		"educationItems": [
+			{
+				"institution": "Polytech Paris-Saclay",
+				"degree": "Título de Ingeniería - Informática e Ingeniería Matemática",
+				"period": "2022 - 2025",
+				"description": "Ingeniería Informática y Matemática. Programa de formación dual en Thales."
+			},
+			{
+				"institution": "Estudio Independiente",
+				"degree": "Matemáticas Aplicadas e Inteligencia Artificial",
+				"period": "2023 - 2025",
+				"description": "Formación autodidacta profunda en matemáticas aplicadas, aprendizaje automático e inteligencia artificial."
+			}
+		],
+		"experienceItems": [
+			{
+				"company": "Thales Land & Air Systems",
+				"role": "Ingeniero Desarrollador CI/CD en Prácticas",
+				"period": "Sept 2023 - Ago 2025",
+				"description": "Diseño e implementación de una nueva cadena de producción de software modular que reemplaza la solución heredada para gestionar proyectos multimillonarios."
+			},
+			{
+				"company": "Thales Romania",
+				"role": "Becario Desarrollador de Ciberseguridad",
+				"period": "Junio 2025 - Ago 2025",
+				"description": "Desarrollo de una API REST local que integra un LLM para el análisis automático de informes de seguridad, conforme a los requisitos C3."
+			}
+		]
 	},
 	"projects": {
 		"title": "Mis Proyectos",
@@ -47,9 +84,9 @@
 		"items": [
 			{
 				"id": 1,
-				"title": "ProChain - Cadena de Producción CI/CD",
-				"description": "Nueva cadena de producción de software modular para Thales, reemplazando GCONF_TOOLS. Arquitectura Python que permite compilación paralela, producción incremental e independencia de Jenkins.",
-				"longDescription": "Durante mi alternancia en Thales, diseñé e implementé ProChain, una cadena de producción CI/CD modular que reemplaza la antigua solución GCONF_TOOLS. Esta nueva arquitectura en Python permite la paralelización de builds, gestión detallada de dependencias por SO/arquitectura, y reduce drásticamente la dependencia de Jenkins. El sistema gestiona proyectos de varios millones de líneas de código con trazabilidad ITAR y soporte multiplataforma (Linux, Windows). Resultados: reducción del 20% del tiempo de compilación en modo completo, y hasta el 80% en modo delta."
+				"title": "Cadena de Producción CI/CD Modular",
+				"description": "Nueva cadena de producción de software modular reemplazando la solución legada. Arquitectura Python que permite compilación paralela, producción incremental e independencia de herramientas de integración continua.",
+				"longDescription": "Durante mi alternancia en Thales, diseñé e implementé una cadena de producción CI/CD modular que reemplaza la solución legada. Esta nueva arquitectura en Python permite la paralelización de builds, gestión detallada de dependencias por SO/arquitectura, y mejora la autonomía de las herramientas de integración continua. El sistema gestiona proyectos de varios millones de líneas de código con trazabilidad completa y soporte multiplataforma (Linux, Windows). Resultados: mejora significativa en los tiempos de compilación, con ganancias del 20% al 80% según el modo de ejecución."
 			},
 			{
 				"id": 2,
@@ -72,8 +109,8 @@
 			{
 				"id": 5,
 				"title": "Portfolio Personal",
-				"description": "Sitio web portfolio moderno desarrollado con Vue 3 y TypeScript. Diseño responsive, animaciones fluidas, soporte multilingüe y modo oscuro.",
-				"longDescription": "Portfolio personal desarrollado con las últimas tecnologías web. Utiliza Vue 3 con Composition API, TypeScript para tipado fuerte y Pinia para gestión de estado. El diseño es completamente responsive con Tailwind CSS, incluye animaciones personalizadas, sistema de tema claro/oscuro y soporte multilingüe (i18n) para 6 idiomas. Optimizado para rendimiento con lazy loading y code splitting."
+				"description": "Sitio web portfolio moderno desarrollado con Vue 3 y TypeScript. Diseño responsive, animaciones fluidas y soporte multilingüe.",
+				"longDescription": "Portfolio personal desarrollado con las últimas tecnologías web. Utiliza Vue 3 con Composition API, TypeScript para tipado fuerte y Pinia para gestión de estado. El diseño es completamente responsive con Tailwind CSS, incluye animaciones personalizadas y soporte multilingüe (i18n) para 6 idiomas. Optimizado para rendimiento con lazy loading y code splitting."
 			}
 		]
 	},
@@ -90,7 +127,7 @@
 		"name": "Nombre",
 		"namePlaceholder": "Tu nombre",
 		"email": "Correo Electrónico",
-		"emailPlaceholder": "tu.email@ejemplo.com",
+		"emailPlaceholder": "tu.email{'@'}ejemplo.com",
 		"message": "Mensaje",
 		"messagePlaceholder": "Tu mensaje...",
 		"send": "Enviar Mensaje",
@@ -102,7 +139,7 @@
 	},
 	"research": {
 		"title": "Publicaciones e Investigación",
-		"description": "Mis trabajos de investigación y publicaciones académicas en optimización, CI/CD y ciberseguridad.",
+		"description": "Mi trabajo de investigación independiente (y futuras publicaciones académicas).",
 		"searchPlaceholder": "Buscar publicaciones...",
 		"sortByDate": "Ordenar por fecha",
 		"sortByCitations": "Ordenar por citas",
@@ -110,6 +147,9 @@
 		"featured": "Destacados",
 		"citations": "citas",
 		"downloadPdf": "Descargar PDF",
-		"noResults": "No se encontraron publicaciones."
+		"noResults": "No se encontraron publicaciones.",
+		"notAvailableTitle": "Publicaciones Próximamente",
+		"notAvailableMessage": "Los artículos de investigación aún no están disponibles. Se publicarán próximamente.",
+		"papers": []
 	}
 }

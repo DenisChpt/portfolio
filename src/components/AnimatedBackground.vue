@@ -4,7 +4,9 @@ import { ref, onMounted, onBeforeUnmount } from 'vue'
 const canvasRef = ref<HTMLCanvasElement>()
 let backgroundAnimation: number | null = null
 
-// Animation de fond optimisée
+/**
+ * Optimized background animation with particle system
+ */
 function initBackgroundAnimation() {
 	if (!canvasRef.value) return
 
@@ -12,7 +14,9 @@ function initBackgroundAnimation() {
 	const ctx = canvas.getContext('2d')
 	if (!ctx) return
 
-	// Ajuster la taille du canvas pour éviter la pixelisation
+	/**
+	 * Adjust canvas size with device pixel ratio to prevent pixelation
+	 */
 	function resizeCanvas() {
 		const dpr = window.devicePixelRatio || 1
 		canvas.width = window.innerWidth * dpr
@@ -22,11 +26,15 @@ function initBackgroundAnimation() {
 		ctx!.scale(dpr, dpr)
 	}
 
-	// Écouter le redimensionnement de la fenêtre
+	/**
+	 * Listen for window resize events
+	 */
 	window.addEventListener('resize', resizeCanvas)
 	resizeCanvas()
 
-	// Paramètres de l'animation
+	/**
+	 * Animation configuration parameters
+	 */
 	const gridSize = 40
 	const gridLineWidth = 0.3
 	const dotsCount = 70
@@ -34,7 +42,9 @@ function initBackgroundAnimation() {
 	const dotMaxRadius = 3
 	const maxSpeed = 0.4
 
-	// Création des points lumineux
+	/**
+	 * Light dot particle class
+	 */
 	class Dot {
 		x: number
 		y: number
@@ -55,15 +65,19 @@ function initBackgroundAnimation() {
 		}
 
 		update() {
-			// Mise à jour de la position
+			/**
+			 * Update particle position with boundary checking
+			 */
 			this.x += this.vx
 			this.y += this.vy
 
-			// Rebond sur les bords
+			// Bounce off edges
 			if (this.x < 0 || this.x > canvas.width) this.vx = -this.vx
 			if (this.y < 0 || this.y > canvas.height) this.vy = -this.vy
 
-			// Effet de pulsation légère
+			/**
+			 * Apply subtle pulsation effect to opacity
+			 */
 			this.alpha = this.initialAlpha * (0.8 + Math.sin(Date.now() * 0.002) * 0.2)
 		}
 
@@ -75,7 +89,9 @@ function initBackgroundAnimation() {
 		}
 	}
 
-	// Création des connexions entre les points
+	/**
+	 * Create connections between nearby particles
+	 */
 	function drawConnections(dots: Dot[], ctx: CanvasRenderingContext2D) {
 		const connectionDistance = 150
 
@@ -98,12 +114,12 @@ function initBackgroundAnimation() {
 		}
 	}
 
-	// Dessin de la grille
+	// Draw the grid
 	function drawGrid(ctx: CanvasRenderingContext2D, width: number, height: number) {
 		ctx.strokeStyle = 'rgba(50, 50, 70, 0.15)'
 		ctx.lineWidth = gridLineWidth
 
-		// Lignes horizontales
+		// Horizontal lines
 		for (let y = 0; y < height; y += gridSize) {
 			ctx.beginPath()
 			ctx.moveTo(0, y)
@@ -111,7 +127,7 @@ function initBackgroundAnimation() {
 			ctx.stroke()
 		}
 
-		// Lignes verticales
+		// Vertical lines
 		for (let x = 0; x < width; x += gridSize) {
 			ctx.beginPath()
 			ctx.moveTo(x, 0)
@@ -120,7 +136,9 @@ function initBackgroundAnimation() {
 		}
 	}
 
-	// Création des points
+	/**
+	 * Initialize particle system
+	 */
 	const dots: Dot[] = []
 	for (let i = 0; i < dotsCount; i++) {
 		dots.push(new Dot())
@@ -132,19 +150,21 @@ function initBackgroundAnimation() {
 		ctx!.fillStyle = '#090A0F';
 		ctx!.fillRect(0, 0, canvas.width, canvas.height)
 
-		// Dessiner la grille
+		// Draw the grid
 		drawGrid(ctx!, canvas.width, canvas.height)
 
-		// Mettre à jour et dessiner les points
+		/**
+		 * Update and render all particles
+		 */
 		dots.forEach((dot) => {
 			dot.update()
 			dot.draw(ctx!)
 		})
 
-		// Dessiner les connexions
+		// Draw connections
 		drawConnections(dots, ctx!)
 
-		// Continuer l'animation
+		// Continue animation
 		backgroundAnimation = requestAnimationFrame(animate)
 	}
 
@@ -158,18 +178,20 @@ onMounted(() => {
 })
 
 onBeforeUnmount(() => {
-	// Nettoyer les animations en cours
+	// Clean up running animations
 	if (backgroundAnimation !== null) {
 		cancelAnimationFrame(backgroundAnimation)
 	}
 
-	// Nettoyer les écouteurs d'événements
+	/**
+	 * Clean up event listeners on unmount
+	 */
 	window.removeEventListener('resize', () => {});
 })
 </script>
 
 <template>
-	<!-- Utiliser un conteneur spécial pour l'arrière-plan -->
+	<!-- Use special container for background -->
 	<div class="animated-background-container">
 		<canvas ref="canvasRef" class="animated-background-canvas"></canvas>
 	</div>
@@ -180,7 +202,9 @@ onBeforeUnmount(() => {
 html, body {
 	margin: 0;
 	padding: 0;
-	/* Supprimer explicitement tout fond qui pourrait interférer */
+	/**
+	 * Explicitly remove any background that could interfere
+	 */
 	background: transparent !important;
 }
 
@@ -199,7 +223,7 @@ html, body {
 	height: 100vh;
 	z-index: -9999;
 	pointer-events: none;
-	overflow: hidden; /* Empêcher tout débordement */
+	overflow: hidden; /* Prevent any overflow */
 }
 
 .animated-background-canvas {

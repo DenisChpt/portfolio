@@ -23,14 +23,14 @@ const getCurrentLanguage = () => {
 	return languages.find((lang) => lang.code === locale.value) || languages[0]
 }
 
-// Fermer le menu si on clique ailleurs
-const closeMenu = (e: MouseEvent) => {
+// Close menu when clicking elsewhere
+const closeMenu = () => {
 	if (isOpen.value) {
 		isOpen.value = false
 	}
 }
 
-// Ajouter un événement click global quand le menu est ouvert
+// Add global click event when menu is open
 watch(isOpen, (newVal) => {
 	if (newVal) {
 		setTimeout(() => {

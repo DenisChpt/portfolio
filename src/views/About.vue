@@ -1,17 +1,58 @@
 <script setup lang="ts">
+import { computed } from 'vue'
 import { useI18n } from 'vue-i18n'
 import { usePageAnimation } from '@/composables/useAnimation'
-import { EXPERIENCES, EDUCATION, SKILLS } from '@/constants/experience'
+import { PROGRAMMING_SKILLS, type ProgrammingSkill } from '@/constants/experience'
 
-const { t } = useI18n()
+const { t, tm } = useI18n()
 
 // Use our animation composable
 usePageAnimation('.about-window', 0.2)
 
-// Get the data from our constants
-const experiences = EXPERIENCES
-const education = EDUCATION
-const skills = SKILLS
+// Get programming skills
+const programmingSkills = PROGRAMMING_SKILLS
+
+// Function to get skill level color - following portfolio gradient theme
+const getSkillLevelColor = (level: ProgrammingSkill['level']) => {
+	switch (level) {
+		case 'expert':
+			return 'from-blue-500 to-blue-600 border-blue-500/30 shadow-blue-500/20'
+		case 'advanced':
+			return 'from-purple-500 to-blue-500 border-purple-500/30 shadow-purple-500/20'
+		case 'intermediate':
+			return 'from-pink-500 to-purple-500 border-pink-500/30 shadow-pink-500/20'
+		case 'beginner':
+			return 'from-pink-400 to-pink-500 border-pink-400/30 shadow-pink-400/20'
+		default:
+			return 'from-gray-500 to-gray-600 border-gray-500/30'
+	}
+}
+
+// Get experiences from i18n
+interface ExperienceItem {
+	company: string
+	role: string
+	period: string
+	description: string
+}
+
+const experiences = computed((): ExperienceItem[] => {
+	const items = tm('about.experienceItems') as any
+	return Array.isArray(items) ? items : []
+})
+
+// Get education from i18n
+interface EducationItem {
+	institution: string
+	degree: string
+	period: string
+	description: string
+}
+
+const education = computed((): EducationItem[] => {
+	const items = tm('about.educationItems') as any
+	return Array.isArray(items) ? items : []
+})
 </script>
 
 <template>
@@ -60,7 +101,7 @@ const skills = SKILLS
 								</div>
 							</div>
 						</div>
-						
+
 						<!-- Timeline items with vertical line -->
 						<div class="space-y-8 relative">
 							<!-- Central vertical line - only for experience section -->
@@ -68,13 +109,13 @@ const skills = SKILLS
 							<div v-for="(exp, index) in experiences" :key="exp.company" class="relative experience-item">
 								<!-- Timeline dot aligned with top of cards -->
 								<div class="timeline-dot absolute left-1/2 transform -translate-x-1/2 top-0 w-4 h-4 bg-gradient-to-r from-indigo-500 to-purple-500 rounded-full border-4 border-gray-900 z-10 hidden lg:block transition-all duration-300"></div>
-								
+
 								<div class="grid grid-cols-1 lg:grid-cols-2 gap-8">
 									<!-- Left side content (Profile and Skills for first two items) -->
 									<div class="lg:pr-8">
 										<div v-if="index === 0" class="relative bg-gray-800/30 backdrop-blur-sm rounded-2xl border border-gray-700/50 p-6 lg:ml-auto lg:max-w-md description-card hover:bg-gray-800/50 hover:border-indigo-500/50 hover:shadow-2xl hover:shadow-indigo-500/10 hover:-translate-y-1 transition-all duration-300 overflow-hidden">
 											<h2 class="text-xl font-bold text-transparent bg-clip-text bg-gradient-to-r from-indigo-400 to-purple-400 mb-4">
-												Profile
+												{{ t('about.profile') }}
 											</h2>
 											<div class="space-y-4 text-gray-300">
 												<div class="flex items-center gap-3">
@@ -84,8 +125,8 @@ const skills = SKILLS
 														</svg>
 													</div>
 													<div>
-														<p class="text-sm text-gray-400">Current Position</p>
-														<p class="font-medium">CI/CD Engineer at Thales</p>
+														<p class="text-sm text-gray-400">{{ t('about.currentPosition') }}</p>
+														<p class="font-medium">Mathematics and Computer Science Engineer</p>
 													</div>
 												</div>
 												<div class="flex items-center gap-3">
@@ -96,40 +137,36 @@ const skills = SKILLS
 														</svg>
 													</div>
 													<div>
-														<p class="text-sm text-gray-400">Location</p>
+														<p class="text-sm text-gray-400">{{ t('about.location') }}</p>
 														<p class="font-medium">France</p>
 													</div>
 												</div>
 											</div>
 										</div>
-										
+
 										<div v-else-if="index === 1" class="relative bg-gray-800/30 backdrop-blur-sm rounded-2xl border border-gray-700/50 p-6 lg:ml-auto lg:max-w-md description-card hover:bg-gray-800/50 hover:border-indigo-500/50 hover:shadow-2xl hover:shadow-indigo-500/10 hover:-translate-y-1 transition-all duration-300 overflow-hidden">
-											<h2 class="text-xl font-bold text-transparent bg-clip-text bg-gradient-to-r from-indigo-400 to-purple-400 mb-4">
-												{{ t('about.topSkills') }}
+											<h2 class="text-xl font-bold text-transparent bg-clip-text bg-gradient-to-r from-indigo-400 to-purple-400 mb-6">
+												{{ t('about.programmingLanguages') }}
 											</h2>
-											<div class="space-y-4">
-												<div v-for="(skill, skillIndex) in skills.slice(0, 5)" :key="skill.name" class="group">
-													<div class="flex justify-between mb-2">
-														<span class="text-gray-300 font-medium">{{ skill.name }}</span>
-														<span class="text-indigo-400 text-sm">{{ skill.level }}%</span>
-													</div>
-													<div class="relative h-2 bg-gray-700/50 rounded-full overflow-hidden">
-														<div
-															class="absolute h-full bg-gradient-to-r from-indigo-500 to-purple-500 rounded-full transition-all duration-1000 ease-out skill-bar"
-															:style="{ width: `${skill.level}%`, '--index': skillIndex }"
-														></div>
-														<div 
-															class="absolute h-full bg-gradient-to-r from-indigo-400/20 to-purple-400/20 rounded-full blur-sm"
-															:style="{ width: `${skill.level}%` }"
-														></div>
-													</div>
+											<div class="space-y-3">
+												<div v-for="(skill, skillIndex) in programmingSkills" :key="skill.name" 
+													class="flex items-center justify-between p-3 bg-gray-900/30 rounded-xl border border-gray-700/30 hover:bg-gray-900/50 transition-all duration-300 group">
+													<span class="text-gray-200 font-medium text-lg group-hover:text-indigo-300 transition-colors">
+														{{ skill.name }}
+													</span>
+													<span 
+														:class="`px-4 py-1.5 text-sm font-bold rounded-full bg-gradient-to-r ${getSkillLevelColor(skill.level)} border backdrop-blur-sm text-white shadow-lg`"
+														class="transform group-hover:scale-110 group-hover:shadow-xl transition-all duration-300"
+													>
+														{{ t(`about.skillLevels.${skill.level}`) }}
+													</span>
 												</div>
 											</div>
 										</div>
-										
+
 										<div v-else class="hidden lg:block"></div>
 									</div>
-									
+
 									<!-- Right side content (Experience cards) -->
 									<div class="lg:pl-8">
 										<div class="relative bg-gray-800/30 backdrop-blur-sm rounded-xl border border-gray-700/50 p-6 lg:max-w-md experience-card hover:bg-gray-800/50 hover:border-indigo-500/50 hover:shadow-2xl hover:shadow-indigo-500/10 hover:-translate-y-1 transition-all duration-300 overflow-hidden">
@@ -151,13 +188,13 @@ const skills = SKILLS
 							</div>
 						</div>
 					</div>
-					
+
 					<!-- Education Section (without timeline) -->
 					<div>
 						<h2 class="text-2xl font-bold text-transparent bg-clip-text bg-gradient-to-r from-indigo-400 to-purple-400 mb-8 text-center">
 							{{ t('about.education') }}
 						</h2>
-						
+
 						<div class="grid grid-cols-1 lg:grid-cols-2 gap-8">
 							<div
 								v-for="(edu, index) in education"
@@ -191,22 +228,6 @@ const skills = SKILLS
 </template>
 
 <style scoped>
-@keyframes slideInLeft {
-	from {
-		opacity: 0;
-		transform: translateX(-30px);
-	}
-	to {
-		opacity: 1;
-		transform: translateX(0);
-	}
-}
-
-.skill-bar {
-	animation: slideInLeft 1s ease-out forwards;
-	animation-delay: calc(var(--index) * 0.1s);
-}
-
 .delay-1000 {
 	animation-delay: 1s;
 }

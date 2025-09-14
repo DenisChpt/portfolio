@@ -80,7 +80,6 @@ cypress/reports/
 # ——————————————————————————————————————————————————————
 .editorconfig
 .prettierrc.json
-tailwind.config.js
 tsconfig.json
 app.config.ts
 nuxt.config.ts
