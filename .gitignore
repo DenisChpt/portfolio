@@ -25,7 +25,7 @@ dist/
 # Couverture de tests
 # ——————————————————————————————————————————————————————
 coverage/
-test/  # Suppression du dossier de tests s'il est inutile
+test/
 
 # ——————————————————————————————————————————————————————
 # Dépendances
@@ -80,7 +80,6 @@ cypress/reports/
 # ——————————————————————————————————————————————————————
 .editorconfig
 .prettierrc.json
-tsconfig.json
 app.config.ts
 nuxt.config.ts
 developer.json
