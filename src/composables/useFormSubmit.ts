@@ -1,5 +1,11 @@
 import { ref } from 'vue'
 
+// Form behavior constants
+const FORM_CONSTANTS = {
+	DEFAULT_RESET_DELAY_MS: 3000,
+	DEFAULT_SIMULATE_DELAY_MS: 1500,
+} as const
+
 interface FormSubmitOptions {
 	onSuccess?: () => void
 	onError?: (error: any) => void
@@ -19,7 +25,13 @@ export function useFormSubmit<T extends object>(
 	submitFunction?: (values: T) => Promise<any>,
 	options: FormSubmitOptions = {}
 ) {
-	const { onSuccess, onError, resetAfter = true, resetDelay = 3000, simulateDelay = 1500 } = options
+	const {
+		onSuccess,
+		onError,
+		resetAfter = true,
+		resetDelay = FORM_CONSTANTS.DEFAULT_RESET_DELAY_MS,
+		simulateDelay = FORM_CONSTANTS.DEFAULT_SIMULATE_DELAY_MS
+	} = options
 
 	const form = ref<T>({ ...initialValues })
 	const isLoading = ref(false)

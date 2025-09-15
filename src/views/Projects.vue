@@ -323,7 +323,7 @@ watch(
 		<div class="fixed inset-0 -z-10">
 			<div class="absolute inset-0 bg-gradient-to-br from-gray-900 via-indigo-900/10 to-gray-900"></div>
 			<div class="absolute top-40 left-20 w-96 h-96 bg-indigo-500/5 rounded-full blur-3xl animate-pulse"></div>
-			<div class="absolute bottom-40 right-20 w-96 h-96 bg-purple-500/5 rounded-full blur-3xl animate-pulse delay-1000"></div>
+			<div class="absolute bottom-40 right-20 w-96 h-96 bg-purple-500/5 rounded-full blur-3xl animate-pulse [animation-delay:1000ms]"></div>
 		</div>
 		
 		<div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
@@ -434,12 +434,12 @@ watch(
 						:style="{ opacity: 0 }"
 					>
 						<!-- Ultra modern card design -->
-						<div class="card-container relative h-full">
+						<div class="relative h-full">
 							<!-- Glow effect that follows mouse -->
-							<div class="card-glow absolute -inset-0.5 bg-gradient-to-r from-indigo-500 via-purple-500 to-pink-500 rounded-2xl opacity-0 group-hover:opacity-75 blur transition-all duration-500"></div>
+							<div class="absolute -inset-0.5 bg-gradient-to-r from-indigo-500 via-purple-500 to-pink-500 rounded-2xl opacity-0 group-hover:opacity-75 blur transition-all duration-500 bg-[size:200%_200%] animate-gradient"></div>
 							
 							<!-- Main card -->
-							<div class="card-content relative h-full bg-gray-900/90 backdrop-blur-xl rounded-2xl border border-gray-800 overflow-hidden transition-all duration-500 group-hover:border-transparent group-hover:transform group-hover:-translate-y-1 flex flex-col">
+							<div class="relative h-full bg-gray-900/90 backdrop-blur-xl rounded-2xl border border-gray-800 overflow-hidden transition-all duration-500 group-hover:border-transparent group-hover:-translate-y-1 flex flex-col">
 								
 								<!-- Gradient overlay that animates -->
 								<div class="absolute inset-0 bg-gradient-to-br from-indigo-500/5 via-purple-500/5 to-pink-500/5 opacity-0 group-hover:opacity-100 transition-opacity duration-700"></div>
@@ -535,7 +535,7 @@ watch(
 
 			<div
 				ref="projectDetailsRef"
-				class="project-details relative max-w-5xl w-full mx-auto max-h-[90vh] overflow-hidden rounded-3xl"
+				class="relative max-w-5xl w-full mx-auto max-h-[90vh] overflow-hidden rounded-3xl"
 			>
 				<!-- Glassmorphism background -->
 				<div class="absolute inset-0 bg-gray-900/90 backdrop-blur-xl"></div>
@@ -685,84 +685,6 @@ watch(
 </template>
 
 <style scoped>
-.project-card {
-	cursor: pointer;
-	/* All animations are handled by GSAP */
-}
-
-/* Glow effect animation */
-.card-glow {
-	background-size: 200% 200%;
-	animation: gradient-animation 3s ease infinite;
-}
-
-@keyframes gradient-animation {
-	0% {
-		background-position: 0% 50%;
-	}
-	50% {
-		background-position: 100% 50%;
-	}
-	100% {
-		background-position: 0% 50%;
-	}
-}
-
-/* Animated gradient shift for image overlay */
-@keyframes gradient-shift {
-	0%, 100% {
-		opacity: 0.3;
-		transform: translateX(0);
-	}
-	50% {
-		opacity: 0.5;
-		transform: translateX(10px);
-	}
-}
-
-.animate-gradient-shift {
-	animation: gradient-shift 8s ease-in-out infinite;
-}
-
-/* Tech badge hover animation */
-.tech-badge {
-	transform: translateY(0);
-}
-
-.group:hover .tech-badge {
-	animation: float-badge 0.5s ease forwards;
-}
-
-@keyframes float-badge {
-	to {
-		transform: translateY(-2px);
-	}
-}
-
-/* Card container hover effects */
-.card-container {
-	transform-style: preserve-3d;
-	perspective: 1000px;
-}
-
-.card-content {
-	transform: translateZ(0);
-	will-change: transform;
-}
-
-/* Smooth hover lift */
-.group:hover .card-content {
-	transform: translateZ(20px);
-}
-
-.delay-1000 {
-	animation-delay: 1s;
-}
-
-.project-details {
-	transform-origin: center center;
-}
-
 /* Project grid configuration with scrolling */
 .projects-grid {
 	display: grid;
@@ -770,8 +692,10 @@ watch(
 	gap: 2rem;
 	padding: 0.25rem 0.25rem;
 	height: auto;
-	max-height: 60vh; /* Fixed height to force scroll appearance */
+	max-height: 60vh;
 	overflow-y: auto;
+	scrollbar-width: thin;
+	scrollbar-color: rgba(99, 102, 241, 0.3) rgba(30, 41, 59, 0.5);
 }
 
 @media (min-width: 768px) {
@@ -786,14 +710,9 @@ watch(
 	}
 }
 
-/* Improved scrollbar styles for projects grid */
-.projects-grid {
-	scrollbar-width: thin;
-	scrollbar-color: rgba(99, 102, 241, 0.3) rgba(30, 41, 59, 0.5);
-}
-
+/* Scrollbar styles */
 .projects-grid::-webkit-scrollbar {
-	width: 10px; /* Wider scrollbar for better visibility */
+	width: 10px;
 }
 
 .projects-grid::-webkit-scrollbar-track {
@@ -809,18 +728,5 @@ watch(
 
 .projects-grid::-webkit-scrollbar-thumb:hover {
 	background: rgba(99, 102, 241, 0.5);
-}
-
-.input {
-	font-size: 1rem;
-	background: rgba(30, 41, 59, 0.4);
-	border: 1px solid rgba(99, 102, 241, 0.2);
-	box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
-	transition: all 0.3s ease;
-}
-
-.input:focus {
-	border-color: rgba(99, 102, 241, 0.5);
-	box-shadow: 0 0 15px rgba(99, 102, 241, 0.2);
 }
 </style>

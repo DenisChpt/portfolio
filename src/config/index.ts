@@ -13,9 +13,15 @@ export const config = {
 		username: import.meta.env.VITE_LINKEDIN_USERNAME || 'username',
 		url: `https://www.linkedin.com/in/${import.meta.env.VITE_LINKEDIN_USERNAME || 'username'}/`,
 	},
-	
+
 	// API configuration
-	apiUrl: import.meta.env.VITE_API_URL || 'http://localhost:3001/api/contact',
+	// In production: Vercel will handle /api/contact
+	// In development: contact form will show but won't actually send (no server running)
+	apiUrl: import.meta.env.VITE_API_URL || '/api/contact',
+
+	// Feature flags
+	isProduction: import.meta.env.PROD,
+	isDevelopment: import.meta.env.DEV,
 }
 
 // Helper function to get mailto link

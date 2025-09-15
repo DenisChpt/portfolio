@@ -31,7 +31,7 @@ const emit = defineEmits<{
 		]"
 		@click="emit('click', $event)"
 	>
-		<span v-if="loading" class="loading-spinner mr-2" aria-hidden="true"></span>
+		<span v-if="loading" class="animate-spin inline-block w-4 h-4 border-2 border-current border-r-transparent rounded-full mr-2" aria-hidden="true"></span>
 		<slot></slot>
 	</component>
 </template>
@@ -168,19 +168,4 @@ const emit = defineEmits<{
 	cursor: not-allowed;
 }
 
-.loading-spinner {
-	display: inline-block;
-	width: 1rem;
-	height: 1rem;
-	border: 2px solid currentColor;
-	border-right-color: transparent;
-	border-radius: 50%;
-	animation: spin 0.75s linear infinite;
-}
-
-@keyframes spin {
-	to {
-		transform: rotate(360deg);
-	}
-}
 </style>
