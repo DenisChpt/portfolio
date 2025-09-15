@@ -1,0 +1,276 @@
+/**
+ * Mobile-specific optimizations
+ * Performance and UX improvements for smartphones
+ */
+
+/* Reduce motion for better performance and accessibility */
+@media (prefers-reduced-motion: reduce) {
+  * {
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
+    scroll-behavior: auto !important;
+  }
+}
+
+/* Mobile-specific performance optimizations */
+@media (max-width: 768px) {
+  /* Disable complex animations on mobile */
+  .animate-pulse {
+    animation: none;
+    opacity: 0.3;
+  }
+
+  /* Simplify gradient animations */
+  .animate-gradient {
+    animation: gradient 6s ease infinite;
+  }
+
+  /* Optimize backdrop filters for performance */
+  .backdrop-blur-xl {
+    backdrop-filter: blur(12px);
+  }
+
+  .backdrop-blur-lg {
+    backdrop-filter: blur(8px);
+  }
+
+  .backdrop-blur-md {
+    backdrop-filter: blur(6px);
+  }
+
+  .backdrop-blur-sm {
+    backdrop-filter: blur(4px);
+  }
+
+  /* Reduce shadow complexity */
+  .shadow-2xl {
+    box-shadow: 0 10px 25px -5px rgba(0, 0, 0, 0.1);
+  }
+
+  /* Optimize transforms */
+  .hover\:scale-105:hover {
+    transform: scale(1.02);
+  }
+
+  .hover\:scale-110:hover {
+    transform: scale(1.05);
+  }
+
+  /* Disable hover effects on touch devices */
+  @media (hover: none) and (pointer: coarse) {
+    .hover\:scale-105:hover,
+    .hover\:scale-110:hover,
+    .hover\:-translate-y-1:hover,
+    .hover\:-translate-y-2:hover {
+      transform: none;
+    }
+
+    /* Provide visual feedback on tap instead */
+    button:active,
+    a:active,
+    .project-card:active {
+      transform: scale(0.98);
+      opacity: 0.9;
+    }
+  }
+
+  /* Optimize floating animations */
+  @keyframes float {
+    0%, 100% {
+      transform: translate(0, 0);
+    }
+    50% {
+      transform: translate(10px, -10px);
+    }
+  }
+
+  /* Simplify gradient shifts */
+  @keyframes gradientShift {
+    0%, 100% {
+      opacity: 0.2;
+    }
+    50% {
+      opacity: 0.3;
+    }
+  }
+
+  /* Improve scrolling performance */
+  .overflow-y-auto {
+    -webkit-overflow-scrolling: touch;
+    scroll-behavior: smooth;
+  }
+
+  /* Optimize images */
+  img {
+    will-change: auto;
+    transform: translateZ(0);
+  }
+
+  /* Reduce particle effects */
+  .absolute.animate-pulse {
+    display: none;
+  }
+
+  /* Better touch targets */
+  button,
+  a,
+  input,
+  textarea,
+  select {
+    min-height: 44px;
+    padding-top: 8px;
+    padding-bottom: 8px;
+  }
+
+  /* Optimize text rendering */
+  * {
+    text-rendering: optimizeSpeed;
+  }
+
+  h1, h2, h3, h4, h5, h6 {
+    text-rendering: optimizeLegibility;
+  }
+}
+
+/* iOS-specific fixes */
+@supports (-webkit-touch-callout: none) {
+  /* Fix for iOS Safari viewport issues */
+  .min-h-screen {
+    min-height: -webkit-fill-available;
+  }
+
+  /* Fix for iOS input zoom */
+  input[type="text"],
+  input[type="email"],
+  input[type="tel"],
+  input[type="number"],
+  input[type="password"],
+  textarea,
+  select {
+    font-size: 16px !important;
+  }
+
+  /* Fix iOS button appearance */
+  button,
+  input[type="button"],
+  input[type="submit"] {
+    -webkit-appearance: none;
+    appearance: none;
+    border-radius: 0;
+  }
+}
+
+/* Android-specific fixes */
+@media screen and (-webkit-min-device-pixel-ratio: 0) and (min-resolution: .001dpcm) {
+  /* Android Chrome specific styles */
+  input,
+  textarea {
+    -webkit-tap-highlight-color: transparent;
+  }
+}
+
+/* Small mobile devices (< 360px width) */
+@media (max-width: 359px) {
+  /* Even smaller text sizes */
+  .text-4xl {
+    font-size: 1.75rem;
+  }
+
+  .text-3xl {
+    font-size: 1.5rem;
+  }
+
+  .text-2xl {
+    font-size: 1.25rem;
+  }
+
+  .text-xl {
+    font-size: 1.125rem;
+  }
+
+  /* Reduce padding on very small screens */
+  .px-4 {
+    padding-left: 0.75rem;
+    padding-right: 0.75rem;
+  }
+
+  .py-4 {
+    padding-top: 0.75rem;
+    padding-bottom: 0.75rem;
+  }
+}
+
+/* Landscape mobile optimizations */
+@media (max-height: 500px) and (orientation: landscape) {
+  /* Reduce vertical spacing in landscape */
+  .min-h-screen {
+    min-height: 100vh;
+  }
+
+  .pt-24,
+  .pt-32 {
+    padding-top: 3rem;
+  }
+
+  .pb-16 {
+    padding-bottom: 2rem;
+  }
+
+  /* Hide decorative elements in landscape */
+  .absolute.animate-pulse,
+  .absolute.bg-gradient-to-br {
+    display: none;
+  }
+
+  /* Adjust modal height */
+  .max-h-\[90vh\] {
+    max-height: 85vh;
+  }
+}
+
+/* Touch device optimizations */
+@media (pointer: coarse) {
+  /* Larger touch targets */
+  .project-card {
+    cursor: pointer;
+    -webkit-tap-highlight-color: transparent;
+  }
+
+  /* Better spacing for touch */
+  .gap-2 {
+    gap: 0.75rem;
+  }
+
+  .gap-3 {
+    gap: 1rem;
+  }
+
+  /* Improve button active states */
+  button:active,
+  a:active {
+    transition: transform 0.1s ease;
+  }
+}
+
+/* Network-aware optimizations */
+@media (prefers-reduced-data: reduce) {
+  /* Disable non-essential animations */
+  * {
+    animation: none !important;
+    transition: none !important;
+  }
+
+  /* Reduce image quality */
+  img {
+    image-rendering: -webkit-optimize-contrast;
+    image-rendering: crisp-edges;
+  }
+
+  /* Hide decorative elements */
+  .absolute.animate-pulse,
+  .bg-gradient-to-br,
+  .blur-3xl {
+    display: none;
+  }
+}

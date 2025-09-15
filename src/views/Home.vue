@@ -14,29 +14,29 @@ const featuredProjects = computed(() => projectsStore.featuredProjects)
 </script>
 
 <template>
-	<div class="min-h-screen flex items-center justify-center relative overflow-hidden">
+	<div class="min-h-screen flex items-center justify-center relative overflow-hidden overflow-x-hidden">
 		<!-- Animated gradient background -->
 		<div class="absolute inset-0 bg-gradient-to-br from-gray-900 via-indigo-900/20 to-gray-900"></div>
 		<div class="absolute inset-0">
-			<div class="absolute top-20 left-10 w-72 h-72 bg-indigo-500/10 rounded-full blur-3xl animate-pulse"></div>
-			<div class="absolute bottom-20 right-10 w-96 h-96 bg-purple-500/10 rounded-full blur-3xl animate-pulse [animation-delay:1000ms]"></div>
-			<div class="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[40rem] h-[40rem] bg-blue-500/5 rounded-full blur-3xl animate-pulse [animation-delay:2000ms]"></div>
+			<div class="absolute top-20 left-10 w-48 sm:w-72 h-48 sm:h-72 bg-indigo-500/10 rounded-full blur-3xl animate-pulse"></div>
+			<div class="absolute bottom-20 right-10 w-64 sm:w-96 h-64 sm:h-96 bg-purple-500/10 rounded-full blur-3xl animate-pulse [animation-delay:1000ms]"></div>
+			<div class="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[20rem] sm:w-[30rem] lg:w-[40rem] h-[20rem] sm:h-[30rem] lg:h-[40rem] bg-blue-500/5 rounded-full blur-3xl animate-pulse [animation-delay:2000ms]"></div>
 		</div>
 
-		<div class="home-content relative z-10 max-w-7xl mx-auto p-8 w-full">
+		<div class="home-content relative z-10 max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8 w-full">
 			<div class="text-center mb-16 pt-20">
 				<!-- Hero Section with better typography -->
-				<h1 class="text-6xl md:text-8xl font-bold mb-6 leading-tight">
-					<span class="block text-transparent bg-clip-text bg-gradient-to-r from-indigo-400 via-purple-400 to-pink-400 bg-[size:200%_200%] animate-gradient">
+				<h1 class="text-4xl xs:text-5xl sm:text-6xl md:text-7xl lg:text-8xl font-bold mb-6 leading-tight px-4">
+					<span class="block text-transparent bg-clip-text bg-gradient-to-r from-indigo-400 via-purple-400 to-pink-400 bg-[size:200%_200%] animate-gradient break-words">
 						Denis Chaput
 					</span>
 				</h1>
 
-				<p class="text-2xl md:text-4xl text-gray-300 mb-4 font-light">
+				<p class="text-xl xs:text-2xl sm:text-3xl md:text-4xl text-gray-300 mb-4 font-light px-4">
 					{{ t('home.subtitle') }}
 				</p>
 
-				<p class="text-xl text-gray-400 max-w-4xl mx-auto mb-12">
+				<p class="text-base xs:text-lg sm:text-xl text-gray-400 max-w-4xl mx-auto mb-12 px-4">
 					{{ t('home.passion') }}
 				</p>
 			</div>
@@ -52,15 +52,15 @@ const featuredProjects = computed(() => projectsStore.featuredProjects)
 					<div class="w-24 h-1 bg-gradient-to-r from-indigo-500 to-purple-500 mx-auto rounded-full"></div>
 				</div>
 
-				<div class="grid grid-cols-1 lg:grid-cols-3 gap-8">
+				<div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4 sm:gap-6 lg:gap-8 px-4 sm:px-0 auto-rows-fr">
 					<div
 						v-for="(project, index) in featuredProjects.slice(0, 3)"
 						:key="project.id"
-						class="group relative flex"
+						class="group relative flex h-full"
 						:style="{ animationDelay: `${index * 0.1}s` }"
 					>
-						<router-link :to="{ name: 'projects', query: { project: project.id } }" class="flex w-full">
-							<div class="relative bg-gray-800/30 backdrop-blur-sm rounded-2xl border border-gray-700/50 overflow-hidden transition-all duration-500 hover:border-indigo-500/50 hover:shadow-2xl hover:shadow-indigo-500/10 hover:-translate-y-2 flex flex-col w-full">
+						<router-link :to="{ name: 'projects', query: { project: project.id } }" class="flex w-full h-full">
+							<div class="relative bg-gray-800/30 backdrop-blur-sm rounded-2xl border border-gray-700/50 overflow-hidden transition-all duration-500 hover:border-indigo-500/50 hover:shadow-2xl hover:shadow-indigo-500/10 hover:-translate-y-2 flex flex-col w-full h-full">
 								<!-- Project Image with overlay -->
 								<div class="relative h-48 overflow-hidden flex-shrink-0">
 									<div class="absolute inset-0 bg-gradient-to-br from-indigo-500/20 to-purple-500/20"></div>
@@ -80,16 +80,16 @@ const featuredProjects = computed(() => projectsStore.featuredProjects)
 								</div>
 
 								<!-- Content -->
-								<div class="p-6 flex flex-col flex-grow">
+								<div class="p-6 flex flex-col flex-grow h-full">
 									<h3 class="text-xl font-bold text-white mb-3 group-hover:text-indigo-300 transition-colors">
 										{{ project.title }}
 									</h3>
-									<p class="text-gray-400 text-sm mb-4 line-clamp-3 flex-grow">
+									<p class="text-gray-400 text-sm mb-4 line-clamp-3 flex-grow min-h-[3.75rem]">
 										{{ project.description }}
 									</p>
 
 									<!-- Tech stack -->
-									<div class="flex flex-wrap gap-2 mb-4">
+									<div class="flex flex-wrap gap-2 mb-4 min-h-[2rem]">
 										<span
 											v-for="tech in project.tech.slice(0, 3)"
 											:key="tech"
@@ -103,7 +103,7 @@ const featuredProjects = computed(() => projectsStore.featuredProjects)
 									</div>
 
 									<!-- View project link -->
-									<div class="flex items-center text-indigo-400 font-medium text-sm group-hover:text-indigo-300 transition-colors mt-auto">
+									<div class="flex items-center text-indigo-400 font-medium text-sm group-hover:text-indigo-300 transition-colors mt-auto pt-2">
 										<span>{{ t('projects.viewProject') }}</span>
 										<svg
 											xmlns="http://www.w3.org/2000/svg"
@@ -122,10 +122,10 @@ const featuredProjects = computed(() => projectsStore.featuredProjects)
 				</div>
 
 				<!-- CTA Buttons repeated -->
-				<div class="flex flex-wrap justify-center gap-6 mt-12">
+				<div class="flex flex-col sm:flex-row justify-center gap-4 sm:gap-6 mt-12 px-4 sm:px-0">
 					<router-link
 						to="/projects"
-						class="group relative inline-flex items-center px-8 py-4 overflow-hidden rounded-full bg-gradient-to-r from-indigo-500 to-purple-500 text-white font-medium shadow-lg transition-all duration-300 hover:scale-105 hover:shadow-xl hover:shadow-indigo-500/25"
+						class="group relative inline-flex items-center justify-center px-6 sm:px-8 py-4 min-h-[56px] overflow-hidden rounded-full bg-gradient-to-r from-indigo-500 to-purple-500 text-white font-medium shadow-lg transition-all duration-300 hover:scale-105 hover:shadow-xl hover:shadow-indigo-500/25 w-full sm:w-auto"
 					>
 						<span class="relative z-10 flex items-center">
 							{{ t('home.viewProjects') }}
@@ -147,7 +147,7 @@ const featuredProjects = computed(() => projectsStore.featuredProjects)
 
 					<router-link
 						to="/contact"
-						class="group inline-flex items-center px-8 py-4 rounded-full border-2 border-gray-600 text-gray-300 font-medium transition-all duration-300 hover:border-indigo-500 hover:text-indigo-300 hover:scale-105 hover:shadow-lg hover:shadow-indigo-500/10 backdrop-blur-sm"
+						class="group inline-flex items-center justify-center px-6 sm:px-8 py-4 min-h-[56px] rounded-full border-2 border-gray-600 text-gray-300 font-medium transition-all duration-300 hover:border-indigo-500 hover:text-indigo-300 hover:scale-105 hover:shadow-lg hover:shadow-indigo-500/10 backdrop-blur-sm w-full sm:w-auto"
 					>
 						<span class="flex items-center">
 							{{ t('home.contactMe') }}
@@ -183,5 +183,12 @@ const featuredProjects = computed(() => projectsStore.featuredProjects)
 
 .skill-badge {
 	@apply px-3 py-1 bg-gradient-to-r from-indigo-500/20 to-purple-500/20 text-indigo-300 rounded-full border border-indigo-500/30 text-xs font-medium backdrop-blur-sm animate-slide-in opacity-0;
+}
+
+/* Ensure equal height cards on desktop */
+@media (min-width: 1024px) {
+	.grid.auto-rows-fr {
+		grid-auto-rows: 1fr;
+	}
 }
 </style>

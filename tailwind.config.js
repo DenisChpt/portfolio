@@ -44,6 +44,10 @@ export default {
   ],
   theme: {
     extend: {
+      screens: {
+        'xs': '480px',
+        '2xs': '360px',
+      },
       colors: {
         primary: {
           50: '#f0f9ff',
