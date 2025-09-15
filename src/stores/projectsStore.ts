@@ -5,6 +5,33 @@ import type { Project } from '@/types/project'
 import { PROJECTS_METADATA } from '@/constants/projects'
 
 /**
+ * Safely get saved filters from sessionStorage
+ * @returns Saved filter technologies or empty array if error
+ */
+const getSavedFilterTechs = (): string[] => {
+	try {
+		const saved = sessionStorage.getItem('projectFilterTechs')
+		return saved ? JSON.parse(saved) : []
+	} catch (error) {
+		console.warn('Failed to load saved filter technologies:', error)
+		return []
+	}
+}
+
+/**
+ * Safely get saved search query from sessionStorage
+ * @returns Saved search query or empty string if error
+ */
+const getSavedSearchQuery = (): string => {
+	try {
+		return sessionStorage.getItem('projectSearchQuery') || ''
+	} catch (error) {
+		console.warn('Failed to load saved search query:', error)
+		return ''
+	}
+}
+
+/**
  * Store for project management
  * Combines metadata from constants with text content from i18n
  */
@@ -13,13 +40,10 @@ export const useProjectsStore = defineStore('projects', () => {
 
 	// State - with session persistence for filters
 	const selectedProjectId = ref<number | null>(null)
-	
-	// Load persisted filters from sessionStorage
-	const savedFilterTechs = sessionStorage.getItem('projectFilterTechs')
-	const savedSearchQuery = sessionStorage.getItem('projectSearchQuery')
-	
-	const filterTechs = ref<string[]>(savedFilterTechs ? JSON.parse(savedFilterTechs) : [])
-	const searchQuery = ref(savedSearchQuery || '')
+
+	// Load persisted filters from sessionStorage with error handling
+	const filterTechs = ref<string[]>(getSavedFilterTechs())
+	const searchQuery = ref(getSavedSearchQuery())
 
 	/**
 	 * Combine metadata with i18n translations to create full project objects
@@ -101,19 +125,35 @@ export const useProjectsStore = defineStore('projects', () => {
 	// Alias for backward compatibility
 	const selectProject = setSelectedProject
 
+	/**
+	 * Set filter technologies and persist to sessionStorage
+	 * @param techs Array of technology names to filter by
+	 */
 	const setFilterTechs = (techs: string[]) => {
 		filterTechs.value = techs
-		// Persist to sessionStorage
-		sessionStorage.setItem('projectFilterTechs', JSON.stringify(techs))
+		// Persist to sessionStorage with error handling
+		try {
+			sessionStorage.setItem('projectFilterTechs', JSON.stringify(techs))
+		} catch (error) {
+			console.warn('Failed to save filter technologies:', error)
+		}
 	}
 	
 	// Alias for backward compatibility
 	const setMultipleTechFilters = setFilterTechs
 
+	/**
+	 * Set search query and persist to sessionStorage
+	 * @param query Search query string
+	 */
 	const setSearchQuery = (query: string) => {
 		searchQuery.value = query
-		// Persist to sessionStorage
-		sessionStorage.setItem('projectSearchQuery', query)
+		// Persist to sessionStorage with error handling
+		try {
+			sessionStorage.setItem('projectSearchQuery', query)
+		} catch (error) {
+			console.warn('Failed to save search query:', error)
+		}
 	}
 
 	const clearFilters = () => {
