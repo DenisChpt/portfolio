@@ -55,7 +55,7 @@ usePageAnimation('.contact-window', 0.2)
 </script>
 
 <template>
-	<div class="min-h-screen pt-32 pb-16">
+	<div class="min-h-screen pt-24 sm:pt-32 pb-16">
 		<!-- Animated background -->
 		<div class="fixed inset-0 -z-10">
 			<div class="absolute inset-0 bg-gradient-to-br from-gray-900 via-indigo-900/10 to-gray-900"></div>
@@ -65,22 +65,22 @@ usePageAnimation('.contact-window', 0.2)
 		
 		<div class="contact-window max-w-6xl mx-auto px-4 sm:px-6 lg:px-8">
 			<!-- Header -->
-			<div class="text-center mb-12">
-				<h1 class="text-5xl md:text-7xl font-bold mb-6">
+			<div class="text-center mb-8 sm:mb-12">
+				<h1 class="text-4xl sm:text-5xl md:text-6xl lg:text-7xl font-bold mb-4 sm:mb-6 px-4">
 					<span class="text-transparent bg-clip-text bg-gradient-to-r from-indigo-400 via-purple-400 to-pink-400">
 						{{ t('contact.title') }}
 					</span>
 				</h1>
-				<p class="text-xl text-gray-300 max-w-3xl mx-auto">
+				<p class="text-lg sm:text-xl text-gray-300 max-w-3xl mx-auto px-4">
 					{{ t('contact.subtitle') }}
 				</p>
 				<div class="w-32 h-1 bg-gradient-to-r from-indigo-500 to-purple-500 mx-auto mt-6 rounded-full"></div>
 			</div>
 			
-			<div class="grid grid-cols-1 lg:grid-cols-2 gap-12">
+			<div class="grid grid-cols-1 lg:grid-cols-2 gap-8 lg:gap-12">
 				<!-- Contact Info -->
 				<div class="space-y-8">
-					<div class="bg-gray-800/30 backdrop-blur-sm rounded-2xl border border-gray-700/50 p-8">
+					<div class="bg-gray-800/30 backdrop-blur-sm rounded-2xl border border-gray-700/50 p-6 sm:p-8">
 						<h2 class="text-2xl font-bold text-transparent bg-clip-text bg-gradient-to-r from-indigo-400 to-purple-400 mb-6">
 							{{ t('contact.getInTouchTitle') }}
 						</h2>
@@ -114,7 +114,7 @@ usePageAnimation('.contact-window', 0.2)
 					</div>
 
 					<!-- Social Links -->
-					<div class="bg-gray-800/30 backdrop-blur-sm rounded-2xl border border-gray-700/50 p-8">
+					<div class="bg-gray-800/30 backdrop-blur-sm rounded-2xl border border-gray-700/50 p-6 sm:p-8">
 						<h2 class="text-2xl font-bold text-transparent bg-clip-text bg-gradient-to-r from-indigo-400 to-purple-400 mb-6">
 							{{ t('contact.connectWithMe') }}
 						</h2>
@@ -169,7 +169,7 @@ usePageAnimation('.contact-window', 0.2)
 								v-model="form.name"
 								type="text"
 								id="name"
-								class="w-full px-4 py-3 bg-gray-900/50 border border-gray-700/50 rounded-xl text-gray-200 placeholder-gray-500 focus:outline-none focus:border-indigo-500/50 focus:ring-2 focus:ring-indigo-500/20 transition-all duration-300"
+								class="w-full px-4 py-3 min-h-[48px] bg-gray-900/50 border border-gray-700/50 rounded-xl text-gray-200 text-base placeholder-gray-500 focus:outline-none focus:border-indigo-500/50 focus:ring-2 focus:ring-indigo-500/20 transition-all duration-300"
 								:placeholder="t('contact.namePlaceholder')"
 								required
 								:disabled="isLoading"
@@ -185,7 +185,7 @@ usePageAnimation('.contact-window', 0.2)
 								v-model="form.email"
 								type="email"
 								id="email"
-								class="w-full px-4 py-3 bg-gray-900/50 border border-gray-700/50 rounded-xl text-gray-200 placeholder-gray-500 focus:outline-none focus:border-indigo-500/50 focus:ring-2 focus:ring-indigo-500/20 transition-all duration-300"
+								class="w-full px-4 py-3 min-h-[48px] bg-gray-900/50 border border-gray-700/50 rounded-xl text-gray-200 text-base placeholder-gray-500 focus:outline-none focus:border-indigo-500/50 focus:ring-2 focus:ring-indigo-500/20 transition-all duration-300"
 								:placeholder="t('contact.emailPlaceholder')"
 								required
 								:disabled="isLoading"
@@ -219,11 +219,11 @@ usePageAnimation('.contact-window', 0.2)
 							<p class="text-green-400 text-sm">{{ t('contact.messageSent') }}</p>
 						</div>
 
-						<div class="flex justify-end">
+						<div class="flex justify-center sm:justify-end">
 							<button
 								type="submit"
 								:disabled="isLoading || isSuccess"
-								class="px-8 py-3 bg-gradient-to-r from-indigo-500 to-purple-500 text-white font-medium rounded-xl hover:shadow-lg hover:shadow-indigo-500/25 transition-all duration-300 disabled:opacity-50 disabled:cursor-not-allowed"
+								class="w-full sm:w-auto px-6 sm:px-8 py-3 min-h-[48px] bg-gradient-to-r from-indigo-500 to-purple-500 text-white font-medium rounded-xl hover:shadow-lg hover:shadow-indigo-500/25 active:scale-95 transition-all duration-300 disabled:opacity-50 disabled:cursor-not-allowed"
 							>
 								<span v-if="!isLoading">{{ t('contact.send') }}</span>
 								<span v-else class="flex items-center gap-2">

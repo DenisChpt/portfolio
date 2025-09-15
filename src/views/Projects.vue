@@ -318,12 +318,12 @@ watch(
 </script>
 
 <template>
-	<div class="min-h-screen pt-32 pb-16">
+	<div class="min-h-screen pt-24 sm:pt-32 pb-16">
 		<!-- Animated background -->
 		<div class="fixed inset-0 -z-10">
 			<div class="absolute inset-0 bg-gradient-to-br from-gray-900 via-indigo-900/10 to-gray-900"></div>
-			<div class="absolute top-40 left-20 w-96 h-96 bg-indigo-500/5 rounded-full blur-3xl animate-pulse"></div>
-			<div class="absolute bottom-40 right-20 w-96 h-96 bg-purple-500/5 rounded-full blur-3xl animate-pulse [animation-delay:1000ms]"></div>
+			<div class="absolute top-40 left-10 sm:left-20 w-64 sm:w-96 h-64 sm:h-96 bg-indigo-500/5 rounded-full blur-3xl animate-pulse"></div>
+			<div class="absolute bottom-40 right-10 sm:right-20 w-64 sm:w-96 h-64 sm:h-96 bg-purple-500/5 rounded-full blur-3xl animate-pulse [animation-delay:1000ms]"></div>
 		</div>
 		
 		<div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
@@ -331,13 +331,13 @@ watch(
 
 			<!-- Main content -->
 			<div v-else>
-				<div ref="headerRef" class="text-center mb-12" :style="{ opacity: 0 }">
-					<h1 class="text-5xl md:text-7xl font-bold mb-6">
+				<div ref="headerRef" class="text-center mb-8 sm:mb-12" :style="{ opacity: 0 }">
+					<h1 class="text-4xl sm:text-5xl md:text-6xl lg:text-7xl font-bold mb-4 sm:mb-6 px-4">
 						<span class="text-transparent bg-clip-text bg-gradient-to-r from-indigo-400 via-purple-400 to-pink-400">
 							{{ t('projects.title') }}
 						</span>
 					</h1>
-					<p class="text-xl text-gray-300 max-w-3xl mx-auto">
+					<p class="text-lg sm:text-xl text-gray-300 max-w-3xl mx-auto px-4">
 						{{ t('projects.description') }}
 					</p>
 					<div class="w-32 h-1 bg-gradient-to-r from-indigo-500 to-purple-500 mx-auto mt-6 rounded-full"></div>
@@ -350,19 +350,19 @@ watch(
 					:style="{ opacity: 0 }"
 				>
 					<!-- Search bar on its own line -->
-					<div class="w-full max-w-2xl mx-auto">
+					<div class="w-full max-w-2xl mx-auto px-4 sm:px-0">
 						<div class="relative">
 							<input
 								v-model="searchQuery"
 								@input="handleSearch"
 								type="text"
 								placeholder="Search projects..."
-								class="input w-full pr-10 text-base py-3"
+								class="input w-full pr-12 text-base py-3 min-h-[48px]"
 							/>
 							<button
 								v-if="searchQuery"
 								@click="clearFilters"
-								class="absolute right-3 top-1/2 transform -translate-y-1/2 text-gray-400 hover:text-white transition-colors duration-300"
+								class="absolute right-0 top-0 h-full px-3 min-w-[44px] flex items-center justify-center text-gray-400 hover:text-white transition-colors duration-300"
 							>
 								<svg
 									xmlns="http://www.w3.org/2000/svg"
@@ -381,12 +381,12 @@ watch(
 					</div>
 
 					<!-- Tech filters on their own line -->
-					<div class="flex flex-wrap justify-center gap-3">
+					<div class="flex flex-wrap justify-center gap-2 sm:gap-3 px-4 sm:px-0">
 						<button
 							v-for="tech in projectsStore.allTechnologies"
 							:key="tech"
 							@click="handleTechFilter(tech)"
-							class="px-4 py-2 text-sm rounded-full border transition-all duration-300"
+							class="px-3 sm:px-4 py-2 min-h-[40px] text-xs sm:text-sm rounded-full border transition-all duration-300"
 							:class="[
 								getTechColor(tech),
 								selectedTechs.has(tech) 
@@ -424,7 +424,7 @@ watch(
 				</div>
 
 				<!-- Projects grid with modern cards -->
-				<div v-else ref="projectsGridRef" class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
+				<div v-else ref="projectsGridRef" class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4 sm:gap-6 lg:gap-8">
 					<div
 						v-for="(project, index) in projectsStore.filteredProjects"
 						:key="project.id"
@@ -529,13 +529,13 @@ watch(
 		<!-- Project Details Modal with modern glassmorphism style -->
 		<div
 			v-if="projectsStore.selectedProject"
-			class="fixed inset-0 z-50 flex items-center justify-center p-4"
+			class="fixed inset-0 z-50 flex items-center justify-center p-0 sm:p-4"
 		>
 			<div ref="modalBackdropRef" class="absolute inset-0 bg-black/60 backdrop-blur-md" @click="closeProject"></div>
 
 			<div
 				ref="projectDetailsRef"
-				class="relative max-w-5xl w-full mx-auto max-h-[90vh] overflow-hidden rounded-3xl"
+				class="relative max-w-5xl w-full mx-auto h-screen sm:h-auto sm:max-h-[90vh] overflow-hidden sm:rounded-3xl"
 			>
 				<!-- Glassmorphism background -->
 				<div class="absolute inset-0 bg-gray-900/90 backdrop-blur-xl"></div>
@@ -545,11 +545,11 @@ watch(
 				<div class="absolute inset-0 rounded-3xl border border-indigo-500/20"></div>
 				
 				<!-- Content -->
-				<div class="relative z-10 p-8 overflow-y-auto max-h-[90vh]">
+				<div class="relative z-10 p-4 sm:p-6 lg:p-8 overflow-y-auto h-screen sm:h-auto sm:max-h-[90vh]">
 					<!-- Header -->
 					<div class="flex justify-between items-start mb-8">
 						<div>
-							<h2 class="text-4xl font-bold mb-2">
+							<h2 class="text-2xl sm:text-3xl lg:text-4xl font-bold mb-2">
 								<span class="text-transparent bg-clip-text bg-gradient-to-r from-indigo-400 via-purple-400 to-pink-400">
 									{{ projectsStore.selectedProject.title }}
 								</span>
@@ -558,7 +558,7 @@ watch(
 						</div>
 						<button
 							@click="closeProject"
-							class="text-gray-400 hover:text-white transition-all duration-300 p-3 rounded-full hover:bg-indigo-500/20 hover:rotate-90 transform"
+							class="text-gray-400 hover:text-white transition-all duration-300 p-2 sm:p-3 min-w-[44px] min-h-[44px] rounded-full hover:bg-indigo-500/20 hover:rotate-90 transform"
 							aria-label="Close project details"
 						>
 							<svg class="w-6 h-6" fill="none" viewBox="0 0 24 24" stroke="currentColor">
@@ -573,7 +573,7 @@ watch(
 					</div>
 
 					<!-- Main content -->
-					<div class="grid grid-cols-1 lg:grid-cols-2 gap-8 mb-8">
+					<div class="grid grid-cols-1 lg:grid-cols-2 gap-6 sm:gap-8 mb-6 sm:mb-8">
 						<!-- Left column - Image and tech -->
 						<div class="space-y-6">
 							<div 
