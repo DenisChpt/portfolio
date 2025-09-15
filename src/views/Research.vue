@@ -104,24 +104,24 @@ const getVenue = (paper: any) => {
 </script>
 
 <template>
-	<div class="min-h-screen pt-32 pb-16">
+	<div class="min-h-screen pt-24 sm:pt-32 pb-16">
 		<!-- Animated background -->
 		<div class="fixed inset-0 -z-10">
 			<div class="absolute inset-0 bg-gradient-to-br from-gray-900 via-indigo-900/10 to-gray-900"></div>
-			<div class="absolute top-48 left-32 w-96 h-96 bg-purple-500/5 rounded-full blur-3xl animate-pulse"></div>
-			<div class="absolute bottom-48 right-32 w-96 h-96 bg-indigo-500/5 rounded-full blur-3xl animate-pulse [animation-delay:1000ms]"></div>
+			<div class="absolute top-48 left-10 sm:left-32 w-64 sm:w-96 h-64 sm:h-96 bg-purple-500/5 rounded-full blur-3xl animate-pulse"></div>
+			<div class="absolute bottom-48 right-10 sm:right-32 w-64 sm:w-96 h-64 sm:h-96 bg-indigo-500/5 rounded-full blur-3xl animate-pulse [animation-delay:1000ms]"></div>
 		</div>
 		
 		<div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
 			<div class="research-section">
 				<!-- Header -->
-				<div class="text-center mb-12">
-					<h1 class="text-5xl md:text-7xl font-bold mb-6">
+				<div class="text-center mb-8 sm:mb-12">
+					<h1 class="text-4xl sm:text-5xl md:text-6xl lg:text-7xl font-bold mb-4 sm:mb-6 px-4">
 						<span class="text-transparent bg-clip-text bg-gradient-to-r from-indigo-400 via-purple-400 to-pink-400">
 							{{ t('research.title') }}
 						</span>
 					</h1>
-					<p class="text-xl text-gray-300 max-w-3xl mx-auto">
+					<p class="text-lg sm:text-xl text-gray-300 max-w-3xl mx-auto px-4">
 						{{ t('research.description') }}
 					</p>
 					<div class="w-32 h-1 bg-gradient-to-r from-indigo-500 to-purple-500 mx-auto mt-6 rounded-full"></div>
@@ -146,7 +146,7 @@ const getVenue = (paper: any) => {
 									v-model="searchQuery"
 									type="text"
 									:placeholder="t('research.searchPlaceholder')"
-									class="w-full pl-12 pr-4 py-3 bg-gray-900/50 border border-gray-700/50 rounded-xl text-gray-200 placeholder-gray-500 focus:outline-none focus:border-indigo-500/50 focus:ring-2 focus:ring-indigo-500/20 transition-all duration-300"
+									class="w-full pl-12 pr-4 py-3 min-h-[48px] bg-gray-900/50 border border-gray-700/50 rounded-xl text-gray-200 text-base placeholder-gray-500 focus:outline-none focus:border-indigo-500/50 focus:ring-2 focus:ring-indigo-500/20 transition-all duration-300"
 								/>
 							</div>
 						</div>
@@ -154,7 +154,7 @@ const getVenue = (paper: any) => {
 						<!-- Sort Dropdown -->
 						<select
 							v-model="sortBy"
-							class="px-5 py-3 bg-gray-900/50 border border-gray-700/50 rounded-xl text-gray-200 focus:outline-none focus:border-indigo-500/50 focus:ring-2 focus:ring-indigo-500/20 transition-all duration-300 cursor-pointer"
+							class="px-5 py-3 min-h-[48px] bg-gray-900/50 border border-gray-700/50 rounded-xl text-gray-200 text-base focus:outline-none focus:border-indigo-500/50 focus:ring-2 focus:ring-indigo-500/20 transition-all duration-300 cursor-pointer"
 						>
 							<option value="date">{{ t('research.sortByDate') }}</option>
 							<option value="citations">{{ t('research.sortByCitations') }}</option>
@@ -168,7 +168,7 @@ const getVenue = (paper: any) => {
 							:key="topic"
 							@click="selectedTopic = topic"
 							:class="[
-								'px-4 py-2 rounded-xl text-sm font-medium transition-all duration-300',
+								'px-3 sm:px-4 py-2 min-h-[40px] rounded-xl text-xs sm:text-sm font-medium transition-all duration-300',
 								selectedTopic === topic
 									? 'bg-gradient-to-r from-indigo-500 to-purple-500 text-white shadow-lg shadow-indigo-500/25'
 									: 'bg-gray-800/50 text-gray-300 border border-gray-700/50 hover:border-indigo-500/50 hover:text-indigo-300'

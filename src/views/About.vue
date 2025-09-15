@@ -56,23 +56,23 @@ const education = computed((): EducationItem[] => {
 </script>
 
 <template>
-	<div class="min-h-screen pt-32 pb-16">
+	<div class="min-h-screen pt-24 sm:pt-32 pb-16">
 		<!-- Animated background -->
 		<div class="fixed inset-0 -z-10">
 			<div class="absolute inset-0 bg-gradient-to-br from-gray-900 via-indigo-900/10 to-gray-900"></div>
-			<div class="absolute top-32 right-20 w-96 h-96 bg-purple-500/5 rounded-full blur-3xl animate-pulse"></div>
-			<div class="absolute bottom-32 left-20 w-96 h-96 bg-indigo-500/5 rounded-full blur-3xl animate-pulse [animation-delay:1000ms]"></div>
+			<div class="absolute top-32 right-10 sm:right-20 w-64 sm:w-96 h-64 sm:h-96 bg-purple-500/5 rounded-full blur-3xl animate-pulse"></div>
+			<div class="absolute bottom-32 left-10 sm:left-20 w-64 sm:w-96 h-64 sm:h-96 bg-indigo-500/5 rounded-full blur-3xl animate-pulse [animation-delay:1000ms]"></div>
 		</div>
 
 		<div class="about-window max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
 			<!-- Header -->
-			<div class="text-center mb-12">
-				<h1 class="text-5xl md:text-7xl font-bold mb-6">
+			<div class="text-center mb-8 sm:mb-12">
+				<h1 class="text-4xl sm:text-5xl md:text-6xl lg:text-7xl font-bold mb-4 sm:mb-6 px-4">
 					<span class="text-transparent bg-clip-text bg-gradient-to-r from-indigo-400 via-purple-400 to-pink-400">
 						{{ t('about.title') }}
 					</span>
 				</h1>
-				<p class="text-xl text-gray-300 max-w-3xl mx-auto">
+				<p class="text-lg sm:text-xl text-gray-300 max-w-3xl mx-auto px-4">
 					{{ t('about.description') }}
 				</p>
 				<div class="w-32 h-1 bg-gradient-to-r from-indigo-500 to-purple-500 mx-auto mt-6 rounded-full"></div>

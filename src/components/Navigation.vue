@@ -95,8 +95,9 @@ watch(
 				<div class="flex items-center sm:hidden">
 					<button
 						@click="toggleMenu"
-						class="inline-flex items-center justify-center p-2 rounded-md text-gray-400 hover:text-indigo-400 hover:bg-indigo-500/10 transition-all duration-200"
+						class="inline-flex items-center justify-center p-3 min-w-[48px] min-h-[48px] rounded-md text-gray-400 hover:text-indigo-400 hover:bg-indigo-500/10 active:bg-indigo-500/20 transition-all duration-200"
 						:aria-label="isMenuOpen ? 'Close menu' : 'Open menu'"
+						:aria-expanded="isMenuOpen"
 					>
 						<span class="sr-only">{{ isMenuOpen ? 'Close menu' : 'Open menu' }}</span>
 						<svg class="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor">
@@ -122,22 +123,22 @@ watch(
 
 		<div
 			v-show="isMenuOpen"
-			class="sm:hidden absolute w-full transform transition-transform duration-300"
+			class="sm:hidden absolute w-full transform transition-all duration-300 ease-out"
 			:class="
 				isMenuOpen ? 'translate-y-0 opacity-100' : '-translate-y-10 opacity-0 pointer-events-none'
 			"
 		>
 			<div
-				class="pt-2 pb-3 space-y-1 border-t border-indigo-500/20 bg-gray-900/90 backdrop-blur-lg"
+				class="pt-4 pb-4 space-y-2 border-t border-indigo-500/20 bg-gray-900/95 backdrop-blur-xl shadow-2xl"
 			>
 				<router-link
 					v-for="r in ['home', 'about', 'projects', 'research', 'contact']"
 					:key="r"
 					:to="{ name: r }"
-					class="mobile-nav-link block pl-3 pr-4 py-2 text-lg font-medium transition-all duration-300"
+					class="mobile-nav-link block pl-4 pr-4 py-4 min-h-[56px] text-lg font-medium transition-all duration-300 flex items-center"
 					:class="{
-						'text-indigo-400 bg-indigo-900/20 border-l-2 border-indigo-500': currentSection === r,
-						'text-gray-300 hover:bg-indigo-900/10 hover:text-indigo-400 border-l-2 border-transparent':
+						'text-indigo-400 bg-indigo-900/30 border-l-4 border-indigo-500': currentSection === r,
+						'text-gray-300 hover:bg-indigo-900/20 hover:text-indigo-400 active:bg-indigo-900/30 border-l-4 border-transparent':
 							currentSection !== r,
 					}"
 					@click="closeMenu"
@@ -145,7 +146,7 @@ watch(
 					{{ t(`nav.${r}`) }}
 				</router-link>
 
-				<div class="flex justify-end items-center px-4 py-2">
+				<div class="flex justify-end items-center px-4 py-4 border-t border-gray-800">
 					<LanguageSelector />
 				</div>
 			</div>

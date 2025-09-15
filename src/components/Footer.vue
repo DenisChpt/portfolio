@@ -6,15 +6,15 @@ const currentYear = new Date().getFullYear()
 
 <template>
 	<footer
-		class="bg-gray-900/40 backdrop-blur-md shadow-lg mt-auto border-t border-indigo-500/20 py-4"
+		class="bg-gray-900/40 backdrop-blur-md shadow-lg mt-auto border-t border-indigo-500/20 py-6 sm:py-4"
 	>
 		<div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-			<div class="flex flex-col md:flex-row justify-between items-center">
-				<p class="text-gray-400 mb-4 md:mb-0">
+			<div class="flex flex-col sm:flex-row justify-between items-center space-y-4 sm:space-y-0">
+				<p class="text-gray-400 text-center sm:text-left text-sm sm:text-base">
 					© {{ currentYear }} Denis Chaput. All rights reserved.
 				</p>
 
-				<div class="flex space-x-6">
+				<div class="flex space-x-4 sm:space-x-6">
 					<a :href="config.github.url" target="_blank" rel="noopener noreferrer" class="footer-social-link" aria-label="GitHub">
 						<svg
 							xmlns="http://www.w3.org/2000/svg"
@@ -64,8 +64,10 @@ const currentYear = new Date().getFullYear()
 	color: rgba(156, 163, 175, 1);
 	transition: all 0.3s ease;
 	position: relative;
-	width: 2rem;
-	height: 2rem;
+	min-width: 2.5rem;
+	min-height: 2.5rem;
+	width: 2.5rem;
+	height: 2.5rem;
 	display: flex;
 	align-items: center;
 	justify-content: center;
@@ -73,6 +75,15 @@ const currentYear = new Date().getFullYear()
 	background: rgba(31, 41, 55, 0.5);
 	border: 1px solid rgba(99, 102, 241, 0.1);
 	overflow: hidden;
+}
+
+@media (min-width: 640px) {
+	.footer-social-link {
+		min-width: 2rem;
+		min-height: 2rem;
+		width: 2rem;
+		height: 2rem;
+	}
 }
 
 .footer-social-link::before {
