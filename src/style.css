@@ -9,6 +9,9 @@
 /* Design tokens and CSS variables */
 @import './assets/css/tokens.css';
 
+/* Mobile-specific optimizations */
+@import './assets/css/mobile.css';
+
 /* Tailwind directives */
 @tailwind base;
 @tailwind components;
@@ -22,6 +25,9 @@
 		background: transparent !important;
 		color: rgb(var(--color-text));
 		font-family: var(--font-sans);
+		min-height: 100vh;
+		min-height: -webkit-fill-available;
+		overscroll-behavior-y: none;
 	}
 
 	/* Ensure transparent backgrounds */
@@ -32,6 +38,7 @@
 	/* Smooth scrolling */
 	html {
 		scroll-behavior: smooth;
+		height: -webkit-fill-available;
 	}
 
 	/* Custom scrollbar */
@@ -66,14 +73,35 @@
 		outline: 2px solid rgba(var(--color-primary), 0.5);
 		outline-offset: 2px;
 	}
+
+	/* Better touch targets for mobile */
+	a, button {
+		min-height: 44px;
+		min-width: 44px;
+		@apply inline-flex items-center justify-center;
+	}
+
+	/* Prevent text selection on interactive elements */
+	button, a {
+		-webkit-user-select: none;
+		user-select: none;
+	}
+
+	/* Improve readability on small screens */
+	@media (max-width: 640px) {
+		p {
+			line-height: 1.7;
+		}
+	}
 }
 
 /* Component layer - Reusable component styles */
 @layer components {
 	/* Layout components */
 	.section {
-		@apply min-h-screen py-24 px-4 sm:px-6 lg:px-8 flex items-center relative overflow-hidden;
+		@apply min-h-screen py-16 sm:py-24 px-4 sm:px-6 lg:px-8 flex items-center relative overflow-hidden;
 		background: transparent;
+		overflow-x: hidden;
 	}
 
 	.container {
@@ -82,9 +110,12 @@
 
 	/* Form components */
 	.input {
-		@apply w-full px-4 py-2 rounded-lg border border-white/20 bg-white/5 backdrop-blur-sm text-white;
+		@apply w-full px-4 py-3 sm:py-2 min-h-[48px] rounded-lg border border-white/20 bg-white/5 backdrop-blur-sm text-white text-base;
 		@apply focus:ring-2 focus:ring-indigo-500/50 focus:border-transparent;
 		@apply transition-all duration-200;
+		-webkit-appearance: none;
+		-moz-appearance: none;
+		appearance: none;
 	}
 
 	/* Text utilities */
