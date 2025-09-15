@@ -19,15 +19,15 @@ const featuredProjects = computed(() => projectsStore.featuredProjects)
 		<div class="absolute inset-0 bg-gradient-to-br from-gray-900 via-indigo-900/20 to-gray-900"></div>
 		<div class="absolute inset-0">
 			<div class="absolute top-20 left-10 w-72 h-72 bg-indigo-500/10 rounded-full blur-3xl animate-pulse"></div>
-			<div class="absolute bottom-20 right-10 w-96 h-96 bg-purple-500/10 rounded-full blur-3xl animate-pulse delay-1000"></div>
-			<div class="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[40rem] h-[40rem] bg-blue-500/5 rounded-full blur-3xl animate-pulse delay-2000"></div>
+			<div class="absolute bottom-20 right-10 w-96 h-96 bg-purple-500/10 rounded-full blur-3xl animate-pulse [animation-delay:1000ms]"></div>
+			<div class="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[40rem] h-[40rem] bg-blue-500/5 rounded-full blur-3xl animate-pulse [animation-delay:2000ms]"></div>
 		</div>
 
 		<div class="home-content relative z-10 max-w-7xl mx-auto p-8 w-full">
 			<div class="text-center mb-16 pt-20">
 				<!-- Hero Section with better typography -->
 				<h1 class="text-6xl md:text-8xl font-bold mb-6 leading-tight">
-					<span class="block text-transparent bg-clip-text bg-gradient-to-r from-indigo-400 via-purple-400 to-pink-400 animate-gradient">
+					<span class="block text-transparent bg-clip-text bg-gradient-to-r from-indigo-400 via-purple-400 to-pink-400 bg-[size:200%_200%] animate-gradient">
 						Denis Chaput
 					</span>
 				</h1>
@@ -169,89 +169,19 @@ const featuredProjects = computed(() => projectsStore.featuredProjects)
 </template>
 
 <style scoped>
-@keyframes gradient {
-	0%, 100% {
-		background-position: 0% 50%;
-	}
-	50% {
-		background-position: 100% 50%;
-	}
-}
-
-.animate-gradient {
-	background-size: 200% 200%;
-	animation: gradient 3s ease infinite;
-}
-
-@keyframes fadeIn {
-	from {
-		opacity: 0;
-		transform: translateY(10px);
-	}
-	to {
-		opacity: 1;
-		transform: translateY(0);
-	}
-}
-
-.animate-fadeIn {
-	animation: fadeIn 0.5s ease-out;
-}
-
 .typing-animation {
-	overflow: hidden;
-	white-space: nowrap;
-	animation: typing 1s steps(20, end);
+	@apply overflow-hidden whitespace-nowrap animate-typing;
 }
 
 .typing-complete {
-	overflow: visible;
-}
-
-@keyframes typing {
-	from {
-		width: 0;
-	}
-	to {
-		width: 100%;
-	}
+	@apply overflow-visible;
 }
 
 .cursor-blink {
-	animation: blink 1s infinite;
-}
-
-@keyframes blink {
-	0%, 49% {
-		opacity: 1;
-	}
-	50%, 100% {
-		opacity: 0;
-	}
+	@apply animate-blink;
 }
 
 .skill-badge {
-	@apply px-3 py-1 bg-gradient-to-r from-indigo-500/20 to-purple-500/20 text-indigo-300 rounded-full border border-indigo-500/30 text-xs font-medium backdrop-blur-sm;
-	animation: slideIn 0.5s ease-out forwards;
-	opacity: 0;
-}
-
-@keyframes slideIn {
-	from {
-		opacity: 0;
-		transform: translateX(-10px);
-	}
-	to {
-		opacity: 1;
-		transform: translateX(0);
-	}
-}
-
-.delay-1000 {
-	animation-delay: 1s;
-}
-
-.delay-2000 {
-	animation-delay: 2s;
+	@apply px-3 py-1 bg-gradient-to-r from-indigo-500/20 to-purple-500/20 text-indigo-300 rounded-full border border-indigo-500/30 text-xs font-medium backdrop-blur-sm animate-slide-in opacity-0;
 }
 </style>

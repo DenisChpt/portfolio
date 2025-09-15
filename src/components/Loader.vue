@@ -537,7 +537,7 @@ onBeforeUnmount(() => {
 					<div class="flex justify-end">
 						<div class="preloader-footer-text">
 							<div class="preloader-footer-text-inner" ref="footerTextInner">
-								Loading<span class="preloader-footer-text-dots">...</span>
+								Loading<span class="animate-dots">...</span>
 							</div>
 						</div>
 					</div>
@@ -581,22 +581,11 @@ onBeforeUnmount(() => {
 		background: radial-gradient(circle, rgba(99, 102, 241, 0.1), transparent);
 		border-radius: 50%;
 		filter: blur(60px);
-		animation: float 20s ease-in-out infinite;
+		animation: animate-float 20s ease-in-out infinite;
 		z-index: -1;
 	}
 }
 
-@keyframes float {
-	0%, 100% {
-		transform: translate(0, 0) scale(1);
-	}
-	33% {
-		transform: translate(30px, -50px) scale(1.1);
-	}
-	66% {
-		transform: translate(-20px, 20px) scale(0.9);
-	}
-}
 
 .preloader {
 	position: fixed;
@@ -754,23 +743,6 @@ onBeforeUnmount(() => {
 	letter-spacing: 0.2em;
 }
 
-.preloader-footer-text-dots {
-	animation: dots 2s infinite;
-}
-
-@keyframes dots {
-	0%,
-	20% {
-		content: '.';
-	}
-	40% {
-		content: '..';
-	}
-	60%,
-	100% {
-		content: '...';
-	}
-}
 
 @media (min-width: 1000px) {
 	.loader-container {

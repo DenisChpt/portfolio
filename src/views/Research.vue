@@ -109,7 +109,7 @@ const getVenue = (paper: any) => {
 		<div class="fixed inset-0 -z-10">
 			<div class="absolute inset-0 bg-gradient-to-br from-gray-900 via-indigo-900/10 to-gray-900"></div>
 			<div class="absolute top-48 left-32 w-96 h-96 bg-purple-500/5 rounded-full blur-3xl animate-pulse"></div>
-			<div class="absolute bottom-48 right-32 w-96 h-96 bg-indigo-500/5 rounded-full blur-3xl animate-pulse delay-1000"></div>
+			<div class="absolute bottom-48 right-32 w-96 h-96 bg-indigo-500/5 rounded-full blur-3xl animate-pulse [animation-delay:1000ms]"></div>
 		</div>
 		
 		<div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
@@ -197,7 +197,7 @@ const getVenue = (paper: any) => {
 					<div
 						v-for="(paper, index) in filteredPapers"
 						:key="paper.id"
-						class="group bg-gray-800/30 backdrop-blur-sm rounded-2xl border border-gray-700/50 p-8 hover:border-indigo-500/30 hover:shadow-2xl hover:shadow-indigo-500/5 transition-all duration-500 research-paper-card"
+						class="group bg-gray-800/30 backdrop-blur-sm rounded-2xl border border-gray-700/50 p-8 hover:border-indigo-500/30 hover:shadow-2xl hover:shadow-indigo-500/5 transition-all duration-500 research-paper-card animate-fade-in-up"
 						:style="{ animationDelay: `${index * 0.1}s` }"
 					>
 						<!-- Featured Badge -->
@@ -307,19 +307,7 @@ const getVenue = (paper: any) => {
 </template>
 
 <style scoped>
-@keyframes fadeInUp {
-	from {
-		opacity: 0;
-		transform: translateY(20px);
-	}
-	to {
-		opacity: 1;
-		transform: translateY(0);
-	}
-}
-
 .research-paper-card {
-	animation: fadeInUp 0.6s ease-out forwards;
 	opacity: 0;
 }
 
@@ -334,7 +322,4 @@ const getVenue = (paper: any) => {
 	overflow: hidden;
 }
 
-.delay-1000 {
-	animation-delay: 1s;
-}
 </style>
