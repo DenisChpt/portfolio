@@ -16,13 +16,13 @@ const programmingSkills = PROGRAMMING_SKILLS
 const getSkillLevelColor = (level: ProgrammingSkill['level']) => {
 	switch (level) {
 		case 'expert':
-			return 'from-blue-500 to-blue-600 border-blue-500/30 shadow-blue-500/20'
+			return 'from-blue-500 to-blue-600 border-blue-500/30'
 		case 'advanced':
-			return 'from-purple-500 to-blue-500 border-purple-500/30 shadow-purple-500/20'
+			return 'from-purple-500 to-blue-500 border-purple-500/30'
 		case 'intermediate':
-			return 'from-pink-500 to-purple-500 border-pink-500/30 shadow-pink-500/20'
+			return 'from-pink-500 to-purple-500 border-pink-500/30'
 		case 'beginner':
-			return 'from-pink-400 to-pink-500 border-pink-400/30 shadow-pink-400/20'
+			return 'from-pink-400 to-pink-500 border-pink-400/30'
 		default:
 			return 'from-gray-500 to-gray-600 border-gray-500/30'
 	}
@@ -37,7 +37,7 @@ interface ExperienceItem {
 }
 
 const experiences = computed((): ExperienceItem[] => {
-	const items = tm('about.experienceItems') as any
+	const items = tm('about.experienceItems') as ExperienceItem[]
 	return Array.isArray(items) ? items : []
 })
 
@@ -50,7 +50,7 @@ interface EducationItem {
 }
 
 const education = computed((): EducationItem[] => {
-	const items = tm('about.educationItems') as any
+	const items = tm('about.educationItems') as EducationItem[]
 	return Array.isArray(items) ? items : []
 })
 </script>
@@ -61,7 +61,7 @@ const education = computed((): EducationItem[] => {
 		<div class="fixed inset-0 -z-10">
 			<div class="absolute inset-0 bg-gradient-to-br from-gray-900 via-indigo-900/10 to-gray-900"></div>
 			<div class="absolute top-32 right-20 w-96 h-96 bg-purple-500/5 rounded-full blur-3xl animate-pulse"></div>
-			<div class="absolute bottom-32 left-20 w-96 h-96 bg-indigo-500/5 rounded-full blur-3xl animate-pulse delay-1000"></div>
+			<div class="absolute bottom-32 left-20 w-96 h-96 bg-indigo-500/5 rounded-full blur-3xl animate-pulse [animation-delay:1000ms]"></div>
 		</div>
 
 		<div class="about-window max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
@@ -228,9 +228,6 @@ const education = computed((): EducationItem[] => {
 </template>
 
 <style scoped>
-.delay-1000 {
-	animation-delay: 1s;
-}
 
 /* Hover effect on timeline dot when hovering experience or description cards */
 .experience-item:has(.experience-card:hover) .timeline-dot,

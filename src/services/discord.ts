@@ -11,11 +11,19 @@ interface ContactMessage {
 import { config } from '@/config'
 
 /**
- * Send a contact form submission to Discord via local relay server
+ * Send a contact form submission to Discord
+ * In production: Routes to Vercel serverless function
+ * In development: Will fail gracefully (no server running)
  */
 export async function sendToDiscord(data: ContactMessage): Promise<void> {
-	// Use local relay server (or production server URL when deployed)
 	const apiEndpoint = config.apiUrl
+
+	// In development, show a helpful message
+	if (config.isDevelopment) {
+		console.warn('📧 Contact form is disabled in development mode')
+		console.warn('The form will work when deployed to production on Vercel')
+		throw new Error('Le formulaire de contact est désactivé en mode développement. Il fonctionnera en production.')
+	}
 
 	try {
 		const response = await fetch(apiEndpoint, {
@@ -33,18 +41,27 @@ export async function sendToDiscord(data: ContactMessage): Promise<void> {
 		}
 
 		// Success - message sent
-		console.log('✅ Message envoyé avec succès')
+		if (config.isDevelopment) {
+			console.log('✅ Message would be sent in production')
+		}
 	} catch (error) {
-		console.error('Failed to send message:', error)
-		
-		// Provide user-friendly error messages in French
+		// Log error only in development
+		if (config.isDevelopment) {
+			console.error('Contact form error:', error)
+		}
+
+		// Provide user-friendly error messages
 		if (error instanceof Error) {
+			// Network errors
 			if (error.message.includes('fetch') || error.message.includes('Failed to fetch')) {
-				throw new Error('Le serveur de contact n\'est pas disponible. Assurez-vous que le serveur est démarré (npm run server).')
+				if (config.isDevelopment) {
+					throw new Error('Le formulaire de contact est désactivé en développement.')
+				}
+				throw new Error('Le service de contact est temporairement indisponible. Veuillez réessayer.')
 			}
 			throw new Error(error.message)
 		}
-		
+
 		throw new Error('Une erreur inattendue s\'est produite. Veuillez réessayer.')
 	}
 }

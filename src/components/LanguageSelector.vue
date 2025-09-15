@@ -105,7 +105,7 @@ watch(isOpen, (newVal) => {
 .lang-dropdown {
 	background: rgba(30, 41, 59, 0.8);
 	box-shadow: 0 8px 16px rgba(0, 0, 0, 0.3), 0 0 0 1px rgba(99, 102, 241, 0.1);
-	animation: fadeIn 0.2s ease-out;
+	animation: animate-fade-in 0.2s ease-out;
 }
 
 .lang-option {
@@ -133,14 +133,4 @@ watch(isOpen, (newVal) => {
 	transform: scaleY(1);
 }
 
-@keyframes fadeIn {
-	from {
-		opacity: 0;
-		transform: translateY(-10px);
-	}
-	to {
-		opacity: 1;
-		transform: translateY(0);
-	}
-}
 </style>

@@ -1,248 +1,122 @@
+/**
+ * Main stylesheet
+ * Following professional best practices:
+ * 1. Import order: tokens -> tailwind -> components
+ * 2. No duplicate animations (all in tailwind.config.js)
+ * 3. Minimal custom CSS (prefer Tailwind utilities)
+ */
+
+/* Design tokens and CSS variables */
 @import './assets/css/tokens.css';
+
+/* Tailwind directives */
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
 
-/* Base styling */
-body {
-	@apply antialiased overflow-x-hidden;
-	background: transparent !important;
-	color: rgb(var(--color-text));
-	font-family: var(--font-sans);
-}
-
-/* Ensure transparent backgrounds for main containers */
-#app,
-.min-h-screen,
-main,
-.flex-grow {
-	background: transparent !important;
-}
-
-/* Smooth scrolling */
-html {
-	scroll-behavior: smooth;
-}
-
-/* Custom scrollbar */
-::-webkit-scrollbar {
-	width: 8px;
-}
-
-::-webkit-scrollbar-track {
-	background: rgba(var(--color-background-light), 0.5);
-}
-
-::-webkit-scrollbar-thumb {
-	background: rgba(var(--color-primary), 0.5);
-	border-radius: var(--radius-md);
-}
-
-::-webkit-scrollbar-thumb:hover {
-	background: rgba(var(--color-primary), 0.7);
-}
-
-/* Transitions */
-.page-enter-active,
-.page-leave-active {
-	transition: opacity var(--transition-medium) ease, transform var(--transition-medium) ease;
-}
-
-.page-enter-from {
-	opacity: 0;
-	transform: translateY(20px);
-}
-
-.page-leave-to {
-	opacity: 0;
-	transform: translateY(-20px);
-}
-
-/* Animation utilities */
-.animate-fade-in {
-	animation: fadeIn var(--animation-fast) ease-out;
-}
-
-.animate-float {
-	animation: float var(--animation-slow) ease-in-out infinite;
-}
-
-.animate-pulse-slow {
-	animation: pulse var(--animation-medium) cubic-bezier(0.4, 0, 0.6, 1) infinite;
-}
-
-/* Keyframes */
-@keyframes fadeIn {
-	from {
-		opacity: 0;
+/* Base layer - Only essential global styles */
+@layer base {
+	/* Core body styling */
+	body {
+		@apply antialiased;
+		background: transparent !important;
+		color: rgb(var(--color-text));
+		font-family: var(--font-sans);
 	}
-	to {
-		opacity: 1;
+
+	/* Ensure transparent backgrounds */
+	#app {
+		background: transparent !important;
+	}
+
+	/* Smooth scrolling */
+	html {
+		scroll-behavior: smooth;
+	}
+
+	/* Custom scrollbar */
+	::-webkit-scrollbar {
+		width: 8px;
+		height: 8px;
+	}
+
+	::-webkit-scrollbar-track {
+		@apply bg-gray-900/50;
+	}
+
+	::-webkit-scrollbar-thumb {
+		@apply bg-indigo-500/50 rounded;
+	}
+
+	::-webkit-scrollbar-thumb:hover {
+		@apply bg-indigo-500/70;
+	}
+
+	/* Focus styles for accessibility */
+	:focus {
+		outline: 2px solid rgba(var(--color-primary), 0.5);
+		outline-offset: 2px;
+	}
+
+	:focus:not(:focus-visible) {
+		outline: none;
+	}
+
+	:focus-visible {
+		outline: 2px solid rgba(var(--color-primary), 0.5);
+		outline-offset: 2px;
 	}
 }
 
-@keyframes float {
-	0%,
-	100% {
-		transform: translateY(0px);
-	}
-	50% {
-		transform: translateY(-20px);
-	}
-}
-
-@keyframes pulse {
-	0%,
-	100% {
-		opacity: 1;
-	}
-	50% {
-		opacity: 0.5;
-	}
-}
-
-@keyframes twinkle {
-	0%,
-	100% {
-		opacity: 1;
-	}
-	50% {
-		opacity: 0.3;
-	}
-}
-
-@keyframes blink {
-	from,
-	to {
-		opacity: 1;
-	}
-	50% {
-		opacity: 0;
-	}
-}
-
-/* Custom component and layout classes */
+/* Component layer - Reusable component styles */
 @layer components {
+	/* Layout components */
 	.section {
 		@apply min-h-screen py-24 px-4 sm:px-6 lg:px-8 flex items-center relative overflow-hidden;
+		background: transparent;
 	}
 
 	.container {
 		@apply max-w-7xl mx-auto relative z-10;
 	}
 
+	/* Form components */
 	.input {
-		@apply w-full px-4 py-2 rounded-lg border border-white/20 bg-white/5 backdrop-blur-sm text-white focus:ring-2 focus:ring-primary-500/50 focus:border-transparent transition-all duration-200;
+		@apply w-full px-4 py-2 rounded-lg border border-white/20 bg-white/5 backdrop-blur-sm text-white;
+		@apply focus:ring-2 focus:ring-indigo-500/50 focus:border-transparent;
+		@apply transition-all duration-200;
 	}
 
-	/* Text styling */
+	/* Text utilities */
 	.gradient-text {
-		@apply text-transparent bg-clip-text bg-gradient-to-r from-primary-300 to-primary-500;
+		@apply text-transparent bg-clip-text bg-gradient-to-r from-indigo-300 to-indigo-500;
 	}
 
-	.terminal {
-		@apply bg-gray-900/70 p-4 rounded-lg font-mono text-sm border border-indigo-500/20;
+}
+
+/* Utility layer - One-off utilities */
+@layer utilities {
+	/* Page transitions */
+	.page-enter-active,
+	.page-leave-active {
+		@apply transition-all duration-500 ease-out;
 	}
 
-	.tech-badge {
-		@apply px-2 py-1 bg-indigo-900/30 rounded-md inline-flex items-center justify-center;
+	.page-enter-from {
+		@apply opacity-0 translate-y-4;
+	}
+
+	.page-leave-to {
+		@apply opacity-0 -translate-y-4;
 	}
 
 	/* Layout utilities */
-	.grid-layout {
-		@apply grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6;
-	}
-
 	.flex-center {
 		@apply flex items-center justify-center;
 	}
 
 	.absolute-center {
-		@apply absolute top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2;
+		@apply absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2;
 	}
 
-	/* Typing effect */
-	.typing-effect {
-		position: relative;
-	}
-
-	.typing-effect::after {
-		content: '';
-		position: absolute;
-		right: -10px;
-		top: 50%;
-		transform: translateY(-50%);
-		width: 6px;
-		height: 15px;
-		background-color: rgb(var(--color-primary));
-		animation: blink 1s step-end infinite;
-	}
-
-	/* Experience styling */
-	.exp-card {
-		@apply bg-slate-800/40 border border-indigo-500/15 rounded-xl p-5 transition-all duration-300 relative overflow-hidden;
-	}
-
-	.exp-card::before {
-		content: '';
-		position: absolute;
-		top: 0;
-		left: 0;
-		right: 0;
-		height: 2px;
-		background: linear-gradient(
-			90deg,
-			rgba(var(--color-primary), 0) 0%,
-			rgba(var(--color-primary), 0.6) 50%,
-			rgba(var(--color-primary), 0) 100%
-		);
-	}
-
-	.exp-card:hover {
-		@apply transform -translate-y-1 shadow-lg border-indigo-500/30;
-	}
-
-	.exp-item {
-		@apply border-l-2 border-indigo-500/60 pl-4 relative transition-all duration-300;
-	}
-
-	.exp-item::before {
-		content: '';
-		position: absolute;
-		top: 0;
-		left: -5px;
-		width: 8px;
-		height: 8px;
-		border-radius: 50%;
-		background: rgba(var(--color-primary), 0.8);
-		box-shadow: 0 0 8px rgba(var(--color-primary), 0.6);
-	}
-
-	.exp-item:hover {
-		@apply border-indigo-500;
-	}
-
-	/* Tech badges */
-	.tech-badge {
-		@apply px-4 py-1 bg-indigo-900/15 text-indigo-300 rounded-full text-sm border border-indigo-500/20 transition-all duration-300;
-	}
-
-	.tech-badge:hover {
-		@apply bg-indigo-900/25 transform -translate-y-0.5 shadow-md border-indigo-500/40;
-	}
-}
-
-/* Accessibility focus styles */
-:focus {
-	outline: 2px solid rgba(var(--color-primary), 0.5);
-	outline-offset: 2px;
-}
-
-:focus:not(:focus-visible) {
-	outline: none;
-}
-
-:focus-visible {
-	outline: 2px solid rgba(var(--color-primary), 0.5);
-	outline-offset: 2px;
 }
