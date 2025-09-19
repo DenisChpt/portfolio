@@ -2,6 +2,8 @@
  * Media service for handling images, placeholders and other media
  */
 
+import { AVATAR_SIZE, EXTERNAL_URLS } from '@/constants/app.constants'
+
 /**
  * Get a placeholder image URL with specified dimensions
  * @param width Width of the placeholder image
@@ -11,9 +13,9 @@
  */
 export const getPlaceholder = (width: number, height: number, text?: string): string => {
 	if (text) {
-		return `https://via.placeholder.com/${width}x${height}?text=${encodeURIComponent(text)}`
+		return `${EXTERNAL_URLS.PLACEHOLDER_IMAGE}/${width}x${height}?text=${encodeURIComponent(text)}`
 	}
-	return `https://via.placeholder.com/${width}x${height}`
+	return `${EXTERNAL_URLS.PLACEHOLDER_IMAGE}/${width}x${height}`
 }
 
 /**
@@ -22,8 +24,8 @@ export const getPlaceholder = (width: number, height: number, text?: string): st
  * @param size Size of the avatar in pixels
  * @returns Avatar image URL
  */
-export const getAvatar = (seed: string, size = 200): string => {
-	return `https://avatars.dicebear.com/api/initials/${encodeURIComponent(seed)}.svg?size=${size}`
+export const getAvatar = (seed: string, size = AVATAR_SIZE.DEFAULT): string => {
+	return `${EXTERNAL_URLS.AVATAR_API}?seed=${encodeURIComponent(seed)}&size=${size}`
 }
 
 /**

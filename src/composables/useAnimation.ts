@@ -1,4 +1,4 @@
-import { onMounted } from 'vue'
+import { onMounted, Ref } from 'vue'
 import { gsap } from 'gsap'
 
 /**
@@ -52,7 +52,7 @@ export function useStaggeredAnimation(
  * @param targetRef - Ref of the element to animate
  * @param scaleAmount - Amount to scale the element
  */
-export function useHoverAnimation(targetRef: any, scaleAmount = 1.05) {
+export function useHoverAnimation(targetRef: Ref<HTMLElement | null>, scaleAmount = 1.05) {
 	const handleMouseEnter = () => {
 		gsap.to(targetRef.value, {
 			scale: scaleAmount,

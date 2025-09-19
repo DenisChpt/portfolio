@@ -4,6 +4,7 @@ import { useI18n } from 'vue-i18n'
 import { useRoute, useRouter } from 'vue-router'
 import { gsap } from 'gsap'
 import { useProjectsStore } from '@/stores/projectsStore'
+import Button from '@/components/Button.vue'
 const { t } = useI18n()
 const projectsStore = useProjectsStore()
 const route = useRoute()

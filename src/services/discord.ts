@@ -9,6 +9,9 @@ interface ContactMessage {
 }
 
 import { config } from '@/config'
+import { createLogger } from '@/services/logger'
+
+const logger = createLogger('DiscordService')
 
 /**
  * Send a contact form submission to Discord
@@ -18,11 +21,10 @@ import { config } from '@/config'
 export async function sendToDiscord(data: ContactMessage): Promise<void> {
 	const apiEndpoint = config.apiUrl
 
-	// In development, show a helpful message
-	if (config.isDevelopment) {
-		console.warn('📧 Contact form is disabled in development mode')
-		console.warn('The form will work when deployed to production on Vercel')
-		throw new Error('Le formulaire de contact est désactivé en mode développement. Il fonctionnera en production.')
+	// In development or preview mode, show a helpful message
+	if (config.isDevelopment || window.location.port === '4173') {
+		logger.info('Contact form is disabled in development/preview mode', { email: data.email })
+		throw new Error('Le formulaire de contact fonctionne uniquement en production sur Vercel. En mode preview local, l\'API n\'est pas disponible.')
 	}
 
 	try {
@@ -41,14 +43,9 @@ export async function sendToDiscord(data: ContactMessage): Promise<void> {
 		}
 
 		// Success - message sent
-		if (config.isDevelopment) {
-			console.log('✅ Message would be sent in production')
-		}
+		logger.info('Message sent successfully', { email: data.email })
 	} catch (error) {
-		// Log error only in development
-		if (config.isDevelopment) {
-			console.error('Contact form error:', error)
-		}
+		logger.error('Failed to send contact form', error)
 
 		// Provide user-friendly error messages
 		if (error instanceof Error) {

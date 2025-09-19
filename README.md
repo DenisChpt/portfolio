@@ -30,14 +30,14 @@ A modern, responsive portfolio website showcasing my professional experience, pr
 ## Getting Started
 
 ### Prerequisites
-- Node.js 18+ 
-- npm or yarn
+- Node.js 22.x or higher
+- npm 10.x or higher
 
 ### Installation
 
 ```bash
 # Clone the repository
-git clone https://github.com/denischaput/portfolio.git
+git clone https://github.com/DenisChpt/portfolio.git
 
 # Navigate to project directory
 cd portfolio
@@ -58,12 +58,6 @@ cp .env.example .env
 # Start development server
 npm run dev
 
-# Start Discord relay server
-npm run server
-
-# Start both servers (Vue + Express)
-npm run dev:all
-
 # Build for production
 npm run build
 
@@ -71,36 +65,50 @@ npm run build
 npm run preview
 ```
 
-### Running Locally
+⚠️ **Important Note about Contact Form:**
+- **Development mode** (`npm run dev`): Contact form shows a warning message
+- **Preview mode** (`npm run preview`): Contact form returns 404 (expected behavior)
+- **Production** (Vercel): Contact form fully functional
 
-To run the portfolio with contact form functionality:
+### API Behavior by Environment
 
-```bash
-# Terminal 1: Start the Discord relay server
-npm run server
+| Environment | Command | URL | Contact Form Status |
+|------------|---------|-----|-------------------|
+| Development | `npm run dev` | `http://localhost:5173` | Shows warning message |
+| Preview | `npm run preview` | `http://localhost:4173` | Returns 404 (no API server) |
+| Production | (deployed) | `https://your-domain.vercel.app` | ✅ Fully functional |
 
-# Terminal 2: Start the Vue development server
-npm run dev
+The contact form API endpoint (`/api/contact`) is a Vercel serverless function that only exists in production.
 
-# Or run both with one command:
-npm run dev:all
-```
+### Deployment on Vercel
 
-### Deployment
+1. Push your code to GitHub
+2. Import the project in Vercel
+3. Set the environment variable in Vercel dashboard:
+   ```
+   DISCORD_WEBHOOK_URL=your_discord_webhook_url_here
+   ```
+4. Deploy
 
-For production deployment, you need to:
-1. Deploy the Vue app (dist folder) to any static hosting (Netlify, Vercel, GitHub Pages, etc.)
-2. Deploy the Express server (server.js) to any Node.js hosting (Heroku, Railway, VPS, etc.)
-3. Update `VITE_API_URL` in your Vue app to point to your production server
+Vercel will automatically:
+- Build the Vue app
+- Create serverless function from `api/contact.js`
+- Handle all routing and API endpoints
 
 ## Project Structure
 
 ```
 portfolio/
+├── api/                # Vercel serverless functions
+│   └── contact.js      # Contact form API endpoint
 ├── src/
 │   ├── components/     # Reusable Vue components
 │   ├── views/          # Page components
 │   ├── stores/         # Pinia state stores
+│   ├── services/       # API services and utilities
+│   │   ├── logger.ts   # Professional logging system
+│   │   └── discord.ts  # Contact form service
+│   ├── constants/      # Application constants
 │   ├── i18n/           # Internationalization files
 │   ├── composables/    # Vue composition utilities
 │   ├── router/         # Routing configuration
@@ -147,39 +155,6 @@ The contact form uses a relay server to bypass CORS restrictions:
 - Server-side validation
 - Works with any hosting provider
 
-### Adding Research Papers
-Research papers can be added directly through the i18n configuration files. Edit the `papers` array in `src/i18n/locales/[language].json`:
-
-```json
-{
-  "research": {
-    "papers": [
-      {
-        "id": 1,
-        "title": "Paper Title",
-        "authors": ["Author 1", "Author 2"],
-        "abstract": "Paper abstract...",
-        "publicationDate": "2024-01",
-        "journal": "Journal Name",
-        "topics": ["Topic1", "Topic2"],
-        "featured": true,
-        "citations": 10
-      }
-    ]
-  }
-}
-```
-
-### Theme Customization
-The application supports automatic theme switching. Theme preferences are persisted in localStorage.
-
-## Performance
-
-- Lazy-loaded routes for optimal initial load time
-- Optimized animations with GSAP
-- Efficient particle system with canvas rendering
-- Code splitting and tree shaking via Vite
-
 ## Browser Support
 
 - Chrome/Edge (latest)
@@ -191,7 +166,7 @@ The application supports automatic theme switching. Theme preferences are persis
 
 MIT License
 
-Copyright (c) 2024 Denis Chaput
+Copyright (c) 2025 Denis Chaput
 
 Permission is hereby granted, free of charge, to any person obtaining a copy
 of this software and associated documentation files (the "Software"), to deal
@@ -210,11 +185,3 @@ AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
 LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
 OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
 SOFTWARE.
-
-## Contact
-
-Denis Chaput - [Portfolio](https://denischaput.dev)
-
----
-
-Built with Vue.js and deployed with modern CI/CD practices.
