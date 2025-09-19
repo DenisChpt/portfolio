@@ -77,7 +77,7 @@ export const PROJECTS_METADATA: ProjectMetadata[] = [
 			'https://via.placeholder.com/800x600',
 		],
 		sourceUrl: 'https://github.com/DenisChpt/portfolio',
-		liveUrl: 'https://denischaput.dev',
+		liveUrl: '/videos/portfolio.mov',  // Video demo of the portfolio
 		status: 'active',
 	},
 ]
