@@ -1,466 +1,320 @@
 <script setup lang="ts">
-import { ref, onMounted, onBeforeUnmount } from 'vue'
+import { ref, onMounted, onBeforeUnmount, computed } from 'vue'
 import { useRouter } from 'vue-router'
 import { gsap } from 'gsap'
-import { CSSPlugin } from 'gsap/CSSPlugin'
-
-// Register necessary plugins
-gsap.registerPlugin(CSSPlugin)
-
-// Global GSAP configuration to improve performance
-gsap.defaults({
-	overwrite: 'auto', // Prevent animation conflicts
-	lazy: false, // Avoid delays in animation startup
-})
 
 const router = useRouter()
+
+// Refs for DOM elements
+const loaderContainer = ref<HTMLDivElement>()
 const progressContainer = ref<HTMLDivElement>()
 const progressCircles = ref<SVGElement>()
 const progressCircle = ref<SVGCircleElement>()
 const progressOutline = ref<SVGCircleElement>()
 const progressTextInner = ref<HTMLDivElement>()
-const footerTextInner = ref<HTMLDivElement>()
-const loaderContainer = ref<HTMLDivElement>()
 
+// State
 const loading = ref(true)
 const progress = ref(0)
 const ctaActive = ref(false)
 const isHovered = ref(false)
-const mouseX = ref(0)
-const mouseY = ref(0)
 
-const baseRadius = 150 // Increased base radius for the circle
-// These coefficients determine the gap size relative to the circumference.
-const dashFactor = 0.04 // for static state (adjusted)
-const offsetFactor = 1e-5 // for hover state (reduced for more fluidity)
+// Animation timeline reference
+let mainTimeline: gsap.core.Timeline | null = null
+let hoverTimeline: gsap.core.Timeline | null = null
+let rotationTween: gsap.core.Tween | null = null
 
-const dashArray = ref('') // Empty at start, will be defined dynamically
-const dashOffset = ref('') // Empty at start, will be defined dynamically
+// Circle configuration - simplified and consistent
+const CIRCLE_CONFIG = {
+	// Normal state
+	normal: {
+		outerRadius: 150,  // Dotted circle
+		innerRadius: 160,  // Solid circle with gaps
+		innerOpacity: 0.5,
+		outerOpacity: 0.4
+	},
+	// Hover state - swap positions
+	hover: {
+		outerRadius: 160,  // Dotted circle expands
+		innerRadius: 150,  // Solid circle contracts
+		innerOpacity: 0.6,
+		outerOpacity: 0.3
+	}
+}
+
+// Calculate circumference and dash values
+const calculateDashValues = (radius: number, progress: number = 100, isHover: boolean = false) => {
+	const circumference = 2 * Math.PI * radius
+
+	// For complete circle (after loading)
+	if (progress === 100) {
+		if (isHover) {
+			// For hover: gradually close the gaps by increasing segment sizes
+			// This creates a smooth closing animation without rotation
+			const gapSize = circumference * 0.001 // Tiny gaps (almost closed)
+			const segment1 = circumference * 0.499
+			const segment2 = circumference * 0.499
+
+			// Keep the same offset to prevent rotation
+			const rotationOffset = circumference * 0.333
+
+			return {
+				array: `${segment1} ${gapSize} ${segment2} ${gapSize}`,
+				offset: rotationOffset
+			}
+		} else {
+			// Normal state: Create two gaps in the circle at 30° and 210°
+			const gapSize = circumference * 0.05 // 5% gaps
+			const segment1 = circumference * 0.45
+			const segment2 = circumference * 0.45
+
+			// Offset to position gaps at 30° and 210°
+			const rotationOffset = circumference * 0.333 // 120° offset
+
+			return {
+				array: `${segment1} ${gapSize} ${segment2} ${gapSize}`,
+				offset: rotationOffset
+			}
+		}
+	}
+
+	// For progress animation (loading)
+	const offset = circumference - (progress / 100) * circumference
+	return {
+		array: `${circumference}`,
+		offset: offset
+	}
+}
+
+// Computed values for circle animations
+const dashArray = computed(() => {
+	if (progress.value === 100) {
+		const radius = isHovered.value ? CIRCLE_CONFIG.hover.innerRadius : CIRCLE_CONFIG.normal.innerRadius
+		return calculateDashValues(radius, 100, isHovered.value).array
+	}
+	return calculateDashValues(CIRCLE_CONFIG.normal.innerRadius, progress.value).array
+})
+
+const dashOffset = computed(() => {
+	if (progress.value === 100) {
+		const radius = isHovered.value ? CIRCLE_CONFIG.hover.innerRadius : CIRCLE_CONFIG.normal.innerRadius
+		return calculateDashValues(radius, 100, isHovered.value).offset
+	}
+	return calculateDashValues(CIRCLE_CONFIG.normal.innerRadius, progress.value).offset
+})
 
 const emit = defineEmits<{
 	'loading-complete': []
 }>()
 
-const circleRotation = ref<gsap.core.Tween | null>(null)
-
-// Calculate initial values for the progress circle
-function initProgressCircle() {
-	if (!progressCircle.value) return
-
-	const circumference = 2 * Math.PI * baseRadius
-	const staticDash = circumference * (0.5 - dashFactor)
-	const staticGap = circumference * dashFactor
-
-	// Define the initial pattern
-	const staticValue = `${staticDash.toFixed(4)} ${staticGap.toFixed(4)} ${staticDash.toFixed(
-		4
-	)} ${staticGap.toFixed(4)}`
-	const staticOffset = staticDash.toFixed(4)
-
-	// Save values for initial rendering
-	dashArray.value = staticValue
-	dashOffset.value = staticOffset
-
-	// Setting initial properties via GSAP rather than CSS for more fluidity
-	gsap.set(progressCircle.value, {
-		strokeDasharray: staticValue,
-		strokeDashoffset: staticOffset,
-	})
-
-	// Also store these values as CSS properties for future reference
-	setProgressCircleProperties(0) // Initialize at 0% rather than 100%
-}
-
-// Update dash offset based on progress
-function setProgressCircle(value: number) {
-	if (!progressCircle.value) return
-
-	const circumference = 2 * Math.PI * baseRadius
-	const offset = circumference - (value / 100) * circumference
-	dashOffset.value = offset.toFixed(4)
-
-	// Update CSS properties at the same time to maintain consistency
-	setProgressCircleProperties(value)
-}
-
-/**
- * Dynamically calculate dash array values for final state and store them
- * as CSS properties on circle elements.
- */
-function setProgressCircleProperties(e: number = 100) {
-	if (!progressCircle.value || !progressOutline.value) return
-
-	// Current radius (now 150)
-	const currentR = progressCircle.value.r.baseVal.value
-	// For hover effect, reduce the radius (less radical)
-	const hoverR = currentR * 0.96
-
-	// Total circumference for static and hover states
-	const fullCircumference = Math.PI * (currentR * 2)
-	const hoverCircumference = Math.PI * (hoverR * 2)
-
-	// More precise calculations to avoid visual jumps
-	const staticDash = fullCircumference * (0.5 - dashFactor * (e / 100))
-	const staticGap = fullCircumference * dashFactor * (e / 100)
-	const hoverDash = hoverCircumference * (0.5 - offsetFactor * (e / 100))
-	const hoverGap = hoverCircumference * offsetFactor * (e / 100)
-
-	// Create a 4-value pattern: dash gap dash gap (with more precision)
-	const staticValue = `${staticDash.toFixed(4)} ${staticGap.toFixed(4)} ${staticDash.toFixed(
-		4
-	)} ${staticGap.toFixed(4)}`
-	const hoverValue = `${hoverDash.toFixed(4)} ${hoverGap.toFixed(4)} ${hoverDash.toFixed(
-		4
-	)} ${hoverGap.toFixed(4)}`
-
-	// Save these values in CSS variables on the progressCircle element
-	progressCircle.value.style.setProperty('--circle-dash-array-static', staticValue)
-	progressCircle.value.style.setProperty('--circle-dash-offset-static', `${staticDash.toFixed(4)}`)
-	progressCircle.value.style.setProperty('--circle-dash-array-hover', hoverValue)
-	progressCircle.value.style.setProperty('--circle-dash-offset-hover', `${hoverDash.toFixed(4)}`)
-	progressCircle.value.style.setProperty('--circle-r1-hover', `${hoverR}px`)
-	progressOutline.value.style.setProperty('--circle-r2-hover', `${hoverR * 1.065}px`)
-
-	// After loading is complete, update initial values
-	// so they match the stored static values
-	if (e === 100 && ctaActive.value) {
-		// Ensure template values match CSS values
-		dashArray.value = staticValue
-		dashOffset.value = staticDash.toFixed(4)
-
-		// Apply values directly to progress circle to avoid jumping
-		if (progressCircle.value) {
-			gsap.set(progressCircle.value, {
-				strokeDasharray: staticValue,
-				strokeDashoffset: staticDash.toFixed(4),
-			})
-		}
-	}
-}
-
-function animateIn() {
+// Initialize loader animations
+function initializeLoader() {
 	if (!progressContainer.value || !progressCircles.value) return
 
+	// Initial fade in
 	gsap.fromTo(
 		progressContainer.value,
-		{ scale: 0.9, opacity: 0 },
-		{ scale: 1, opacity: 1, duration: 3, ease: 'power4.out' }
+		{ scale: 0.8, opacity: 0 },
+		{ scale: 1, opacity: 1, duration: 1.5, ease: 'power2.out' }
 	)
 
-	circleRotation.value = gsap.to(progressCircles.value, {
-		rotate: 360,
-		duration: 6,
+	// Rotation animation
+	rotationTween = gsap.to(progressCircles.value, {
+		rotation: 360,
+		duration: 8,
 		ease: 'none',
 		repeat: -1,
-		paused: false,
+		transformOrigin: 'center center'
 	})
+
+	// Progress animation
+	simulateProgress()
 }
 
+// Simulate loading progress
 function simulateProgress() {
-	gsap.to(progress, {
+	mainTimeline = gsap.timeline({
+		onComplete: () => {
+			onLoadingComplete()
+		}
+	})
+
+	// Animate progress from 0 to 100
+	mainTimeline.to(progress, {
 		value: 100,
-		duration: 5,
-		ease: 'power4.out',
-		onUpdate() {
-			setProgressCircle(progress.value)
-		},
-		onComplete() {
-			if (circleRotation.value) {
-				circleRotation.value.kill()
-			}
-
-			if (progressTextInner.value) {
-				gsap.to(progressTextInner.value, {
-					opacity: 0,
-					y: 20,
-					duration: 0.5,
-					ease: 'power2.in',
-					onComplete: () => {
-						// Smooth transition to finalize circle before activating CTA
-						if (!progressCircle.value) return
-						const finalValue =
-							progressCircle.value.style.getPropertyValue('--circle-dash-array-static') ||
-							dashArray.value
-						const finalOffset =
-							progressCircle.value.style.getPropertyValue('--circle-dash-offset-static') ||
-							dashOffset.value
-
-						gsap.to(progressCircle.value, {
-							strokeDasharray: finalValue,
-							strokeDashoffset: finalOffset,
-							duration: 0.3,
-							ease: 'power2.out',
-							onComplete: () => {
-								// Ensure reactive values are synchronized
-								dashArray.value = finalValue
-								dashOffset.value = finalOffset
-
-								// Activate CTA only after circle transition
-								ctaActive.value = true
-
-								// Use querySelector to ensure element exists
-								const ctaTextInner = document.querySelector('.preloader-cta-text-inner')
-								if (ctaTextInner) {
-									gsap.fromTo(
-										ctaTextInner,
-										{
-											opacity: 0,
-											y: 20,
-										},
-										{
-											opacity: 1,
-											y: 0,
-											duration: 0.8,
-											ease: 'power2.out',
-											onComplete: () => {
-												checkMousePosition()
-											}
-										}
-									)
-								}
-							},
-						})
-					},
+		duration: 3,
+		ease: 'power2.out',
+		onUpdate: () => {
+			// Update circle during progress
+			if (progressCircle.value && progress.value < 100) {
+				const values = calculateDashValues(CIRCLE_CONFIG.normal.innerRadius, progress.value)
+				gsap.set(progressCircle.value, {
+					strokeDasharray: values.array,
+					strokeDashoffset: values.offset
 				})
 			}
-		},
+		}
 	})
 }
 
-function handleEnter() {
-	if (!progressContainer.value || !loaderContainer.value) return
+// Handle loading complete
+function onLoadingComplete() {
+	if (!progressCircle.value || !progressTextInner.value) return
 
-	// Circle animation
-	gsap.to(progressContainer.value, {
-		scale: 1.3,
-		opacity: 0,
-		duration: 0.8,
-		ease: 'expo.out',
-	})
-
-	// Instant fade out of loader content without changing background
-	gsap.to(loaderContainer.value, {
-		opacity: 0,
-		duration: 0.8,
-		ease: 'expo.out',
-		onComplete: () => {
-			loading.value = false
-			emit('loading-complete')
-			router.push('/') // Navigate to home page
-		},
-	})
-}
-
-// Function to check if mouse is in clickable area
-function checkMousePosition() {
-	const clickableArea = document.querySelector('.preloader-clickable-area')
-	if (!clickableArea || !ctaActive.value) return
-
-	const rect = clickableArea.getBoundingClientRect()
-	const centerX = rect.left + rect.width / 2
-	const centerY = rect.top + rect.height / 2
-	const radius = rect.width / 2
-
-	const distance = Math.sqrt(
-		Math.pow(mouseX.value - centerX, 2) + Math.pow(mouseY.value - centerY, 2)
-	)
-
-	if (distance <= radius && !isHovered.value) {
-		handleCircleHover(true)
+	// Stop rotation
+	if (rotationTween) {
+		rotationTween.pause()
 	}
+
+	// Fade out progress text
+	gsap.to(progressTextInner.value, {
+		opacity: 0,
+		y: -20,
+		duration: 0.5,
+		ease: 'power2.in',
+		onComplete: () => {
+			// Update circle to final state with gaps
+			if (!progressCircle.value) return
+
+			const values = calculateDashValues(CIRCLE_CONFIG.normal.innerRadius, 100)
+			gsap.to(progressCircle.value, {
+				strokeDasharray: values.array,
+				strokeDashoffset: values.offset,
+				duration: 0.8,
+				ease: 'power2.inOut',
+				onComplete: () => {
+					// Show CTA
+					ctaActive.value = true
+
+					// Fade in CTA text
+					const ctaText = document.querySelector('.preloader-cta-text-inner')
+					if (ctaText) {
+						gsap.fromTo(
+							ctaText,
+							{ opacity: 0, y: 20 },
+							{ opacity: 1, y: 0, duration: 0.8, ease: 'power2.out' }
+						)
+					}
+				}
+			})
+		}
+	})
 }
 
-// Track mouse position
-function trackMousePosition(event: MouseEvent) {
-	mouseX.value = event.clientX
-	mouseY.value = event.clientY
-}
-
-function handleCircleHover(isEntering: boolean) {
+// Improved hover animation with better state management
+function handleCircleHover(entering: boolean) {
 	if (!ctaActive.value || !progressCircle.value || !progressOutline.value) return
 
-	// Store references in local variables
-	const circle = progressCircle.value
-	const outline = progressOutline.value
+	// Cancel any existing hover animation
+	if (hoverTimeline) {
+		hoverTimeline.kill()
+	}
 
-	isHovered.value = isEntering
+	isHovered.value = entering
 
-	// Improvement 1: Longer animation duration for smoother transition
-	const duration = 1.2
+	// Create new timeline for this hover state
+	hoverTimeline = gsap.timeline({
+		defaults: {
+			duration: 0.5,
+			ease: 'power2.inOut'
+		}
+	})
 
-	// Improvement 2: Use more sophisticated ease for smoother animation
-	const ease = 'elastic.out(0.5, 0.3)'
+	if (entering) {
+		// Calculate values for hover state (almost closed gaps)
+		const innerValues = calculateDashValues(CIRCLE_CONFIG.hover.innerRadius, 100, true)
 
-	if (isEntering) {
-		// Retrieve calculated dynamic values for hover
-		const hoverDashArray =
-			circle.style.getPropertyValue('--circle-dash-array-hover') || '325.27 36.09 325.27 36.09'
-		const hoverDashOffset = circle.style.getPropertyValue('--circle-dash-offset-hover') || '325.27'
-		const hoverR = circle.style.getPropertyValue('--circle-r1-hover') || '145px'
-		const outlineR = circle.style.getPropertyValue('--circle-r2-hover') || '160px'
-
-		// Improvement 3: Use GSAP timeline to coordinate animations
-		const tl = gsap.timeline({
-			defaults: { duration, ease },
-		})
-
-		// Animation of outline (outer circle)
-		tl.to(
-			outline,
-			{
-				r: outlineR.replace('px', ''),
-				opacity: 0.6,
-				overwrite: 'auto',
-			},
-			0
-		)
-
-		// Animation of main circle
-		tl.to(
-			circle,
-			{
-				r: hoverR.replace('px', ''),
-				opacity: 0.5,
-				overwrite: 'auto',
-			},
-			0
-		)
-
-		// Animation of stroke properties
-		tl.to(
-			circle,
-			{
-				strokeDasharray: hoverDashArray,
-				strokeDashoffset: hoverDashOffset,
-				overwrite: 'auto',
-				onUpdate: () => {
-					dashArray.value = circle.style.strokeDasharray || hoverDashArray
-					dashOffset.value = circle.style.strokeDashoffset || hoverDashOffset
-				},
-			},
-			0
-		)
-
-		// Text animation
-		tl.to(
-			'.preloader-cta-text-static',
-			{
+		// Animate to hover state - circles swap positions, gaps close
+		hoverTimeline
+			.to(progressOutline.value, {
+				attr: { r: CIRCLE_CONFIG.hover.outerRadius },
+				opacity: CIRCLE_CONFIG.hover.outerOpacity
+			}, 0)
+			.to(progressCircle.value, {
+				attr: { r: CIRCLE_CONFIG.hover.innerRadius },
+				opacity: CIRCLE_CONFIG.hover.innerOpacity,
+				strokeDasharray: innerValues.array,
+				strokeDashoffset: innerValues.offset
+			}, 0)
+			.to('.preloader-cta-text-static', {
 				y: '-100%',
 				opacity: 0,
-				duration: 0.5,
-				ease: 'power2.out',
-				overwrite: 'auto',
-			},
-			0
-		)
-
-		tl.to(
-			'.preloader-cta-text-hover',
-			{
-				y: 0,
+				duration: 0.3
+			}, 0)
+			.to('.preloader-cta-text-hover', {
+				y: '0%',
 				opacity: 1,
-				duration: 0.5,
-				ease: 'power2.out',
-				overwrite: 'auto',
-			},
-			0.1
-		)
+				duration: 0.3
+			}, 0.1)
 	} else {
-		const staticDashArray =
-			circle.style.getPropertyValue('--circle-dash-array-static') || '339.29 37.69 339.29 37.69'
-		const staticDashOffset =
-			circle.style.getPropertyValue('--circle-dash-offset-static') || '339.29'
+		// Calculate values for normal state (with gaps)
+		const innerValues = calculateDashValues(CIRCLE_CONFIG.normal.innerRadius, 100, false)
 
-		// Use timeline for exit as well
-		const tl = gsap.timeline({
-			defaults: { duration, ease },
-		})
-
-		tl.to(
-			outline,
-			{
-				r: 150,
-				opacity: 0.4,
-				overwrite: 'auto',
-			},
-			0
-		)
-
-		tl.to(
-			circle,
-			{
-				r: 160,
-				opacity: 0.5,
-				overwrite: 'auto',
-			},
-			0
-		)
-
-		tl.to(
-			circle,
-			{
-				strokeDasharray: staticDashArray,
-				strokeDashoffset: staticDashOffset,
-				overwrite: 'auto',
-				onUpdate: () => {
-					dashArray.value = circle.style.strokeDasharray || staticDashArray
-					dashOffset.value = circle.style.strokeDashoffset || staticDashOffset
-				},
-			},
-			0
-		)
-
-		tl.to(
-			'.preloader-cta-text-static',
-			{
-				y: 0,
+		// Animate back to normal state
+		hoverTimeline
+			.to(progressOutline.value, {
+				attr: { r: CIRCLE_CONFIG.normal.outerRadius },
+				opacity: CIRCLE_CONFIG.normal.outerOpacity
+			}, 0)
+			.to(progressCircle.value, {
+				attr: { r: CIRCLE_CONFIG.normal.innerRadius },
+				opacity: CIRCLE_CONFIG.normal.innerOpacity,
+				strokeDasharray: innerValues.array,
+				strokeDashoffset: innerValues.offset
+			}, 0)
+			.to('.preloader-cta-text-static', {
+				y: '0%',
 				opacity: 1,
-				duration: 0.5,
-				ease: 'power2.out',
-				overwrite: 'auto',
-			},
-			0
-		)
-
-		tl.to(
-			'.preloader-cta-text-hover',
-			{
+				duration: 0.45  // Slightly slower return animation
+			}, 0)
+			.to('.preloader-cta-text-hover', {
 				y: '100%',
 				opacity: 0,
-				duration: 0.5,
-				ease: 'power2.out',
-				overwrite: 'auto',
-			},
-			0
-		)
+				duration: 0.45  // Slightly slower return animation
+			}, 0.1)
 	}
 }
 
+// Handle click to enter site
+function handleEnter() {
+	if (!ctaActive.value || !progressContainer.value || !loaderContainer.value) return
+
+	// Disable further interactions and hide progress completely
+	ctaActive.value = false
+	progress.value = -1 // Set to -1 to completely hide progress text
+
+	// Exit animation - faster
+	gsap.timeline()
+		.to(progressContainer.value, {
+			scale: 1.3,
+			opacity: 0,
+			duration: 0.5,
+			ease: 'power2.in'
+		})
+		.to(loaderContainer.value, {
+			opacity: 0,
+			duration: 0.5,
+			ease: 'power2.in',
+			onComplete: () => {
+				loading.value = false
+				emit('loading-complete')
+				router.push('/')
+			}
+		}, '-=0.3')
+}
+
+// Lifecycle
 onMounted(() => {
-	// Add listener to track mouse position
-	window.addEventListener('mousemove', trackMousePosition)
-
-	// Ensure refs are properly defined before initializing
 	setTimeout(() => {
-		if (progressCircle.value && progressOutline.value) {
-			initProgressCircle() // Initialize circle values
-		}
-
-		if (progressContainer.value && progressCircles.value) {
-			animateIn()
-		}
-
-		simulateProgress()
+		initializeLoader()
 	}, 100)
 })
 
 onBeforeUnmount(() => {
-	// Clean up running animations
-	if (circleRotation.value) {
-		circleRotation.value.kill()
-	}
-
-	window.removeEventListener('mousemove', trackMousePosition)
+	// Clean up all animations
+	if (mainTimeline) mainTimeline.kill()
+	if (hoverTimeline) hoverTimeline.kill()
+	if (rotationTween) rotationTween.kill()
 })
 </script>
 
@@ -470,16 +324,19 @@ onBeforeUnmount(() => {
 		ref="loaderContainer"
 		class="loader-container fixed inset-0 flex items-center justify-center z-50"
 	>
-		<div class="preloader c-color">
+		<div class="preloader">
 			<div class="preloader-progress-wrapper">
 				<div class="preloader-progress" ref="progressContainer">
+					<!-- Clickable area -->
 					<div
 						class="preloader-clickable-area"
 						@mouseenter="handleCircleHover(true)"
 						@mouseleave="handleCircleHover(false)"
-						@click="ctaActive ? handleEnter() : null"
+						@click="handleEnter"
+						v-if="ctaActive"
 					></div>
 
+					<!-- CTA Text -->
 					<div class="preloader-cta" :class="{ 'is-active': ctaActive }">
 						<div class="preloader-cta-text">
 							<div class="preloader-cta-text-inner">
@@ -489,264 +346,202 @@ onBeforeUnmount(() => {
 						</div>
 					</div>
 
+					<!-- SVG Circles -->
 					<svg
 						class="preloader-progress-circles"
-						width="462"
-						height="462"
-						viewBox="0 0 462 462"
-						fill="none"
-						xmlns="http://www.w3.org/2000/svg"
+						width="400"
+						height="400"
+						viewBox="0 0 400 400"
 						ref="progressCircles"
 					>
+						<!-- Dotted outline circle -->
 						<circle
 							class="preloader-progress-outline"
-							opacity="0.4"
-							cx="231"
-							cy="231"
-							r="150"
+							:opacity="CIRCLE_CONFIG.normal.outerOpacity"
+							cx="200"
+							cy="200"
+							:r="CIRCLE_CONFIG.normal.outerRadius"
+							fill="none"
 							stroke="currentColor"
-							stroke-dasharray="2 2"
+							stroke-width="1"
+							stroke-dasharray="2 4"
 							ref="progressOutline"
 						/>
+						<!-- Main progress circle -->
 						<circle
 							class="preloader-progress-circle"
-							opacity="0.5"
-							cx="231"
-							cy="231"
-							r="160"
+							:opacity="CIRCLE_CONFIG.normal.innerOpacity"
+							cx="200"
+							cy="200"
+							:r="CIRCLE_CONFIG.normal.innerRadius"
+							fill="none"
 							stroke="currentColor"
-							:style="{
-								strokeDasharray: dashArray,
-								strokeDashoffset: dashOffset,
-							}"
+							stroke-width="2"
+							:stroke-dasharray="dashArray"
+							:stroke-dashoffset="dashOffset"
+							stroke-linecap="round"
 							ref="progressCircle"
 						/>
 					</svg>
 
-					<div class="preloader-progress-text">
+					<!-- Progress Text -->
+					<div class="preloader-progress-text" v-if="!ctaActive && progress >= 0">
 						<div class="preloader-progress-text-inner" ref="progressTextInner">
-							<div class="preloader-progress-text-percent">{{ Math.round(progress) }}</div>
-							%
+							<span class="preloader-progress-text-percent">{{ Math.round(progress) }}</span>
+							<span class="preloader-progress-text-symbol">%</span>
 						</div>
 					</div>
 				</div>
 			</div>
 
-			<div class="preloader-footer">
-				<div class="wrap">
-					<div class="flex justify-end">
-						<div class="preloader-footer-text">
-							<div class="preloader-footer-text-inner" ref="footerTextInner">
-								Loading<span class="animate-dots">...</span>
-							</div>
-						</div>
-					</div>
-				</div>
-			</div>
 		</div>
 	</div>
 </template>
 
 <style scoped>
-:root {
-	--font-mono: 'JB Mono', 'Menlo', 'Monaco', 'Courier New', monospace;
-	--expo-out: cubic-bezier(0.19, 1, 0.22, 1);
-	--circ-out: cubic-bezier(0.075, 0.82, 0.165, 1);
-}
-
 .loader-container {
+	background: linear-gradient(135deg,
+		rgb(17, 24, 39) 0%,
+		rgba(99, 102, 241, 0.05) 50%,
+		rgb(17, 24, 39) 100%);
 	color: #bcbcbc;
-	background: transparent !important; /* Transparent background to see AnimatedBackground */
-
-	/* Add background with animated gradient similar to other pages */
-	&::before {
-		content: '';
-		position: fixed;
-		inset: 0;
-		background: linear-gradient(to bottom right,
-			rgb(17, 24, 39),
-			rgba(99, 102, 241, 0.1),
-			rgb(17, 24, 39));
-		z-index: -1;
-	}
-
-	/* Animated gradient bubbles */
-	&::after {
-		content: '';
-		position: fixed;
-		top: 20%;
-		left: 10%;
-		width: 400px;
-		height: 400px;
-		background: radial-gradient(circle, rgba(99, 102, 241, 0.1), transparent);
-		border-radius: 50%;
-		filter: blur(60px);
-		animation: animate-float 20s ease-in-out infinite;
-		z-index: -1;
-	}
 }
-
 
 .preloader {
-	position: fixed;
-	top: 0;
-	left: 0;
+	position: relative;
 	width: 100%;
 	height: 100%;
 	display: flex;
 	flex-direction: column;
 	justify-content: center;
 	align-items: center;
-	font-family: var(--font-mono);
-	font-size: 0.75rem;
-	font-weight: 700;
-	text-transform: uppercase;
-	letter-spacing: 0.04em;
+	font-family: system-ui, -apple-system, sans-serif;
 }
 
 .preloader-progress-wrapper {
 	position: relative;
-	width: 30rem;
-	height: 30rem;
-	z-index: 1;
-}
-
-@media (max-width: 999px) {
-	.preloader-progress-wrapper {
-		width: 22rem;
-		height: 22rem;
-	}
+	width: 400px;
+	height: 400px;
 }
 
 .preloader-progress {
 	position: absolute;
-	top: 50%;
-	left: 50%;
-	transform: translate(-50%, -50%);
-	will-change: opacity, transform;
-	width: 100%;
-	height: 100%;
+	inset: 0;
+	display: flex;
+	align-items: center;
+	justify-content: center;
 }
 
 .preloader-clickable-area {
 	position: absolute;
-	top: 50%;
-	left: 50%;
-	transform: translate(-50%, -50%);
-	width: 310px;
-	height: 310px;
+	inset: 50px;
 	border-radius: 50%;
 	cursor: pointer;
-	z-index: 2;
-	transform-style: preserve-3d;
+	z-index: 10;
 }
 
 .preloader-progress-circles {
-	width: 100%;
-	height: 100%;
-	transform: rotate(135deg);
-	pointer-events: none;
-	will-change: transform;
-	backface-visibility: hidden;
-	transform-style: preserve-3d;
+	position: absolute;
+	inset: 0;
+	transform: rotate(-90deg);
 }
 
 .preloader-progress-outline {
-	will-change: r, opacity;
-	transform: translateZ(0);
-	stroke-width: 1px;
+	transition: none;
 }
 
 .preloader-progress-circle {
-	will-change: r, opacity, stroke-dasharray, stroke-dashoffset;
-	transform: translateZ(0);
-	stroke-width: 2px;
+	transition: none;
 }
 
 .preloader-progress-text {
 	position: absolute;
-	top: 50%;
-	left: 50%;
-	width: 6rem;
-	transform: translate(-50%, -55%);
-	text-align: center;
+	inset: 0;
+	display: flex;
+	align-items: center;
+	justify-content: center;
 	pointer-events: none;
 }
 
+.preloader-progress-text-inner {
+	display: flex;
+	align-items: baseline;
+	gap: 2px;
+	color: white;
+}
+
 .preloader-progress-text-percent {
-	font-size: 1.75rem;
-	font-weight: 600;
-	color: rgba(255, 255, 255, 0.95);
-	margin-bottom: -5px;
+	font-size: 1.5rem;
+	font-weight: 400;
+}
+
+.preloader-progress-text-symbol {
+	font-size: 1.5rem;
+	font-weight: 400;
+	opacity: 0.9;
 }
 
 .preloader-cta {
 	position: absolute;
-	top: 50%;
-	left: 50%;
-	transform: translate(-50%, -50%);
+	inset: 0;
 	display: flex;
-	justify-content: center;
 	align-items: center;
+	justify-content: center;
 	pointer-events: none;
-	z-index: 1;
 }
 
 .preloader-cta-text {
 	position: relative;
 	overflow: hidden;
+	height: 40px;
 }
 
 .preloader-cta-text-inner {
-	position: relative;
 	opacity: 0;
-	transform: translateY(20px);
 }
 
 .preloader-cta.is-active .preloader-cta-text-inner {
 	opacity: 1;
-	transform: translateY(0);
 }
 
 .preloader-cta-text-static,
 .preloader-cta-text-hover {
-	padding: 0.5rem 1rem;
-	font-size: 1.5rem;
-	letter-spacing: 0.4em;
+	display: flex;
+	align-items: center;
+	justify-content: center;
+	height: 40px;
+	font-size: 1.25rem;
+	font-weight: 500;
+	letter-spacing: 0.15em;
 	text-transform: uppercase;
-	will-change: transform, opacity;
-	backface-visibility: hidden;
+	transition: none;
 }
 
 .preloader-cta-text-hover {
 	position: absolute;
 	top: 0;
 	left: 0;
+	right: 0;
 	transform: translateY(100%);
 	opacity: 0;
-	color: rgba(165, 180, 252, 1);
-}
-
-.preloader-footer {
-	position: fixed;
-	bottom: var(--py, 1.5rem);
-	left: 0;
-	right: 0;
-	padding: 0 var(--px, 1.5rem);
-	z-index: 1;
-}
-
-.preloader-footer-text-inner {
-	display: flex;
-	overflow: hidden;
-	opacity: 0;
-	letter-spacing: 0.2em;
+	color: rgb(165, 180, 252);
 }
 
 
-@media (min-width: 1000px) {
-	.loader-container {
-		font-size: clamp(14px, 0.92593vw, 18px);
+/* Responsive */
+@media (max-width: 640px) {
+	.preloader-progress-wrapper {
+		width: 300px;
+		height: 300px;
+	}
+
+	.preloader-progress-circles {
+		width: 300px;
+		height: 300px;
+	}
+
+	.preloader-progress-text-percent {
+		font-size: 2rem;
 	}
 }
 </style>

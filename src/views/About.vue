@@ -108,7 +108,7 @@ const education = computed((): EducationItem[] => {
 							<div class="absolute left-1/2 transform -translate-x-1/2 top-0 bottom-0 w-0.5 bg-gradient-to-b from-indigo-500 to-purple-500 hidden lg:block"></div>
 							<div v-for="(exp, index) in experiences" :key="exp.company" class="relative experience-item">
 								<!-- Timeline dot aligned with top of cards -->
-								<div class="timeline-dot absolute left-1/2 transform -translate-x-1/2 top-0 w-4 h-4 bg-gradient-to-r from-indigo-500 to-purple-500 rounded-full border-4 border-gray-900 z-10 hidden lg:block transition-all duration-300"></div>
+								<div class="timeline-dot absolute top-0 w-4 h-4 bg-gradient-to-r from-indigo-500 to-purple-500 rounded-full border-4 border-gray-900 z-10 hidden lg:block transition-all duration-300"></div>
 
 								<div class="grid grid-cols-1 lg:grid-cols-2 gap-8">
 									<!-- Left side content (Profile and Skills for first two items) -->
@@ -228,13 +228,15 @@ const education = computed((): EducationItem[] => {
 </template>
 
 <style scoped>
+/* Position timeline dot at center */
+.timeline-dot {
+	left: 50%;
+	transform: translateX(-50%);
+}
 
 /* Hover effect on timeline dot when hovering experience or description cards */
 .experience-item:has(.experience-card:hover) .timeline-dot,
 .experience-item:has(.description-card:hover) .timeline-dot {
-	width: 1.5rem;
-	height: 1.5rem;
-	border-width: 5px;
-	transform: translateX(-50%) translateY(-0.25rem);
+	transform: translateX(-50%) scale(1.5);
 }
 </style>
