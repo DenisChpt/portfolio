@@ -19,10 +19,12 @@ const closeMenu = () => {
 	isMenuOpen.value = false
 }
 
-const reloadPage = (event: Event) => {
+const handlePortfolioClick = (event: Event) => {
 	event.preventDefault()
-	window.location.reload()
+	// Use location.href for a full page reload that works in production
+	window.location.href = window.location.origin
 }
+
 
 const handleScroll = () => {
 	// Use a smaller threshold for faster transition
@@ -55,7 +57,7 @@ watch(
 			<div class="flex justify-between h-14">
 				<div class="flex items-center">
 					<div class="flex-shrink-0 flex items-center">
-						<a href="/" @click="reloadPage" class="group text-xl font-bold relative">
+						<a href="/" @click="handlePortfolioClick" class="group text-xl font-bold relative cursor-pointer">
 							<span
 								class="text-transparent bg-clip-text bg-gradient-to-r from-indigo-400 to-purple-400 group-hover:from-purple-400 group-hover:to-pink-400 transition-all duration-500"
 							>
