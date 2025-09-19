@@ -24,6 +24,10 @@ const searchQuery = ref(projectsStore.searchQuery)
 const selectedTechs = ref<Set<string>>(new Set(projectsStore.filterTechs))
 const isFiltering = ref(false)
 
+// Modal state - can show card or video
+const modalMode = ref<'card' | 'video'>('card')
+const videoRef = ref<HTMLVideoElement>()
+
 // Color mapping for technologies - vibrant and distinct colors
 const techColors: Record<string, string> = {
 	'Python': 'bg-yellow-500/20 text-yellow-300 border-yellow-500/40',
@@ -65,7 +69,7 @@ const getStatusColor = (status?: string) => {
 }
 
 // Reference for the modal
-const projectDetailsRef = ref(null)
+const projectDetailsRef = ref<HTMLElement | null>(null)
 const projectImageRef = ref<HTMLElement | null>(null)
 const modalBackdropRef = ref<HTMLElement | null>(null)
 
@@ -209,13 +213,43 @@ const openProject = (id: number) => {
 	})
 }
 
-const handlePortfolioClick = (event: Event) => {
-	// For portfolio project, refresh the page instead of opening in new tab
-	event.preventDefault()
-	window.location.reload()
+// Handle live demo click - play video if available, otherwise open URL
+const handleLiveDemoClick = (project: any) => {
+	if (project.liveUrl) {
+		// Check if liveUrl is a video file
+		const isVideo = /\.(mp4|webm|ogg|mov)$/i.test(project.liveUrl)
+
+		if (isVideo) {
+			// If it's a video, switch to video mode
+			modalMode.value = 'video'
+			// Start video playback after switching
+			nextTick(() => {
+				if (videoRef.value) {
+					videoRef.value.play()
+				}
+			})
+		} else {
+			// Otherwise open the live URL
+			window.open(project.liveUrl, '_blank', 'noopener,noreferrer')
+		}
+	}
+}
+
+// Switch back to card view from video
+const switchToCard = () => {
+	if (videoRef.value) {
+		videoRef.value.pause()
+	}
+	modalMode.value = 'card'
 }
 
 const closeProject = () => {
+	// Reset to card mode when closing
+	modalMode.value = 'card'
+	if (videoRef.value) {
+		videoRef.value.pause()
+	}
+
 	// Animate the disappearance of the modal and backdrop
 	if (modalBackdropRef.value) {
 		gsap.to(modalBackdropRef.value, {
@@ -545,8 +579,50 @@ watch(
 				<!-- Border glow effect -->
 				<div class="absolute inset-0 rounded-3xl border border-indigo-500/20"></div>
 				
-				<!-- Content -->
-				<div class="relative z-10 p-4 sm:p-6 lg:p-8 overflow-y-auto h-screen sm:h-auto sm:max-h-[90vh]">
+				<!-- Video View -->
+				<div v-if="modalMode === 'video' && projectsStore.selectedProject?.liveUrl && /\.(mp4|webm|ogg|mov)$/i.test(projectsStore.selectedProject.liveUrl)" class="relative z-10 h-full">
+					<!-- Video Header with controls -->
+					<div class="absolute top-0 left-0 right-0 z-20 p-4 bg-gradient-to-b from-black/80 to-transparent">
+						<div class="flex justify-between items-center">
+							<!-- Back to card button (icon only) -->
+							<button
+								@click="switchToCard"
+								class="p-2 bg-black/50 backdrop-blur-sm rounded-full text-white hover:bg-white/20 transition-all duration-300"
+								aria-label="Back to details"
+							>
+								<svg class="w-5 h-5" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+									<path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 19l-7-7 7-7" />
+								</svg>
+							</button>
+
+							<!-- Close button -->
+							<button
+								@click="closeProject"
+								class="p-2 bg-black/50 backdrop-blur-sm rounded-full text-white hover:bg-red-500/50 transition-all duration-300"
+								aria-label="Close"
+							>
+								<svg class="w-5 h-5" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+									<path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12" />
+								</svg>
+							</button>
+						</div>
+					</div>
+
+					<!-- Video element -->
+					<video
+						ref="videoRef"
+						:src="projectsStore.selectedProject.liveUrl"
+						class="w-full h-full object-contain bg-black"
+						controls
+						controlsList="nodownload nofullscreen"
+						playsinline
+					>
+						Your browser does not support the video tag.
+					</video>
+				</div>
+
+				<!-- Card View (original content) -->
+				<div v-else class="relative z-10 p-4 sm:p-6 lg:p-8 overflow-y-auto h-screen sm:h-auto sm:max-h-[90vh]">
 					<!-- Header -->
 					<div class="flex justify-between items-start mb-8">
 						<div>
@@ -638,16 +714,23 @@ watch(
 
 					<!-- Actions with modern buttons -->
 					<div class="flex flex-wrap gap-4 pt-6 border-t border-indigo-500/20">
-						<a
+						<button
 							v-if="projectsStore.selectedProject.liveUrl"
-							:href="projectsStore.selectedProject.liveUrl"
-							:target="projectsStore.selectedProject.id === 5 ? '_self' : '_blank'"
-							:rel="projectsStore.selectedProject.id === 5 ? '' : 'noopener noreferrer'"
 							class="group relative inline-flex items-center px-6 py-3 overflow-hidden rounded-full bg-gradient-to-r from-indigo-500 to-purple-500 text-white font-medium shadow-lg transition-all duration-300 hover:scale-105 hover:shadow-xl hover:shadow-indigo-500/25"
-							@click="projectsStore.selectedProject.id === 5 ? handlePortfolioClick($event) : null"
+							@click="handleLiveDemoClick(projectsStore.selectedProject)"
 						>
 							<span class="relative z-10 flex items-center">
 								<svg
+									v-if="projectsStore.selectedProject.liveUrl && /\.(mp4|webm|ogg|mov)$/i.test(projectsStore.selectedProject.liveUrl)"
+									xmlns="http://www.w3.org/2000/svg"
+									class="h-5 w-5 mr-2"
+									viewBox="0 0 20 20"
+									fill="currentColor"
+								>
+									<path d="M10 18a8 8 0 100-16 8 8 0 000 16zM9.555 7.168A1 1 0 008 8v4a1 1 0 001.555.832l3-2a1 1 0 000-1.664l-3-2z" />
+								</svg>
+								<svg
+									v-else
 									xmlns="http://www.w3.org/2000/svg"
 									class="h-5 w-5 mr-2"
 									viewBox="0 0 20 20"
@@ -659,8 +742,8 @@ watch(
 								{{ t('projects.viewLiveDemo') }}
 							</span>
 							<div class="absolute inset-0 bg-gradient-to-r from-purple-500 to-pink-500 opacity-0 transition-opacity duration-300 group-hover:opacity-100 rounded-full"></div>
-						</a>
-						
+						</button>
+
 						<a
 							v-if="projectsStore.selectedProject.sourceUrl"
 							:href="projectsStore.selectedProject.sourceUrl"
@@ -686,6 +769,22 @@ watch(
 </template>
 
 <style scoped>
+/* Video mode styles */
+video::-webkit-media-controls {
+	background: transparent;
+}
+
+video::-webkit-media-controls-panel {
+	background: linear-gradient(to top, rgba(0, 0, 0, 0.7), transparent);
+}
+
+/* Fullscreen styles */
+:fullscreen video {
+	width: 100%;
+	height: 100%;
+	object-fit: contain;
+}
+
 /* Project grid configuration with scrolling */
 .projects-grid {
 	display: grid;
