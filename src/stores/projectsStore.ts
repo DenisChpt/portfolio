@@ -1,7 +1,7 @@
 import { defineStore } from 'pinia'
 import { ref, computed } from 'vue'
 import { useI18n } from 'vue-i18n'
-import type { Project } from '@/types/project'
+import type { Project, ProjectI18nItem } from '@/types/project'
 import { PROJECTS_METADATA } from '@/constants/projects'
 
 /**
@@ -13,7 +13,6 @@ const getSavedFilterTechs = (): string[] => {
 		const saved = sessionStorage.getItem('projectFilterTechs')
 		return saved ? JSON.parse(saved) : []
 	} catch (error) {
-		console.warn('Failed to load saved filter technologies:', error)
 		return []
 	}
 }
@@ -26,7 +25,6 @@ const getSavedSearchQuery = (): string => {
 	try {
 		return sessionStorage.getItem('projectSearchQuery') || ''
 	} catch (error) {
-		console.warn('Failed to load saved search query:', error)
 		return ''
 	}
 }
@@ -52,11 +50,11 @@ export const useProjectsStore = defineStore('projects', () => {
 		// Force reactivity on locale change
 		locale.value
 		
-		const projectItems = tm('projects.items') as any[]
+		const projectItems = tm('projects.items') as ProjectI18nItem[]
 		if (!Array.isArray(projectItems)) return []
-		
+
 		return PROJECTS_METADATA.map(metadata => {
-			const projectText = projectItems.find(item => item.id === metadata.id)
+			const projectText = projectItems.find((item: ProjectI18nItem) => item.id === metadata.id)
 			if (!projectText) return null
 			
 			return {
@@ -135,7 +133,7 @@ export const useProjectsStore = defineStore('projects', () => {
 		try {
 			sessionStorage.setItem('projectFilterTechs', JSON.stringify(techs))
 		} catch (error) {
-			console.warn('Failed to save filter technologies:', error)
+			// Silently fail if sessionStorage is not available
 		}
 	}
 	
@@ -152,7 +150,7 @@ export const useProjectsStore = defineStore('projects', () => {
 		try {
 			sessionStorage.setItem('projectSearchQuery', query)
 		} catch (error) {
-			console.warn('Failed to save search query:', error)
+			// Silently fail if sessionStorage is not available
 		}
 	}
 

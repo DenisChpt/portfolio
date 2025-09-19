@@ -98,7 +98,7 @@ const formatDate = (dateString: string) => {
 }
 
 // Get publication venue
-const getVenue = (paper: any) => {
+const getVenue = (paper: ResearchPaper) => {
 	return paper.journal || paper.conference || 'Preprint'
 }
 </script>

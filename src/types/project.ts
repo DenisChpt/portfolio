@@ -61,3 +61,13 @@ export interface ContactForm {
 	email: string
 	message: string
 }
+
+/**
+ * Represents a project item from i18n translations
+ */
+export interface ProjectI18nItem {
+	id: number
+	title: string
+	description: string
+	longDescription: string
+}

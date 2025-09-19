@@ -12,10 +12,8 @@
 /* Mobile-specific optimizations */
 @import './assets/css/mobile.css';
 
-/* Tailwind directives */
-@tailwind base;
-@tailwind components;
-@tailwind utilities;
+/* Tailwind CSS v4 with custom utilities */
+@import './app.css';
 
 /* Base layer - Only essential global styles */
 @layer base {
@@ -48,15 +46,16 @@
 	}
 
 	::-webkit-scrollbar-track {
-		@apply bg-gray-900/50;
+		background-color: rgb(17 24 39 / 0.5);
 	}
 
 	::-webkit-scrollbar-thumb {
-		@apply bg-indigo-500/50 rounded;
+		background-color: rgb(99 102 241 / 0.5);
+		border-radius: 0.25rem;
 	}
 
 	::-webkit-scrollbar-thumb:hover {
-		@apply bg-indigo-500/70;
+		background-color: rgb(99 102 241 / 0.7);
 	}
 
 	/* Focus styles for accessibility */
