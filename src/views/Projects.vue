@@ -4,6 +4,7 @@ import { useI18n } from 'vue-i18n'
 import { useRoute, useRouter } from 'vue-router'
 import { gsap } from 'gsap'
 import { useProjectsStore } from '@/stores/projectsStore'
+import Button from '@/components/Button.vue'
 const { t } = useI18n()
 const projectsStore = useProjectsStore()
 const route = useRoute()
@@ -436,7 +437,7 @@ watch(
 						<!-- Ultra modern card design -->
 						<div class="relative h-full">
 							<!-- Glow effect that follows mouse -->
-							<div class="absolute -inset-0.5 bg-gradient-to-r from-indigo-500 via-purple-500 to-pink-500 rounded-2xl opacity-0 group-hover:opacity-75 blur transition-all duration-500 bg-[size:200%_200%] animate-gradient"></div>
+							<div class="absolute -inset-0.5 bg-gradient-to-r from-indigo-500 via-purple-500 to-pink-500 rounded-2xl opacity-0 group-hover:opacity-75 blur transition-all duration-500 bg-size-200 animate-gradient"></div>
 							
 							<!-- Main card -->
 							<div class="relative h-full bg-gray-900/90 backdrop-blur-xl rounded-2xl border border-gray-800 overflow-hidden transition-all duration-500 group-hover:border-transparent group-hover:-translate-y-1 flex flex-col">

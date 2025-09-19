@@ -41,8 +41,7 @@ const { form, isLoading, isSuccess, handleSubmit } = useFormSubmit<ContactForm>(
 	{
 		resetAfter: true,
 		resetDelay: 3000,
-		onError: (err) => {
-			console.error('Form submission error:', err)
+		onError: () => {
 			if (!errorMessage.value) {
 				errorMessage.value = 'Failed to send message. Please try again later.'
 			}
