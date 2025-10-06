@@ -1,6 +1,6 @@
 # Denis Chaput - Portfolio
 
-A modern, responsive portfolio website showcasing my professional experience, projects, and technical expertise in software engineering, optimization, and cybersecurity.
+A modern, responsive portfolio website highlighting the projects I’ve worked on and my professional path.
 
 ## Features
 
@@ -65,57 +65,6 @@ npm run build
 npm run preview
 ```
 
-⚠️ **Important Note about Contact Form:**
-- **Development mode** (`npm run dev`): Contact form shows a warning message
-- **Preview mode** (`npm run preview`): Contact form returns 404 (expected behavior)
-- **Production** (Vercel): Contact form fully functional
-
-### API Behavior by Environment
-
-| Environment | Command | URL | Contact Form Status |
-|------------|---------|-----|-------------------|
-| Development | `npm run dev` | `http://localhost:5173` | Shows warning message |
-| Preview | `npm run preview` | `http://localhost:4173` | Returns 404 (no API server) |
-| Production | (deployed) | `https://your-domain.vercel.app` | ✅ Fully functional |
-
-The contact form API endpoint (`/api/contact`) is a Vercel serverless function that only exists in production.
-
-### Deployment on Vercel
-
-1. Push your code to GitHub
-2. Import the project in Vercel
-3. Set the environment variable in Vercel dashboard:
-   ```
-   DISCORD_WEBHOOK_URL=your_discord_webhook_url_here
-   ```
-4. Deploy
-
-Vercel will automatically:
-- Build the Vue app
-- Create serverless function from `api/contact.js`
-- Handle all routing and API endpoints
-
-## Project Structure
-
-```
-portfolio/
-├── api/                # Vercel serverless functions
-│   └── contact.js      # Contact form API endpoint
-├── src/
-│   ├── components/     # Reusable Vue components
-│   ├── views/          # Page components
-│   ├── stores/         # Pinia state stores
-│   ├── services/       # API services and utilities
-│   │   ├── logger.ts   # Professional logging system
-│   │   └── discord.ts  # Contact form service
-│   ├── constants/      # Application constants
-│   ├── i18n/           # Internationalization files
-│   ├── composables/    # Vue composition utilities
-│   ├── router/         # Routing configuration
-│   └── types/          # TypeScript type definitions
-├── public/             # Static assets
-└── package.json        # Project dependencies
-```
 
 ## Configuration
 
@@ -137,23 +86,6 @@ VITE_EMAIL=your.email@example.com
 VITE_GITHUB_USERNAME=your-github-username
 VITE_LINKEDIN_USERNAME=your-linkedin-username
 ```
-
-#### Setting up Discord Webhook:
-1. Go to your Discord server settings
-2. Navigate to Integrations → Webhooks
-3. Create a new webhook and copy the URL
-4. Add it to your `.env` file
-
-#### Contact Form Architecture:
-The contact form uses a relay server to bypass CORS restrictions:
-- **Local**: Vue app → Express server (localhost:3001) → Discord
-- **Production**: Vue app → Your server → Discord
-
-**Security Benefits:**
-- Discord webhook URL never exposed to client
-- No CORS issues
-- Server-side validation
-- Works with any hosting provider
 
 ## Browser Support
 
