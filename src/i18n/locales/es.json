@@ -74,6 +74,9 @@
 		"viewProject": "Ver Proyecto",
 		"viewLiveDemo": "Ver Demo",
 		"viewSource": "Ver Código Fuente",
+		"technologiesUsed": "Tecnologías utilizadas",
+		"projectStatus": "Estado del proyecto",
+		"projectOverview": "Descripción del proyecto",
 		"status": {
 			"active": "Activo",
 			"completed": "Completado",
@@ -132,7 +135,16 @@
 		"messagePlaceholder": "Tu mensaje...",
 		"send": "Enviar Mensaje",
 		"sending": "Enviando...",
-		"messageSent": "¡Mensaje enviado con éxito!"
+		"messageSent": "¡Mensaje enviado con éxito!",
+		"errors": {
+			"invalidName": "Por favor, ingrese un nombre válido (al menos 2 caracteres)",
+			"invalidEmail": "Por favor, ingrese una dirección de correo electrónico válida",
+			"invalidMessage": "Por favor, ingrese un mensaje (al menos 5 caracteres)",
+			"contactDisabledDev": "El formulario de contacto solo funciona en producción.",
+			"serviceUnavailable": "El servicio de contacto no está disponible temporalmente. Inténtelo de nuevo.",
+			"sendFailed": "No se pudo enviar el mensaje. Inténtelo de nuevo.",
+			"unknownError": "Se produjo un error inesperado. Inténtelo de nuevo."
+		}
 	},
 	"footer": {
 		"allRightsReserved": "Todos los derechos reservados."

@@ -4,6 +4,7 @@ import { useI18n } from 'vue-i18n'
 import { useRoute, useRouter } from 'vue-router'
 import { gsap } from 'gsap'
 import { useProjectsStore } from '@/stores/projectsStore'
+import type { Project } from '@/types/project'
 import Button from '@/components/Button.vue'
 const { t } = useI18n()
 const projectsStore = useProjectsStore()
@@ -128,7 +129,7 @@ const handleTechFilter = async (tech: string) => {
 	}
 
 	// Update the filter in the store with all selected technologies
-	projectsStore.setMultipleTechFilters(Array.from(selectedTechs.value))
+	projectsStore.setFilterTechs(Array.from(selectedTechs.value))
 
 	// Allow DOM to update before animating
 	await nextTick()
@@ -185,7 +186,7 @@ const animateFilteredProjects = () => {
 
 // Open and close project details
 const openProject = (id: number) => {
-	projectsStore.selectProject(id)
+	projectsStore.setSelectedProject(id)
 
 	// Animate the modal and backdrop appearance
 	nextTick(() => {
@@ -224,7 +225,7 @@ const openProject = (id: number) => {
 }
 
 // Handle live demo click - play video if available, otherwise open URL
-const handleLiveDemoClick = (project: any) => {
+const handleLiveDemoClick = (project: Project) => {
 	if (project.liveUrl) {
 		// Check if liveUrl is a video file
 		const isVideo = /\.(mp4|webm|ogg|mov)$/i.test(project.liveUrl)
@@ -276,7 +277,7 @@ const closeProject = () => {
 			duration: 0.3,
 			ease: 'power2.in',
 			onComplete: () => {
-				projectsStore.selectProject(null)
+				projectsStore.setSelectedProject(null)
 				// Clean up query parameter if present
 				if (route.query.project) {
 					router.replace({ name: 'projects', query: {} })
@@ -284,7 +285,7 @@ const closeProject = () => {
 			},
 		})
 	} else {
-		projectsStore.selectProject(null)
+		projectsStore.setSelectedProject(null)
 		// Clean up query parameter if present
 		if (route.query.project) {
 			router.replace({ name: 'projects', query: {} })
@@ -396,7 +397,7 @@ watch(
 								v-model="searchQuery"
 								@input="handleSearch"
 								type="text"
-								placeholder="Search projects..."
+								:placeholder="t('projects.searchPlaceholder')"
 								class="input w-full pr-12 text-base py-3 min-h-[48px]"
 							/>
 							<button
@@ -459,7 +460,7 @@ watch(
 							d="M9.172 16.172a4 4 0 015.656 0M9 10h.01M15 10h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z"
 						/>
 					</svg>
-					<p class="text-gray-400 text-lg mb-5">No projects found matching your criteria.</p>
+					<p class="text-gray-400 text-lg mb-5">{{ t('projects.noResults') }}</p>
 					<Button @click="clearFilters" variant="outline" size="md">Clear Filters</Button>
 				</div>
 
@@ -678,7 +679,7 @@ watch(
 							
 							<!-- Tech stack with consistent colors -->
 							<div>
-								<h3 class="text-sm font-semibold text-indigo-300 mb-3 uppercase tracking-wider">Technologies Used</h3>
+								<h3 class="text-sm font-semibold text-indigo-300 mb-3 uppercase tracking-wider">{{ t('projects.technologiesUsed') }}</h3>
 								<div class="flex flex-wrap gap-2">
 									<span
 										v-for="tech in projectsStore.selectedProject.tech"
@@ -691,9 +692,9 @@ watch(
 								</div>
 							</div>
 							
-							<!-- Project Status -->
+							<!-- {{ t('projects.projectStatus') }} -->
 							<div>
-								<h3 class="text-sm font-semibold text-purple-300 mb-3 uppercase tracking-wider">Project Status</h3>
+								<h3 class="text-sm font-semibold text-purple-300 mb-3 uppercase tracking-wider">{{ t('projects.projectStatus') }}</h3>
 								<div class="flex items-center space-x-3">
 									<div 
 										class="w-3 h-3 rounded-full animate-pulse"
@@ -712,7 +713,7 @@ watch(
 						<!-- Right column - Description -->
 						<div class="space-y-6">
 							<div>
-								<h3 class="text-sm font-semibold text-purple-300 mb-3 uppercase tracking-wider">Project Overview</h3>
+								<h3 class="text-sm font-semibold text-purple-300 mb-3 uppercase tracking-wider">{{ t('projects.projectOverview') }}</h3>
 								<p class="text-gray-300 text-base leading-relaxed">
 									{{ projectsStore.selectedProject.longDescription }}
 								</p>
@@ -777,7 +778,6 @@ watch(
 </template>
 
 <style scoped>
-/* Video mode styles */
 video::-webkit-media-controls {
 	background: transparent;
 }
@@ -786,55 +786,9 @@ video::-webkit-media-controls-panel {
 	background: linear-gradient(to top, rgba(0, 0, 0, 0.7), transparent);
 }
 
-/* Fullscreen styles */
 :fullscreen video {
 	width: 100%;
 	height: 100%;
 	object-fit: contain;
-}
-
-/* Project grid configuration with scrolling */
-.projects-grid {
-	display: grid;
-	grid-template-columns: repeat(1, minmax(0, 1fr));
-	gap: 2rem;
-	padding: 0.25rem 0.25rem;
-	height: auto;
-	max-height: 60vh;
-	overflow-y: auto;
-	scrollbar-width: thin;
-	scrollbar-color: rgba(99, 102, 241, 0.3) rgba(30, 41, 59, 0.5);
-}
-
-@media (min-width: 768px) {
-	.projects-grid {
-		grid-template-columns: repeat(2, minmax(0, 1fr));
-	}
-}
-
-@media (min-width: 1024px) {
-	.projects-grid {
-		grid-template-columns: repeat(3, minmax(0, 1fr));
-	}
-}
-
-/* Scrollbar styles */
-.projects-grid::-webkit-scrollbar {
-	width: 10px;
-}
-
-.projects-grid::-webkit-scrollbar-track {
-	background: rgba(30, 41, 59, 0.5);
-	border-radius: 4px;
-}
-
-.projects-grid::-webkit-scrollbar-thumb {
-	background: rgba(99, 102, 241, 0.3);
-	border-radius: 4px;
-	border: 1px solid rgba(30, 41, 59, 0.5);
-}
-
-.projects-grid::-webkit-scrollbar-thumb:hover {
-	background: rgba(99, 102, 241, 0.5);
 }
 </style>

@@ -1,16 +1,11 @@
 import { createRouter, createWebHistory } from 'vue-router'
 
-/**
- * Application router configuration
- * Implements lazy loading for all routes to optimize bundle size and performance
- */
 const router = createRouter({
   history: createWebHistory(),
   routes: [
     {
       path: '/',
       name: 'home',
-      // Lazy load Home component for consistency
       component: () => import('../views/Home.vue')
     },
     {

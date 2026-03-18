@@ -1,16 +1,3 @@
-/**
- * Portfolio Application Entry Point
- * 
- * Initializes Vue 3 application with:
- * - Pinia state management
- * - Vue Router for navigation
- * - i18n for internationalization
- * - Global styles and configurations
- * 
- * @author Denis Chaput
- * @license MIT
- */
-
 import { createApp } from 'vue'
 import { createPinia } from 'pinia'
 import App from './App.vue'

@@ -74,6 +74,9 @@
 		"viewProject": "View Project",
 		"viewLiveDemo": "View Live Demo",
 		"viewSource": "View Source",
+		"technologiesUsed": "Technologies Used",
+		"projectStatus": "Project Status",
+		"projectOverview": "Project Overview",
 		"status": {
 			"active": "Active",
 			"completed": "Completed",
@@ -132,7 +135,16 @@
 		"messagePlaceholder": "Your message...",
 		"send": "Send Message",
 		"sending": "Sending...",
-		"messageSent": "Message sent successfully!"
+		"messageSent": "Message sent successfully!",
+		"errors": {
+			"invalidName": "Please enter a valid name (at least 2 characters)",
+			"invalidEmail": "Please enter a valid email address",
+			"invalidMessage": "Please enter a message (at least 5 characters)",
+			"contactDisabledDev": "The contact form only works in production.",
+			"serviceUnavailable": "The contact service is temporarily unavailable. Please try again.",
+			"sendFailed": "Failed to send message. Please try again later.",
+			"unknownError": "An unexpected error occurred. Please try again."
+		}
 	},
 	"footer": {
 		"allRightsReserved": "All rights reserved."

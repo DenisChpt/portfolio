@@ -74,6 +74,9 @@
 		"viewProject": "عرض المشروع",
 		"viewLiveDemo": "عرض العرض التوضيحي",
 		"viewSource": "عرض الكود المصدري",
+		"technologiesUsed": "التقنيات المستخدمة",
+		"projectStatus": "حالة المشروع",
+		"projectOverview": "نظرة عامة على المشروع",
 		"status": {
 			"active": "نشط",
 			"completed": "مكتمل",
@@ -132,7 +135,16 @@
 		"messagePlaceholder": "...رسالتك",
 		"send": "أرسل الرسالة",
 		"sending": "جاري الإرسال...",
-		"messageSent": "تم إرسال الرسالة بنجاح!"
+		"messageSent": "تم إرسال الرسالة بنجاح!",
+		"errors": {
+			"invalidName": "يرجى إدخال اسم صالح (حرفان على الأقل)",
+			"invalidEmail": "يرجى إدخال عنوان بريد إلكتروني صالح",
+			"invalidMessage": "يرجى إدخال رسالة (5 أحرف على الأقل)",
+			"contactDisabledDev": "نموذج الاتصال يعمل فقط في الإنتاج.",
+			"serviceUnavailable": "خدمة الاتصال غير متاحة مؤقتاً. يرجى المحاولة مرة أخرى.",
+			"sendFailed": "فشل إرسال الرسالة. يرجى المحاولة مرة أخرى.",
+			"unknownError": "حدث خطأ غير متوقع. يرجى المحاولة مرة أخرى."
+		}
 	},
 	"footer": {
 		"allRightsReserved": "جميع الحقوق محفوظة."

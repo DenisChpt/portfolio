@@ -228,24 +228,18 @@ onBeforeUnmount(() => {
 </script>
 
 <template>
-	<!-- Use special container for background -->
 	<div class="animated-background-container">
 		<canvas ref="canvasRef" class="animated-background-canvas"></canvas>
 	</div>
 </template>
 
 <style>
-/* Styles globaux pour s'assurer que le fond est visible partout */
 html, body {
 	margin: 0;
 	padding: 0;
-	/**
-	 * Explicitly remove any background that could interfere
-	 */
 	background: transparent !important;
 }
 
-/* Assurer que la structure principale a un fond transparent */
 #app {
 	background-color: transparent !important;
 }
@@ -260,7 +254,7 @@ html, body {
 	height: 100vh;
 	z-index: -9999;
 	pointer-events: none;
-	overflow: hidden; /* Prevent any overflow */
+	overflow: hidden;
 }
 
 .animated-background-canvas {
