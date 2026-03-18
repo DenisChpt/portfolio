@@ -1,5 +1,5 @@
 <script setup lang="ts">
-import { ref, watch } from 'vue'
+import { ref, watch, onBeforeUnmount } from 'vue'
 import { useI18n } from 'vue-i18n'
 
 const { locale } = useI18n()
@@ -39,6 +39,10 @@ watch(isOpen, (newVal) => {
 	} else {
 		window.removeEventListener('click', closeMenu)
 	}
+})
+
+onBeforeUnmount(() => {
+	window.removeEventListener('click', closeMenu)
 })
 </script>
 

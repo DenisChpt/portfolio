@@ -11,8 +11,8 @@ export default defineConfig({
 		},
 	},
 	build: {
-		// Bundle all CSS into a single file
-		cssCodeSplit: false,
+		// Enable CSS code splitting for faster initial load
+		cssCodeSplit: true,
 		// Disable sourcemaps in production for performance
 		sourcemap: false,
 		// Use terser for minification
@@ -24,14 +24,18 @@ export default defineConfig({
 				drop_debugger: true,
 			},
 		},
-		// Increase chunk size warning limit
 		chunkSizeWarningLimit: 1500,
 		rollupOptions: {
 			output: {
-				// Consistent file naming
 				assetFileNames: 'assets/[name]-[hash].[ext]',
 				chunkFileNames: 'assets/[name]-[hash].js',
 				entryFileNames: 'assets/[name]-[hash].js',
+				// Split vendor chunks for better caching
+				manualChunks: {
+					'vue-vendor': ['vue', 'vue-router', 'pinia'],
+					'ui-vendor': ['gsap', '@vueuse/core', '@headlessui/vue'],
+					'i18n': ['vue-i18n'],
+				},
 			},
 		},
 	},

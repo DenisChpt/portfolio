@@ -73,21 +73,31 @@ const projectDetailsRef = ref<HTMLElement | null>(null)
 const projectImageRef = ref<HTMLElement | null>(null)
 const modalBackdropRef = ref<HTMLElement | null>(null)
 
-// Mouse tracking for image tilt effect
+// Mouse tracking for image tilt effect - batched with RAF to avoid layout thrashing
+let tiltRAF: number | null = null
 const handleMouseMove = (event: MouseEvent) => {
 	if (!projectImageRef.value) return
-	
-	const rect = projectImageRef.value.getBoundingClientRect()
-	const x = event.clientX - rect.left
-	const y = event.clientY - rect.top
-	
-	const centerX = rect.width / 2
-	const centerY = rect.height / 2
-	
-	const rotateX = ((y - centerY) / centerY) * -10 // Max 10 degrees
-	const rotateY = ((x - centerX) / centerX) * 10 // Max 10 degrees
-	
-	projectImageRef.value.style.transform = `perspective(1000px) rotateX(${rotateX}deg) rotateY(${rotateY}deg) scale(1.05)`
+	if (tiltRAF) return // Skip if a frame is already pending
+
+	const clientX = event.clientX
+	const clientY = event.clientY
+
+	tiltRAF = requestAnimationFrame(() => {
+		tiltRAF = null
+		if (!projectImageRef.value) return
+
+		const rect = projectImageRef.value.getBoundingClientRect()
+		const x = clientX - rect.left
+		const y = clientY - rect.top
+
+		const centerX = rect.width / 2
+		const centerY = rect.height / 2
+
+		const rotateX = ((y - centerY) / centerY) * -10
+		const rotateY = ((x - centerX) / centerX) * 10
+
+		projectImageRef.value.style.transform = `perspective(1000px) rotateX(${rotateX}deg) rotateY(${rotateY}deg) scale(1.05)`
+	})
 }
 
 const handleMouseLeave = () => {
@@ -95,16 +105,16 @@ const handleMouseLeave = () => {
 	projectImageRef.value.style.transform = 'perspective(1000px) rotateX(0) rotateY(0) scale(1)'
 }
 
-// Handle filtering
-const handleSearch = async () => {
-	isFiltering.value = true
-	projectsStore.setSearchQuery(searchQuery.value)
-	
-	// Allow DOM to update before animating
-	await nextTick()
-	
-	// Animation of filtered elements
-	animateFilteredProjects()
+// Debounced search to avoid filtering on every keystroke
+let searchTimeout: ReturnType<typeof setTimeout> | null = null
+const handleSearch = () => {
+	if (searchTimeout) clearTimeout(searchTimeout)
+	searchTimeout = setTimeout(async () => {
+		isFiltering.value = true
+		projectsStore.setSearchQuery(searchQuery.value)
+		await nextTick()
+		animateFilteredProjects()
+	}, 150)
 }
 
 const handleTechFilter = async (tech: string) => {
@@ -333,22 +343,17 @@ onMounted(() => {
 	}, 50)
 })
 
-// Watch for changes in filtered projects
+// Watch for changes in filtered projects (shallow comparison via length + ids)
 watch(
-	() => projectsStore.filteredProjects,
-	(_, oldProjects) => {
-		// Don't animate if content is not ready yet
+	() => projectsStore.filteredProjects.map(p => p.id).join(','),
+	(_, oldVal) => {
 		if (!contentReady.value) return
+		if (!oldVal || isFiltering.value) return
 
-		// Don't animate at initialization or if animation is already handled by handleTechFilter
-		if (!oldProjects || isFiltering.value) return
-
-		// Animate filter changes
 		nextTick(() => {
 			animateFilteredProjects()
 		})
-	},
-	{ deep: true }
+	}
 )
 </script>
 
@@ -488,6 +493,8 @@ watch(
 									<img
 										:src="project.image"
 										:alt="project.title"
+										loading="lazy"
+										decoding="async"
 										class="w-full h-full object-cover transition-all duration-700 group-hover:scale-110 group-hover:rotate-1"
 									/>
 									
@@ -662,6 +669,7 @@ watch(
 									ref="projectImageRef"
 									:src="projectsStore.selectedProject.image"
 									:alt="projectsStore.selectedProject.title"
+									decoding="async"
 									class="w-full rounded-2xl aspect-video object-cover transition-transform duration-200 ease-out"
 									style="transform-style: preserve-3d; will-change: transform;"
 								/>

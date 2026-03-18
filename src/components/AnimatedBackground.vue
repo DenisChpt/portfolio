@@ -3,6 +3,7 @@ import { ref, onMounted, onBeforeUnmount } from 'vue'
 
 const canvasRef = ref<HTMLCanvasElement>()
 let backgroundAnimation: number | null = null
+let resizeHandler: (() => void) | null = null
 
 /**
  * Optimized background animation with particle system
@@ -14,22 +15,35 @@ function initBackgroundAnimation() {
 	const ctx = canvas.getContext('2d')
 	if (!ctx) return
 
+	let canvasW = 0
+	let canvasH = 0
+
 	/**
 	 * Adjust canvas size with device pixel ratio to prevent pixelation
 	 */
 	function resizeCanvas() {
 		const dpr = window.devicePixelRatio || 1
-		canvas.width = window.innerWidth * dpr
-		canvas.height = window.innerHeight * dpr
-		canvas.style.width = `${window.innerWidth}px`
-		canvas.style.height = `${window.innerHeight}px`
-		ctx!.scale(dpr, dpr)
+		canvasW = window.innerWidth
+		canvasH = window.innerHeight
+		canvas.width = canvasW * dpr
+		canvas.height = canvasH * dpr
+		canvas.style.width = `${canvasW}px`
+		canvas.style.height = `${canvasH}px`
+		// Reset transform before scaling to avoid accumulation on resize
+		ctx!.setTransform(dpr, 0, 0, dpr, 0, 0)
 	}
 
-	/**
-	 * Listen for window resize events
-	 */
-	window.addEventListener('resize', resizeCanvas)
+	// Throttled resize handler
+	let resizeTimeout: ReturnType<typeof setTimeout> | null = null
+	resizeHandler = () => {
+		if (resizeTimeout) return
+		resizeTimeout = setTimeout(() => {
+			resizeTimeout = null
+			resizeCanvas()
+		}, 200)
+	}
+
+	window.addEventListener('resize', resizeHandler, { passive: true })
 	resizeCanvas()
 
 	/**
@@ -37,10 +51,12 @@ function initBackgroundAnimation() {
 	 */
 	const gridSize = 40
 	const gridLineWidth = 0.3
-	const dotsCount = 70
+	const dotsCount = 50
 	const dotMinRadius = 1
 	const dotMaxRadius = 3
 	const maxSpeed = 0.4
+	const connectionDistSq = 150 * 150
+	const connectionDist = 150
 
 	/**
 	 * Light dot particle class
@@ -53,32 +69,27 @@ function initBackgroundAnimation() {
 		vy: number
 		initialAlpha: number
 		alpha: number
+		phaseOffset: number
 
 		constructor() {
-			this.x = Math.random() * canvas.width
-			this.y = Math.random() * canvas.height
+			this.x = Math.random() * canvasW
+			this.y = Math.random() * canvasH
 			this.radius = Math.random() * (dotMaxRadius - dotMinRadius) + dotMinRadius
 			this.vx = (Math.random() * 2 - 1) * maxSpeed
 			this.vy = (Math.random() * 2 - 1) * maxSpeed
 			this.initialAlpha = Math.random() * 0.5 + 0.2
 			this.alpha = this.initialAlpha
+			this.phaseOffset = Math.random() * Math.PI * 2
 		}
 
-		update() {
-			/**
-			 * Update particle position with boundary checking
-			 */
+		update(time: number) {
 			this.x += this.vx
 			this.y += this.vy
 
-			// Bounce off edges
-			if (this.x < 0 || this.x > canvas.width) this.vx = -this.vx
-			if (this.y < 0 || this.y > canvas.height) this.vy = -this.vy
+			if (this.x < 0 || this.x > canvasW) this.vx = -this.vx
+			if (this.y < 0 || this.y > canvasH) this.vy = -this.vy
 
-			/**
-			 * Apply subtle pulsation effect to opacity
-			 */
-			this.alpha = this.initialAlpha * (0.8 + Math.sin(Date.now() * 0.002) * 0.2)
+			this.alpha = this.initialAlpha * (0.8 + Math.sin(time * 0.002 + this.phaseOffset) * 0.2)
 		}
 
 		draw(ctx: CanvasRenderingContext2D) {
@@ -90,50 +101,84 @@ function initBackgroundAnimation() {
 	}
 
 	/**
-	 * Create connections between nearby particles
+	 * Draw connections using spatial grid to avoid O(n²)
 	 */
 	function drawConnections(dots: Dot[], ctx: CanvasRenderingContext2D) {
-		const connectionDistance = 150
+		const cellSize = connectionDist
+		const cols = Math.ceil(canvasW / cellSize) + 1
+		const grid: Map<number, number[]> = new Map()
 
+		// Place dots into grid cells
 		for (let i = 0; i < dots.length; i++) {
-			for (let j = i + 1; j < dots.length; j++) {
-				const dx = dots[i].x - dots[j].x
-				const dy = dots[i].y - dots[j].y
-				const distance = Math.sqrt(dx * dx + dy * dy)
-
-				if (distance < connectionDistance) {
-					const opacity = (1 - distance / connectionDistance) * 0.15
-					ctx.beginPath()
-					ctx.moveTo(dots[i].x, dots[i].y)
-					ctx.lineTo(dots[j].x, dots[j].y)
-					ctx.strokeStyle = `rgba(140, 140, 180, ${opacity})`
-					ctx.lineWidth = 0.5
-					ctx.stroke()
-				}
+			const cx = (dots[i].x / cellSize) | 0
+			const cy = (dots[i].y / cellSize) | 0
+			const key = cy * cols + cx
+			const cell = grid.get(key)
+			if (cell) {
+				cell.push(i)
+			} else {
+				grid.set(key, [i])
 			}
 		}
+
+		ctx.lineWidth = 0.5
+
+		// Check only neighboring cells
+		grid.forEach((indices, key) => {
+			const cy = (key / cols) | 0
+			const cx = key - cy * cols
+			// Check current cell and 3 forward neighbors to avoid duplicates
+			const neighborKeys = [
+				key,
+				cy * cols + (cx + 1),
+				(cy + 1) * cols + (cx - 1),
+				(cy + 1) * cols + cx,
+			]
+
+			for (const nKey of neighborKeys) {
+				const nIndices = nKey === key ? indices : grid.get(nKey)
+				if (!nIndices) continue
+
+				for (const i of indices) {
+					const startJ = nKey === key ? indices.indexOf(i) + 1 : 0
+					for (let jIdx = startJ; jIdx < nIndices.length; jIdx++) {
+						const j = nIndices[jIdx]
+						const dx = dots[i].x - dots[j].x
+						const dy = dots[i].y - dots[j].y
+						const distSq = dx * dx + dy * dy
+
+						if (distSq < connectionDistSq) {
+							const dist = Math.sqrt(distSq)
+							const opacity = (1 - dist / connectionDist) * 0.15
+							ctx.beginPath()
+							ctx.moveTo(dots[i].x, dots[i].y)
+							ctx.lineTo(dots[j].x, dots[j].y)
+							ctx.strokeStyle = `rgba(140, 140, 180, ${opacity})`
+							ctx.stroke()
+						}
+					}
+				}
+			}
+		})
 	}
 
-	// Draw the grid
+	// Draw the grid using a single path for efficiency
 	function drawGrid(ctx: CanvasRenderingContext2D, width: number, height: number) {
 		ctx.strokeStyle = 'rgba(50, 50, 70, 0.15)'
 		ctx.lineWidth = gridLineWidth
+		ctx.beginPath()
 
-		// Horizontal lines
 		for (let y = 0; y < height; y += gridSize) {
-			ctx.beginPath()
 			ctx.moveTo(0, y)
 			ctx.lineTo(width, y)
-			ctx.stroke()
 		}
 
-		// Vertical lines
 		for (let x = 0; x < width; x += gridSize) {
-			ctx.beginPath()
 			ctx.moveTo(x, 0)
 			ctx.lineTo(x, height)
-			ctx.stroke()
 		}
+
+		ctx.stroke()
 	}
 
 	/**
@@ -145,30 +190,24 @@ function initBackgroundAnimation() {
 	}
 
 	// Animation
-	function animate() {
-		ctx!.clearRect(0, 0, canvas.width, canvas.height)
+	function animate(time: number) {
+		ctx!.clearRect(0, 0, canvasW, canvasH)
 		ctx!.fillStyle = '#090A0F';
-		ctx!.fillRect(0, 0, canvas.width, canvas.height)
+		ctx!.fillRect(0, 0, canvasW, canvasH)
 
-		// Draw the grid
-		drawGrid(ctx!, canvas.width, canvas.height)
+		drawGrid(ctx!, canvasW, canvasH)
 
-		/**
-		 * Update and render all particles
-		 */
-		dots.forEach((dot) => {
-			dot.update()
-			dot.draw(ctx!)
-		})
+		for (let i = 0; i < dots.length; i++) {
+			dots[i].update(time)
+			dots[i].draw(ctx!)
+		}
 
-		// Draw connections
 		drawConnections(dots, ctx!)
 
-		// Continue animation
 		backgroundAnimation = requestAnimationFrame(animate)
 	}
 
-	animate()
+	backgroundAnimation = requestAnimationFrame(animate)
 }
 
 onMounted(() => {
@@ -178,15 +217,13 @@ onMounted(() => {
 })
 
 onBeforeUnmount(() => {
-	// Clean up running animations
 	if (backgroundAnimation !== null) {
 		cancelAnimationFrame(backgroundAnimation)
 	}
 
-	/**
-	 * Clean up event listeners on unmount
-	 */
-	window.removeEventListener('resize', () => {});
+	if (resizeHandler) {
+		window.removeEventListener('resize', resizeHandler)
+	}
 })
 </script>
 

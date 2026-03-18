@@ -444,6 +444,7 @@ onBeforeUnmount(() => {
 	position: absolute;
 	inset: 0;
 	transform: rotate(-90deg);
+	will-change: transform;
 }
 
 .preloader-progress-outline {

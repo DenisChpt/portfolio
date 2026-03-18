@@ -34,7 +34,7 @@ const getSavedSearchQuery = (): string => {
  * Combines metadata from constants with text content from i18n
  */
 export const useProjectsStore = defineStore('projects', () => {
-	const { tm, locale } = useI18n()
+	const { tm } = useI18n()
 
 	// State - with session persistence for filters
 	const selectedProjectId = ref<number | null>(null)
@@ -47,9 +47,6 @@ export const useProjectsStore = defineStore('projects', () => {
 	 * Combine metadata with i18n translations to create full project objects
 	 */
 	const projects = computed((): Project[] => {
-		// Force reactivity on locale change
-		locale.value
-		
 		const projectItems = tm('projects.items') as ProjectI18nItem[]
 		if (!Array.isArray(projectItems)) return []
 
@@ -109,7 +106,7 @@ export const useProjectsStore = defineStore('projects', () => {
 
 	const getAllTechnologies = () => {
 		const techSet = new Set<string>()
-		projects.value.forEach((project) => {
+		PROJECTS_METADATA.forEach((project) => {
 			project.tech.forEach((tech) => techSet.add(tech))
 		})
 		return Array.from(techSet).sort()
@@ -162,8 +159,8 @@ export const useProjectsStore = defineStore('projects', () => {
 		sessionStorage.removeItem('projectSearchQuery')
 	}
 	
-	// Computed as getter
-	const allTechnologies = computed(() => getAllTechnologies())
+	// Static - technologies come from metadata, not i18n
+	const allTechnologies = getAllTechnologies()
 
 	return {
 		// State
