@@ -5,9 +5,6 @@ export interface ProgrammingSkill {
 	level: SkillLevel
 }
 
-/**
- * Programming languages with skill levels
- */
 export const PROGRAMMING_SKILLS: ProgrammingSkill[] = [
 	{ name: 'Python', level: 'expert' },
 	{ name: 'Rust', level: 'expert' },

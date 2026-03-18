@@ -9,12 +9,6 @@ interface FormSubmitOptions {
 	simulateDelay?: number
 }
 
-/**
- * Hook for handling form submissions with loading and success states
- * @param initialValues - Initial form values
- * @param submitFunction - Actual function to execute on submit (optional)
- * @param options - Configuration options
- */
 export function useFormSubmit<T extends object>(
 	initialValues: T,
 	submitFunction?: (values: T) => Promise<void>,
@@ -46,18 +40,14 @@ export function useFormSubmit<T extends object>(
 			if (submitFunction) {
 				await submitFunction(form.value)
 			} else {
-				// Simulate API call if no submitFunction is provided
 				await new Promise((resolve) => setTimeout(resolve, simulateDelay))
 			}
 
 			isSuccess.value = true
 			if (onSuccess) onSuccess()
 
-			// Reset form after success if requested
 			if (resetAfter) {
 				resetForm()
-
-				// Reset success state after delay
 				setTimeout(() => {
 					isSuccess.value = false
 				}, resetDelay)
@@ -70,12 +60,5 @@ export function useFormSubmit<T extends object>(
 		}
 	}
 
-	return {
-		form,
-		isLoading,
-		isSuccess,
-		error,
-		handleSubmit,
-		resetForm,
-	}
+	return { form, isLoading, isSuccess, error, handleSubmit, resetForm }
 }

@@ -171,34 +171,6 @@ const featuredProjects = computed(() => projectsStore.featuredProjects)
 </template>
 
 <style scoped>
-.typing-animation {
-	overflow: hidden;
-	white-space: nowrap;
-	animation: typing 2s steps(40, end);
-}
-
-.typing-complete {
-	overflow: visible;
-}
-
-.cursor-blink {
-	animation: blink 1s infinite;
-}
-
-.skill-badge {
-	padding: 0.25rem 0.75rem;
-	background: linear-gradient(to right, rgb(99 102 241 / 0.2), rgb(168 85 247 / 0.2));
-	color: rgb(165 180 252);
-	border-radius: 9999px;
-	border: 1px solid rgb(99 102 241 / 0.3);
-	font-size: 0.75rem;
-	font-weight: 500;
-	backdrop-filter: blur(4px);
-	animation: slideIn 0.4s ease-out;
-	opacity: 0;
-}
-
-/* Ensure equal height cards on desktop */
 @media (min-width: 1024px) {
 	.grid.auto-rows-fr {
 		grid-auto-rows: 1fr;

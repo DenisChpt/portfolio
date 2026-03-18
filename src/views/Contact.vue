@@ -3,53 +3,57 @@ import { ref } from 'vue'
 import { useI18n } from 'vue-i18n'
 import { usePageAnimation } from '@/composables/useAnimation'
 import { useFormSubmit } from '@/composables/useFormSubmit'
-import { ContactForm } from '@/types/project'
+import type { ContactForm } from '@/types/project'
 import { IconEmail, IconLocation, IconGithub, IconLinkedin } from '@/components/icons'
 import { sendToDiscord, validateContactForm } from '@/services/discord'
 import { config } from '@/config'
 
 const { t } = useI18n()
-const errorMessage = ref<string>('')
+const errorMessage = ref('')
 
-// Initial form values
-const initialValues: ContactForm = {
-	name: '',
-	email: '',
-	message: '',
+const ERROR_MAP: Record<string, string> = {
+	INVALID_NAME: 'contact.errors.invalidName',
+	INVALID_EMAIL: 'contact.errors.invalidEmail',
+	INVALID_MESSAGE: 'contact.errors.invalidMessage',
+	CONTACT_DISABLED_DEV: 'contact.errors.contactDisabledDev',
+	SERVICE_UNAVAILABLE: 'contact.errors.serviceUnavailable',
+	SEND_FAILED: 'contact.errors.sendFailed',
+	UNKNOWN_ERROR: 'contact.errors.unknownError',
 }
 
-// Function to handle actual Discord submission
+const resolveError = (code: string): string => {
+	const key = ERROR_MAP[code]
+	return key ? t(key) : code
+}
+
+const initialValues: ContactForm = { name: '', email: '', message: '' }
+
 const submitToDiscord = async (values: ContactForm) => {
-	// Validate form data
 	const validationError = validateContactForm(values)
 	if (validationError) {
-		errorMessage.value = validationError
+		errorMessage.value = resolveError(validationError)
 		throw new Error(validationError)
 	}
-	
-	// Clear any previous error
+
 	errorMessage.value = ''
-	
-	// Send to Discord
 	await sendToDiscord(values)
 }
 
-// Use our form handling composable with Discord integration
 const { form, isLoading, isSuccess, handleSubmit } = useFormSubmit<ContactForm>(
 	initialValues,
 	submitToDiscord,
 	{
 		resetAfter: true,
 		resetDelay: 3000,
-		onError: () => {
+		onError: (err) => {
 			if (!errorMessage.value) {
-				errorMessage.value = 'Failed to send message. Please try again later.'
+				const code = err instanceof Error ? err.message : 'UNKNOWN_ERROR'
+				errorMessage.value = resolveError(code)
 			}
 		},
 	}
 )
 
-// Use our animation composable
 usePageAnimation('.contact-window', 0.2)
 </script>
 

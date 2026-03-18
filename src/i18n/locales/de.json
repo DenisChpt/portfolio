@@ -74,6 +74,9 @@
 		"viewProject": "Projekt ansehen",
 		"viewLiveDemo": "Live-Demo ansehen",
 		"viewSource": "Quellcode ansehen",
+		"technologiesUsed": "Verwendete Technologien",
+		"projectStatus": "Projektstatus",
+		"projectOverview": "Projektübersicht",
 		"status": {
 			"active": "Aktiv",
 			"completed": "Abgeschlossen",
@@ -132,7 +135,16 @@
 		"messagePlaceholder": "Deine Nachricht...",
 		"send": "Nachricht senden",
 		"sending": "Wird gesendet...",
-		"messageSent": "Nachricht erfolgreich gesendet!"
+		"messageSent": "Nachricht erfolgreich gesendet!",
+		"errors": {
+			"invalidName": "Bitte geben Sie einen gültigen Namen ein (mindestens 2 Zeichen)",
+			"invalidEmail": "Bitte geben Sie eine gültige E-Mail-Adresse ein",
+			"invalidMessage": "Bitte geben Sie eine Nachricht ein (mindestens 5 Zeichen)",
+			"contactDisabledDev": "Das Kontaktformular funktioniert nur in der Produktion.",
+			"serviceUnavailable": "Der Kontaktdienst ist vorübergehend nicht verfügbar. Bitte versuchen Sie es erneut.",
+			"sendFailed": "Nachricht konnte nicht gesendet werden. Bitte versuchen Sie es erneut.",
+			"unknownError": "Ein unerwarteter Fehler ist aufgetreten. Bitte versuchen Sie es erneut."
+		}
 	},
 	"footer": {
 		"allRightsReserved": "Alle Rechte vorbehalten."

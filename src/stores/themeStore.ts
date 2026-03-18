@@ -2,15 +2,10 @@ import { defineStore } from 'pinia'
 import { ref, watch } from 'vue'
 import { useStorage } from '@vueuse/core'
 
-/**
- * Store for theme management
- */
 export const useThemeStore = defineStore('theme', () => {
-	// State
 	const isDark = useStorage('portfolio-theme', true)
 	const themeLoaded = ref(false)
 
-	// Actions
 	const toggleDark = () => {
 		isDark.value = !isDark.value
 	}
@@ -19,28 +14,15 @@ export const useThemeStore = defineStore('theme', () => {
 		isDark.value = value
 	}
 
-	// Apply theme classes when the theme changes
 	watch(
 		isDark,
 		(newValue) => {
-			if (newValue) {
-				document.documentElement.classList.add('dark-theme')
-				document.documentElement.classList.remove('light-theme')
-			} else {
-				document.documentElement.classList.add('light-theme')
-				document.documentElement.classList.remove('dark-theme')
-			}
-
-			// Set the loaded flag to true after the first theme application
+			document.documentElement.classList.toggle('dark-theme', newValue)
+			document.documentElement.classList.toggle('light-theme', !newValue)
 			themeLoaded.value = true
 		},
 		{ immediate: true }
 	)
 
-	return {
-		isDark,
-		themeLoaded,
-		toggleDark,
-		setDark,
-	}
+	return { isDark, themeLoaded, toggleDark, setDark }
 })

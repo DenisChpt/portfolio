@@ -13,15 +13,11 @@ const handleLoadingComplete = () => {
 </script>
 
 <template>
-	<!-- AnimatedBackground remains visible permanently -->
 	<AnimatedBackground />
 
-	<!-- Loader on top of AnimatedBackground -->
 	<Loader v-if="isLoading" @loading-complete="handleLoadingComplete" />
 
-	<!-- Main content only appears when loading is complete -->
 	<div v-if="!isLoading" class="min-h-screen flex flex-col">
-		<!-- Navigation bar -->
 		<Navigation />
 
 		<main class="flex-grow">
@@ -35,5 +31,3 @@ const handleLoadingComplete = () => {
 		<Footer />
 	</div>
 </template>
-
-<!-- All global styles are now in src/style.css -->
