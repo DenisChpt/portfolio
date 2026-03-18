@@ -139,7 +139,7 @@
 	},
 	"research": {
 		"title": "Publications & Research",
-		"description": "My independent research work (and future academic publications).",
+		"description": "My independent research work and academic publications.",
 		"searchPlaceholder": "Search publications...",
 		"sortByDate": "Sort by date",
 		"sortByCitations": "Sort by citations",
@@ -147,9 +147,27 @@
 		"featured": "Featured",
 		"citations": "citations",
 		"downloadPdf": "Download PDF",
+		"viewPdf": "View PDF",
+		"viewCode": "View Code",
+		"close": "Close",
+		"abstract": "Abstract",
+		"publicationInfo": "Publication Info",
 		"noResults": "No publications found.",
 		"notAvailableTitle": "Publications Coming Soon",
 		"notAvailableMessage": "Research papers are not yet available. They will be published soon.",
-		"papers": []
+		"papers": [
+			{
+				"id": 1,
+				"title": "Early Detection of Overfitting via Persistent Homology Analysis of Deep Neural Network Activations",
+				"authors": ["Denis Chaput"],
+				"abstract": "Overfitting constitutes a fundamental challenge in deep learning. Classical detection methods rely on monitoring validation loss, often a lagging indicator. This work proposes an approach based on Topological Data Analysis (TDA) to detect early signs of overfitting by computing the persistent homology of internal activations of neural networks. The study covers three datasets (Fashion-MNIST, CIFAR-10, MNIST), three architectures (shallow CNN, deep CNN, MLP), and four training set sizes, with five independent runs per configuration. TDA-based detectors achieve a 100% detection rate on all 8 configurations, triggering at epochs 18-28 on CNN architectures — 30 to 55 epochs before early stopping. A reproducible three-phase pattern (compression, stabilization, fragmentation) is identified in topological invariants across all tested CNN configurations.",
+				"publicationDate": "2026-02",
+				"journal": "Independent Research",
+				"topics": ["Topological Data Analysis", "Deep Learning", "Overfitting Detection"],
+				"featured": true,
+				"pdfUrl": "/papers/TDA.pdf",
+				"codeUrl": "https://github.com/DenisChpt/TDA-Overfitting-Detection"
+			}
+		]
 	}
 }

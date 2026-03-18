@@ -139,7 +139,7 @@
 	},
 	"research": {
 		"title": "Publicaciones e Investigación",
-		"description": "Mi trabajo de investigación independiente (y futuras publicaciones académicas).",
+		"description": "Mi trabajo de investigación independiente y publicaciones académicas.",
 		"searchPlaceholder": "Buscar publicaciones...",
 		"sortByDate": "Ordenar por fecha",
 		"sortByCitations": "Ordenar por citas",
@@ -147,9 +147,27 @@
 		"featured": "Destacados",
 		"citations": "citas",
 		"downloadPdf": "Descargar PDF",
+		"viewPdf": "Ver PDF",
+		"viewCode": "Ver código",
+		"close": "Cerrar",
+		"abstract": "Resumen",
+		"publicationInfo": "Información de publicación",
 		"noResults": "No se encontraron publicaciones.",
 		"notAvailableTitle": "Publicaciones Próximamente",
 		"notAvailableMessage": "Los artículos de investigación aún no están disponibles. Se publicarán próximamente.",
-		"papers": []
+		"papers": [
+			{
+				"id": 1,
+				"title": "Detección temprana del sobreajuste mediante análisis de homología persistente de activaciones de redes neuronales profundas",
+				"authors": ["Denis Chaput"],
+				"abstract": "El sobreajuste constituye un desafío fundamental en el aprendizaje profundo. Los métodos clásicos de detección se basan en monitorear la pérdida de validación, a menudo un indicador retardado. Este trabajo propone un enfoque basado en el Análisis Topológico de Datos (TDA) para detectar signos tempranos de sobreajuste mediante el cálculo de la homología persistente de las activaciones internas de redes neuronales. El estudio abarca tres conjuntos de datos (Fashion-MNIST, CIFAR-10, MNIST), tres arquitecturas (CNN superficial, CNN profunda, MLP) y cuatro tamaños de conjunto de entrenamiento, con cinco ejecuciones independientes por configuración. Los detectores basados en TDA logran una tasa de detección del 100% en las 8 configuraciones, activándose en las épocas 18-28 en arquitecturas CNN — 30 a 55 épocas antes del early stopping.",
+				"publicationDate": "2026-02",
+				"journal": "Investigación independiente",
+				"topics": ["Análisis topológico de datos", "Aprendizaje profundo", "Detección de sobreajuste"],
+				"featured": true,
+				"pdfUrl": "/papers/TDA.pdf",
+				"codeUrl": "https://github.com/DenisChpt/TDA-Overfitting-Detection"
+			}
+		]
 	}
 }

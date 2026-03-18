@@ -139,7 +139,7 @@
 	},
 	"research": {
 		"title": "Veröffentlichungen & Forschung",
-		"description": "Meine unabhängigen Forschungsarbeiten (und zukünftige akademische Veröffentlichungen).",
+		"description": "Meine unabhängigen Forschungsarbeiten und akademische Veröffentlichungen.",
 		"searchPlaceholder": "Publikationen suchen...",
 		"sortByDate": "Nach Datum sortieren",
 		"sortByCitations": "Nach Zitaten sortieren",
@@ -147,9 +147,27 @@
 		"featured": "Hervorgehoben",
 		"citations": "Zitate",
 		"downloadPdf": "PDF herunterladen",
+		"viewPdf": "PDF ansehen",
+		"viewCode": "Code ansehen",
+		"close": "Schließen",
+		"abstract": "Zusammenfassung",
+		"publicationInfo": "Veröffentlichungsinfo",
 		"noResults": "Keine Veröffentlichungen gefunden.",
 		"notAvailableTitle": "Veröffentlichungen demnächst",
 		"notAvailableMessage": "Forschungsarbeiten sind noch nicht verfügbar. Sie werden in Kürze veröffentlicht.",
-		"papers": []
+		"papers": [
+			{
+				"id": 1,
+				"title": "Früherkennung von Overfitting durch persistente Homologieanalyse von Aktivierungen tiefer neuronaler Netze",
+				"authors": ["Denis Chaput"],
+				"abstract": "Overfitting stellt eine grundlegende Herausforderung im Deep Learning dar. Klassische Erkennungsmethoden basieren auf der Überwachung des Validierungsverlusts, oft ein nachlaufender Indikator. Diese Arbeit schlägt einen Ansatz vor, der auf Topologischer Datenanalyse (TDA) basiert, um frühe Anzeichen von Overfitting zu erkennen, indem die persistente Homologie der internen Aktivierungen neuronaler Netze berechnet wird. Die Studie umfasst drei Datensätze (Fashion-MNIST, CIFAR-10, MNIST), drei Architekturen (flaches CNN, tiefes CNN, MLP) und vier Trainingsgrößen, mit fünf unabhängigen Durchläufen pro Konfiguration. TDA-basierte Detektoren erreichen eine 100%ige Erkennungsrate in allen 8 Konfigurationen und lösen in den Epochen 18-28 bei CNN-Architekturen aus — 30 bis 55 Epochen vor dem Early Stopping.",
+				"publicationDate": "2026-02",
+				"journal": "Unabhängige Forschung",
+				"topics": ["Topologische Datenanalyse", "Deep Learning", "Overfitting-Erkennung"],
+				"featured": true,
+				"pdfUrl": "/papers/TDA.pdf",
+				"codeUrl": "https://github.com/DenisChpt/TDA-Overfitting-Detection"
+			}
+		]
 	}
 }
