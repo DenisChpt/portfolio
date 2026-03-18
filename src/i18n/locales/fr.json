@@ -139,7 +139,7 @@
 	},
 	"research": {
 		"title": "Publications & Recherche",
-		"description": "Mes travaux de recherche indépendants (et futures publications académiques).",
+		"description": "Mes travaux de recherche indépendants et publications académiques.",
 		"searchPlaceholder": "Rechercher des publications...",
 		"sortByDate": "Trier par date",
 		"sortByCitations": "Trier par citations",
@@ -147,9 +147,27 @@
 		"featured": "En vedette",
 		"citations": "citations",
 		"downloadPdf": "Télécharger PDF",
+		"viewPdf": "Voir le PDF",
+		"viewCode": "Voir le code",
+		"close": "Fermer",
+		"abstract": "Résumé",
+		"publicationInfo": "Informations de publication",
 		"noResults": "Aucune publication trouvée.",
 		"notAvailableTitle": "Publications à venir",
 		"notAvailableMessage": "Les papiers de recherche ne sont pas encore disponibles. Ils seront publiés prochainement.",
-		"papers": []
+		"papers": [
+			{
+				"id": 1,
+				"title": "Détection précoce du surapprentissage par analyse de l'homologie persistante des activations de réseaux de neurones profonds",
+				"authors": ["Denis Chaput"],
+				"abstract": "Le surapprentissage constitue un défi fondamental en apprentissage profond. Les méthodes classiques de détection reposent sur la surveillance de la perte de validation, souvent un indicateur retardé. Ce travail propose une approche basée sur l'Analyse Topologique des Données (TDA) pour détecter les premiers signes de surapprentissage en calculant l'homologie persistante des activations internes des réseaux de neurones. L'étude couvre trois jeux de données (Fashion-MNIST, CIFAR-10, MNIST), trois architectures (CNN peu profond, CNN profond, MLP) et quatre tailles d'ensemble d'entraînement, avec cinq exécutions indépendantes par configuration. Les détecteurs basés sur la TDA atteignent un taux de détection de 100% sur les 8 configurations, se déclenchant aux époques 18-28 sur les architectures CNN — 30 à 55 époques avant l'arrêt précoce. Un motif reproductible en trois phases (compression, stabilisation, fragmentation) est identifié dans les invariants topologiques.",
+				"publicationDate": "2026-02",
+				"journal": "Recherche indépendante",
+				"topics": ["Analyse topologique des données", "Apprentissage profond", "Détection du surapprentissage"],
+				"featured": true,
+				"pdfUrl": "/papers/TDA.pdf",
+				"codeUrl": "https://github.com/DenisChpt/TDA-Overfitting-Detection"
+			}
+		]
 	}
 }
