@@ -14,6 +14,7 @@ export function usePageAnimation(selector: string, delay = 0.2) {
 			duration: 1,
 			ease: 'expo.out',
 			delay,
+			force3D: true,
 		})
 	})
 }
@@ -43,6 +44,7 @@ export function useStaggeredAnimation(
 			stagger,
 			delay,
 			ease,
+			force3D: true,
 		})
 	})
 }
@@ -58,6 +60,7 @@ export function useHoverAnimation(targetRef: Ref<HTMLElement | null>, scaleAmoun
 			scale: scaleAmount,
 			duration: 0.3,
 			ease: 'power2.out',
+			force3D: true,
 		})
 	}
 
@@ -66,6 +69,7 @@ export function useHoverAnimation(targetRef: Ref<HTMLElement | null>, scaleAmoun
 			scale: 1,
 			duration: 0.3,
 			ease: 'power2.out',
+			force3D: true,
 		})
 	}
 

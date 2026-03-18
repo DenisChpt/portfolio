@@ -1,5 +1,5 @@
 <script setup lang="ts">
-import { ref, computed, watch, onMounted } from 'vue'
+import { ref, computed, watch, onMounted, onBeforeUnmount } from 'vue'
 import { useI18n } from 'vue-i18n'
 import { useRoute } from 'vue-router'
 import LanguageSelector from './LanguageSelector.vue'
@@ -32,8 +32,12 @@ const handleScroll = () => {
 }
 
 onMounted(() => {
-	window.addEventListener('scroll', handleScroll)
+	window.addEventListener('scroll', handleScroll, { passive: true })
 	handleScroll()
+})
+
+onBeforeUnmount(() => {
+	window.removeEventListener('scroll', handleScroll)
 })
 
 watch(
