@@ -61,7 +61,7 @@ usePageAnimation('.contact-window', 0.2)
 	<div class="min-h-screen pt-24 sm:pt-32 pb-16">
 		<!-- Animated background -->
 		<div class="fixed inset-0 -z-10">
-			<div class="absolute inset-0 bg-gradient-to-br from-gray-900 via-indigo-900/10 to-gray-900"></div>
+			<div class="absolute inset-0 bg-linear-to-br from-gray-900 via-indigo-900/10 to-gray-900"></div>
 			<div class="absolute top-64 right-48 w-96 h-96 bg-purple-500/5 rounded-full blur-3xl animate-pulse"></div>
 			<div class="absolute bottom-64 left-48 w-96 h-96 bg-indigo-500/5 rounded-full blur-3xl animate-pulse [animation-delay:1000ms]"></div>
 		</div>
@@ -70,21 +70,21 @@ usePageAnimation('.contact-window', 0.2)
 			<!-- Header -->
 			<div class="text-center mb-8 sm:mb-12">
 				<h1 class="text-4xl sm:text-5xl md:text-6xl lg:text-7xl font-bold mb-4 sm:mb-6 px-4">
-					<span class="text-transparent bg-clip-text bg-gradient-to-r from-indigo-400 via-purple-400 to-pink-400">
+					<span class="text-transparent bg-clip-text bg-linear-to-r from-indigo-400 via-purple-400 to-pink-400">
 						{{ t('contact.title') }}
 					</span>
 				</h1>
 				<p class="text-lg sm:text-xl text-gray-300 max-w-3xl mx-auto px-4">
 					{{ t('contact.subtitle') }}
 				</p>
-				<div class="w-32 h-1 bg-gradient-to-r from-indigo-500 to-purple-500 mx-auto mt-6 rounded-full"></div>
+				<div class="w-32 h-1 bg-linear-to-r from-indigo-500 to-purple-500 mx-auto mt-6 rounded-full"></div>
 			</div>
 			
 			<div class="grid grid-cols-1 lg:grid-cols-2 gap-8 lg:gap-12">
 				<!-- Contact Info -->
 				<div class="space-y-8">
 					<div class="bg-gray-800/30 backdrop-blur-sm rounded-2xl border border-gray-700/50 p-6 sm:p-8">
-						<h2 class="text-2xl font-bold text-transparent bg-clip-text bg-gradient-to-r from-indigo-400 to-purple-400 mb-6">
+						<h2 class="text-2xl font-bold text-transparent bg-clip-text bg-linear-to-r from-indigo-400 to-purple-400 mb-6">
 							{{ t('contact.getInTouchTitle') }}
 						</h2>
 						<p class="text-gray-300 mb-8">
@@ -93,7 +93,7 @@ usePageAnimation('.contact-window', 0.2)
 
 						<div class="space-y-6">
 							<div class="flex items-center gap-4 group">
-								<div class="w-12 h-12 rounded-xl bg-gradient-to-br from-indigo-500/20 to-purple-500/20 flex items-center justify-center text-indigo-400 group-hover:scale-110 transition-transform duration-300">
+								<div class="w-12 h-12 rounded-xl bg-linear-to-br from-indigo-500/20 to-purple-500/20 flex items-center justify-center text-indigo-400 group-hover:scale-110 transition-transform duration-300">
 									<IconEmail />
 								</div>
 								<div>
@@ -105,7 +105,7 @@ usePageAnimation('.contact-window', 0.2)
 							</div>
 
 							<div class="flex items-center gap-4 group">
-								<div class="w-12 h-12 rounded-xl bg-gradient-to-br from-indigo-500/20 to-purple-500/20 flex items-center justify-center text-indigo-400 group-hover:scale-110 transition-transform duration-300">
+								<div class="w-12 h-12 rounded-xl bg-linear-to-br from-indigo-500/20 to-purple-500/20 flex items-center justify-center text-indigo-400 group-hover:scale-110 transition-transform duration-300">
 									<IconLocation />
 								</div>
 								<div>
@@ -118,7 +118,7 @@ usePageAnimation('.contact-window', 0.2)
 
 					<!-- Social Links -->
 					<div class="bg-gray-800/30 backdrop-blur-sm rounded-2xl border border-gray-700/50 p-6 sm:p-8">
-						<h2 class="text-2xl font-bold text-transparent bg-clip-text bg-gradient-to-r from-indigo-400 to-purple-400 mb-6">
+						<h2 class="text-2xl font-bold text-transparent bg-clip-text bg-linear-to-r from-indigo-400 to-purple-400 mb-6">
 							{{ t('contact.connectWithMe') }}
 						</h2>
 						<div class="flex gap-4">
@@ -152,13 +152,13 @@ usePageAnimation('.contact-window', 0.2)
 
 				<!-- Contact Form -->
 				<div class="bg-gray-800/30 backdrop-blur-sm rounded-2xl border border-gray-700/50 p-8">
-					<h2 class="text-2xl font-bold text-transparent bg-clip-text bg-gradient-to-r from-indigo-400 to-purple-400 mb-6">
+					<h2 class="text-2xl font-bold text-transparent bg-clip-text bg-linear-to-r from-indigo-400 to-purple-400 mb-6">
 						{{ t('contact.sendMessageTitle') }}
 					</h2>
 					<form @submit="handleSubmit" class="space-y-6">
 						<div
 							v-if="isSuccess"
-							class="bg-gradient-to-r from-green-500/20 to-emerald-500/20 border border-green-500/30 text-green-400 p-4 rounded-xl text-center font-medium"
+							class="bg-linear-to-r from-green-500/20 to-emerald-500/20 border border-green-500/30 text-green-400 p-4 rounded-xl text-center font-medium"
 							role="alert"
 						>
 							✓ {{ t('contact.messageSent') }}
@@ -226,7 +226,7 @@ usePageAnimation('.contact-window', 0.2)
 							<button
 								type="submit"
 								:disabled="isLoading || isSuccess"
-								class="w-full sm:w-auto px-6 sm:px-8 py-3 min-h-[48px] bg-gradient-to-r from-indigo-500 to-purple-500 text-white font-medium rounded-xl hover:shadow-lg hover:shadow-indigo-500/25 active:scale-95 transition-all duration-300 disabled:opacity-50 disabled:cursor-not-allowed"
+								class="w-full sm:w-auto px-6 sm:px-8 py-3 min-h-[48px] bg-linear-to-r from-indigo-500 to-purple-500 text-white font-medium rounded-xl hover:shadow-lg hover:shadow-indigo-500/25 active:scale-95 transition-all duration-300 disabled:opacity-50 disabled:cursor-not-allowed"
 							>
 								<span v-if="!isLoading">{{ t('contact.send') }}</span>
 								<span v-else class="flex items-center gap-2">
