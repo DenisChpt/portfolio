@@ -178,7 +178,7 @@
 				"topics": ["تحليل البيانات الطوبولوجي", "التعلم العميق", "كشف الإفراط في التعلم"],
 				"featured": true,
 				"pdfUrl": "/papers/TDA.pdf",
-				"codeUrl": "https://github.com/DenisChpt/TDA-Overfitting-Detection"
+				"codeUrl": "https://github.com/DenisChpt/tda_synaplex"
 			}
 		]
 	}

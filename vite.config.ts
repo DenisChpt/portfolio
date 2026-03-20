@@ -30,11 +30,16 @@ export default defineConfig({
 				assetFileNames: 'assets/[name]-[hash].[ext]',
 				chunkFileNames: 'assets/[name]-[hash].js',
 				entryFileNames: 'assets/[name]-[hash].js',
-				// Split vendor chunks for better caching
-				manualChunks: {
-					'vue-vendor': ['vue', 'vue-router', 'pinia'],
-					'ui-vendor': ['gsap', '@vueuse/core', '@headlessui/vue'],
-					'i18n': ['vue-i18n'],
+				manualChunks(id) {
+					if (id.includes('node_modules/vue/') || id.includes('node_modules/vue-router/') || id.includes('node_modules/pinia/')) {
+						return 'vue-vendor'
+					}
+					if (id.includes('node_modules/gsap/') || id.includes('node_modules/@vueuse/') || id.includes('node_modules/@headlessui/')) {
+						return 'ui-vendor'
+					}
+					if (id.includes('node_modules/vue-i18n/')) {
+						return 'i18n'
+					}
 				},
 			},
 		},
