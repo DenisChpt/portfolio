@@ -172,7 +172,7 @@ usePageAnimation('.contact-window', 0.2)
 								v-model="form.name"
 								type="text"
 								id="name"
-								class="w-full px-4 py-3 min-h-[48px] bg-gray-900/50 border border-gray-700/50 rounded-xl text-gray-200 text-base placeholder-gray-500 focus:outline-none focus:border-indigo-500/50 focus:ring-2 focus:ring-indigo-500/20 transition-all duration-300"
+								class="w-full px-4 py-3 min-h-12 bg-gray-900/50 border border-gray-700/50 rounded-xl text-gray-200 text-base placeholder-gray-500 focus:outline-none focus:border-indigo-500/50 focus:ring-2 focus:ring-indigo-500/20 transition-all duration-300"
 								:placeholder="t('contact.namePlaceholder')"
 								required
 								:disabled="isLoading"
@@ -188,7 +188,7 @@ usePageAnimation('.contact-window', 0.2)
 								v-model="form.email"
 								type="email"
 								id="email"
-								class="w-full px-4 py-3 min-h-[48px] bg-gray-900/50 border border-gray-700/50 rounded-xl text-gray-200 text-base placeholder-gray-500 focus:outline-none focus:border-indigo-500/50 focus:ring-2 focus:ring-indigo-500/20 transition-all duration-300"
+								class="w-full px-4 py-3 min-h-12 bg-gray-900/50 border border-gray-700/50 rounded-xl text-gray-200 text-base placeholder-gray-500 focus:outline-none focus:border-indigo-500/50 focus:ring-2 focus:ring-indigo-500/20 transition-all duration-300"
 								:placeholder="t('contact.emailPlaceholder')"
 								required
 								:disabled="isLoading"
@@ -226,7 +226,7 @@ usePageAnimation('.contact-window', 0.2)
 							<button
 								type="submit"
 								:disabled="isLoading || isSuccess"
-								class="w-full sm:w-auto px-6 sm:px-8 py-3 min-h-[48px] bg-linear-to-r from-indigo-500 to-purple-500 text-white font-medium rounded-xl hover:shadow-lg hover:shadow-indigo-500/25 active:scale-95 transition-all duration-300 disabled:opacity-50 disabled:cursor-not-allowed"
+								class="w-full sm:w-auto px-6 sm:px-8 py-3 min-h-12 bg-linear-to-r from-indigo-500 to-purple-500 text-white font-medium rounded-xl hover:shadow-lg hover:shadow-indigo-500/25 active:scale-95 transition-all duration-300 disabled:opacity-50 disabled:cursor-not-allowed"
 							>
 								<span v-if="!isLoading">{{ t('contact.send') }}</span>
 								<span v-else class="flex items-center gap-2">
