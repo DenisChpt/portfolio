@@ -14,8 +14,6 @@ const router = useRouter()
 // References for animation
 const headerRef = ref(null)
 const filtersRef = ref(null)
-const projectsGridRef = ref(null)
-const cardRef = ref(null)
 
 // Variable to control initial visibility
 const contentReady = ref(false)
@@ -465,12 +463,11 @@ watch(
 				</div>
 
 				<!-- Projects grid with modern cards -->
-				<div v-else ref="projectsGridRef" class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4 sm:gap-6 lg:gap-8">
+				<div v-else class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4 sm:gap-6 lg:gap-8">
 					<div
 						v-for="(project, index) in projectsStore.filteredProjects"
 						:key="project.id"
 						class="project-card group"
-						ref="cardRef"
 						@click="openProject(project.id)"
 						:style="{ opacity: 0 }"
 					>

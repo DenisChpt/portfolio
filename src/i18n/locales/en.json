@@ -178,7 +178,7 @@
 				"topics": ["Topological Data Analysis", "Deep Learning", "Overfitting Detection"],
 				"featured": true,
 				"pdfUrl": "/papers/TDA.pdf",
-				"codeUrl": "https://github.com/DenisChpt/TDA-Overfitting-Detection"
+				"codeUrl": "https://github.com/DenisChpt/tda_synaplex"
 			}
 		]
 	}

@@ -178,7 +178,7 @@
 				"topics": ["Análisis topológico de datos", "Aprendizaje profundo", "Detección de sobreajuste"],
 				"featured": true,
 				"pdfUrl": "/papers/TDA.pdf",
-				"codeUrl": "https://github.com/DenisChpt/TDA-Overfitting-Detection"
+				"codeUrl": "https://github.com/DenisChpt/tda_synaplex"
 			}
 		]
 	}

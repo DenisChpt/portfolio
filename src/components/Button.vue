@@ -93,7 +93,7 @@ const emit = defineEmits<{
 	transition: 0.8s;
 }
 
-.button-primary:hover::before:not(:disabled) {
+.button-primary:hover:not(:disabled)::before {
 	left: 100%;
 }
 
@@ -142,7 +142,7 @@ const emit = defineEmits<{
 	transition: width 0.3s ease;
 }
 
-.button-text:hover::after:not(:disabled) {
+.button-text:hover:not(:disabled)::after {
 	width: 100%;
 }
 
