@@ -111,9 +111,21 @@
 			},
 			{
 				"id": 5,
+				"title": "Synaplex - TDA-Engine für neuronale Netze",
+				"description": "Hochperformante Topologische Datenanalyse-Engine für neuronale Netze, geschrieben in Rust mit Python-Bindings. Optimierte Algorithmen für persistente Homologie-Berechnung und Analyse neuronaler Netze.",
+				"longDescription": "Synaplex ist eine hochperformante Topologische Datenanalyse (TDA) Engine, die für die Analyse neuronaler Netze entwickelt wurde. Geschrieben in Rust mit Python-Bindings über PyO3, bietet sie optimierte Algorithmen für persistente Homologie-Berechnung via Kohomologie, Vietoris-Rips Simplizialkomplex-Konstruktion und topologische Analyse neuronaler Netze (Aktivierungsräume, Gewichtsmatrizen, Verlustlandschaften). Das System setzt auf Effizienz durch kombinatorische Kodierung, parallele Verarbeitung mit Rayon und optimierte Algorithmen, die unnötige Komplexität vermeiden."
+			},
+			{
+				"id": 6,
 				"title": "Persönliches Portfolio",
 				"description": "Moderne Portfolio-Website entwickelt mit Vue 3 und TypeScript. Responsives Design, flüssige Animationen und mehrsprachiger Support.",
 				"longDescription": "Persönliches Portfolio entwickelt mit den neuesten Webtechnologien. Verwendet Vue 3 mit Composition API, TypeScript für starke Typisierung und Pinia für Zustandsverwaltung. Das Design ist vollständig responsiv mit Tailwind CSS, enthält benutzerdefinierte Animationen und mehrsprachigen Support (i18n) für 6 Sprachen. Optimiert für Performance mit Lazy Loading und Code Splitting."
+			},
+			{
+				"id": 7,
+				"title": "Einführung ins Deep Learning - Mathematische Grundlagen",
+				"description": "Umfassender 168-seitiger Kurs in angewandter Mathematik, der Deep Learning vom einzelnen Neuron bis zu Transformern abdeckt. Rigorose mathematische Herleitungen, vollständige Algorithmen und numerische Beispiele.",
+				"longDescription": "Ein vollständiger Kurs in angewandter Mathematik, der schrittweise das mathematische Verständnis von Deep Learning aufbaut. Ausgehend von einem einzelnen Neuron für binäre Klassifikation verallgemeinert er auf Netzwerke beliebiger Größe und fortgeschrittene Architekturen. Die 17 Kapitel umfassen: Neuron-Grundlagen und Sigmoid-Aktivierung, probabilistische Kostenfunktionen, Gradientenabstieg und Backpropagation, Vektorisierung, mehrschichtige Netzwerke, Multi-Klassen-Klassifikation mit Softmax, Aktivierungsfunktionen, Parameterinitialisierung (Glorot/He), Batch-Normalisierung, fortgeschrittene Optimierer (SGD Momentum, Adam, AdamW), Regularisierung (L1/L2, Dropout, Early Stopping, Datenaugmentation), Faltungsnetzwerke (CNN), rekurrente Netzwerke (RNN, LSTM, GRU) und Aufmerksamkeitsmechanismen mit Transformern."
 			}
 		]
 	},
@@ -179,6 +191,18 @@
 				"featured": true,
 				"pdfUrl": "/papers/TDA.pdf",
 				"codeUrl": "https://github.com/DenisChpt/tda_synaplex"
+			},
+			{
+				"id": 2,
+				"title": "Einführung ins Deep Learning: Von mathematischen Grundlagen zu neuronalen Netzen",
+				"authors": ["Denis Chaput"],
+				"abstract": "Ein umfassender Kurs in angewandter Mathematik, der schrittweise das mathematische Verständnis von Deep Learning aufbaut. Ausgehend von einem einzelnen Neuron für binäre Klassifikation verallgemeinert der Kurs auf Netzwerke beliebiger Größe, bevor er fortgeschrittene Architekturen (Faltungen, RNNs, Transformer) behandelt. Deep Learning basiert auf drei fundamentalen Säulen: Modellierung (Aufbau einer parametrischen Funktion), Optimierung (Finden der besten Parameter durch Gradientenabstieg) und Generalisierung (Sicherstellen, dass das Modell auf neuen Daten funktioniert). Die 17 Kapitel bieten rigorose mathematische Herleitungen, vollständige Algorithmen und numerische Beispiele zu Kostenfunktionen, Backpropagation, Vektorisierung, Batch-Normalisierung, fortgeschrittenen Optimierern (Adam, AdamW), Regularisierungstechniken, CNNs, LSTMs, GRUs, Aufmerksamkeitsmechanismen und der vollständigen Transformer-Architektur.",
+				"publicationDate": "2026-03",
+				"journal": "Unabhängiges Kursmaterial",
+				"topics": ["Deep Learning", "Angewandte Mathematik", "Neuronale Netze"],
+				"featured": true,
+				"pdfUrl": "/papers/DeepLearning.pdf",
+				"codeUrl": "https://github.com/DenisChpt/placeholder"
 			}
 		]
 	}

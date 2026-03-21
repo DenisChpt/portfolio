@@ -111,9 +111,21 @@
 			},
 			{
 				"id": 5,
+				"title": "Synaplex - TDA Engine for Neural Networks",
+				"description": "High-performance Topological Data Analysis engine for neural networks, written in Rust with Python bindings. Optimized algorithms for persistent homology computation and neural network analysis.",
+				"longDescription": "Synaplex is a high-performance Topological Data Analysis (TDA) engine designed for analyzing neural networks. Written in Rust with Python bindings via PyO3, it provides optimized algorithms for persistent homology computation via cohomology, Vietoris-Rips simplicial complex construction, and neural network topology analysis (activation spaces, weight matrices, loss landscapes). The system emphasizes efficiency through combinatorial encoding, parallel processing with Rayon, and optimized algorithms that avoid unnecessary complexity."
+			},
+			{
+				"id": 6,
 				"title": "Personal Portfolio",
 				"description": "Modern portfolio website developed with Vue 3 and TypeScript. Responsive design, smooth animations, and multilingual support.",
 				"longDescription": "Personal portfolio developed with the latest web technologies. Uses Vue 3 with Composition API, TypeScript for strong typing, and Pinia for state management. The design is fully responsive with Tailwind CSS, includes custom animations and multilingual support (i18n) for 6 languages. Optimized for performance with lazy loading and code splitting."
+			},
+			{
+				"id": 7,
+				"title": "Introduction to Deep Learning - Mathematical Foundations",
+				"description": "Comprehensive 168-page applied mathematics course covering deep learning from the single neuron to Transformers. Rigorous mathematical derivations, complete algorithms and numerical examples.",
+				"longDescription": "A complete applied mathematics course building a progressive mathematical understanding of deep learning. Starting from a single neuron performing binary classification, it generalizes to arbitrarily sized networks and advanced architectures. The 17 chapters cover: neuron foundations and sigmoid activation, probabilistic cost functions, gradient descent and backpropagation, vectorization, multi-layer networks, multi-class classification with softmax, activation functions, parameter initialization (Glorot/He), batch normalization, advanced optimizers (SGD momentum, Adam, AdamW), regularization (L1/L2, dropout, early stopping, data augmentation), convolutional neural networks (CNNs), recurrent networks (RNN, LSTM, GRU), and attention mechanisms with Transformers."
 			}
 		]
 	},
@@ -179,6 +191,18 @@
 				"featured": true,
 				"pdfUrl": "/papers/TDA.pdf",
 				"codeUrl": "https://github.com/DenisChpt/tda_synaplex"
+			},
+			{
+				"id": 2,
+				"title": "Introduction to Deep Learning: From Mathematical Foundations to Neural Networks",
+				"authors": ["Denis Chaput"],
+				"abstract": "A comprehensive applied mathematics course building a progressive mathematical understanding of deep learning. Starting from a single neuron performing binary classification, the course generalizes to arbitrarily sized networks before tackling advanced architectures (convolutions, RNNs, Transformers). Deep learning rests on three fundamental pillars: modeling (building a parametric function), optimization (finding the best parameters via gradient descent), and generalization (ensuring the model works on new data). The 17 chapters provide rigorous mathematical derivations, complete algorithms, and numerical examples covering cost functions, backpropagation, vectorization, batch normalization, advanced optimizers (Adam, AdamW), regularization techniques, CNNs, LSTMs, GRUs, attention mechanisms, and the full Transformer architecture.",
+				"publicationDate": "2026-03",
+				"journal": "Independent Course Material",
+				"topics": ["Deep Learning", "Applied Mathematics", "Neural Networks"],
+				"featured": true,
+				"pdfUrl": "/papers/DeepLearning.pdf",
+				"codeUrl": "https://github.com/DenisChpt/placeholder"
 			}
 		]
 	}

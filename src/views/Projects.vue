@@ -45,7 +45,7 @@ const techColors: Record<string, string> = {
 	'Linux': 'bg-slate-500/20 text-slate-300 border-slate-500/40',
 	'Git': 'bg-red-600/20 text-red-400 border-red-600/40',
 	'AWS': 'bg-orange-600/20 text-orange-400 border-orange-600/40',
-	'SQL': 'bg-violet-500/20 text-violet-300 border-violet-500/40',
+	'Maths': 'bg-violet-500/20 text-violet-300 border-violet-500/40',
 	'OpenGL': 'bg-teal-500/20 text-teal-300 border-teal-500/40',
 	'default': 'bg-gray-500/20 text-gray-300 border-gray-500/40'
 }

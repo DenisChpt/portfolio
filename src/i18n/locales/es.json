@@ -111,9 +111,21 @@
 			},
 			{
 				"id": 5,
+				"title": "Synaplex - Motor TDA para Redes Neuronales",
+				"description": "Motor de Análisis Topológico de Datos de alto rendimiento para redes neuronales, escrito en Rust con bindings Python. Algoritmos optimizados para cálculo de homología persistente y análisis de redes neuronales.",
+				"longDescription": "Synaplex es un motor de Análisis Topológico de Datos (TDA) de alto rendimiento diseñado para analizar redes neuronales. Escrito en Rust con bindings Python vía PyO3, proporciona algoritmos optimizados para cálculo de homología persistente por cohomología, construcción de complejos simpliciales de Vietoris-Rips y análisis topológico de redes neuronales (espacios de activación, matrices de pesos, paisajes de pérdida). El sistema enfatiza la eficiencia mediante codificación combinatoria, procesamiento paralelo con Rayon y algoritmos optimizados que evitan complejidad innecesaria."
+			},
+			{
+				"id": 6,
 				"title": "Portfolio Personal",
 				"description": "Sitio web portfolio moderno desarrollado con Vue 3 y TypeScript. Diseño responsive, animaciones fluidas y soporte multilingüe.",
 				"longDescription": "Portfolio personal desarrollado con las últimas tecnologías web. Utiliza Vue 3 con Composition API, TypeScript para tipado fuerte y Pinia para gestión de estado. El diseño es completamente responsive con Tailwind CSS, incluye animaciones personalizadas y soporte multilingüe (i18n) para 6 idiomas. Optimizado para rendimiento con lazy loading y code splitting."
+			},
+			{
+				"id": 7,
+				"title": "Introducción al Deep Learning - Fundamentos Matemáticos",
+				"description": "Curso completo de 168 páginas en matemáticas aplicadas que cubre el deep learning desde la neurona única hasta los Transformers. Demostraciones matemáticas rigurosas, algoritmos completos y ejemplos numéricos.",
+				"longDescription": "Un curso completo de matemáticas aplicadas que construye progresivamente la comprensión matemática del deep learning. Partiendo de una neurona única que realiza clasificación binaria, se generaliza a redes de tamaño arbitrario y arquitecturas avanzadas. Los 17 capítulos cubren: fundamentos de la neurona y activación sigmoide, funciones de costo probabilísticas, descenso de gradiente y retropropagación, vectorización, redes multicapa, clasificación multiclase con softmax, funciones de activación, inicialización de parámetros (Glorot/He), normalización por lotes, optimizadores avanzados (SGD momentum, Adam, AdamW), regularización (L1/L2, dropout, parada temprana, aumento de datos), redes convolucionales (CNN), redes recurrentes (RNN, LSTM, GRU) y mecanismos de atención con Transformers."
 			}
 		]
 	},
@@ -171,14 +183,38 @@
 			{
 				"id": 1,
 				"title": "Detección temprana del sobreajuste mediante análisis de homología persistente de activaciones de redes neuronales profundas",
-				"authors": ["Denis Chaput"],
+				"authors": [
+					"Denis Chaput"
+				],
 				"abstract": "El sobreajuste constituye un desafío fundamental en el aprendizaje profundo. Los métodos clásicos de detección se basan en monitorear la pérdida de validación, a menudo un indicador retardado. Este trabajo propone un enfoque basado en el Análisis Topológico de Datos (TDA) para detectar signos tempranos de sobreajuste mediante el cálculo de la homología persistente de las activaciones internas de redes neuronales. El estudio abarca tres conjuntos de datos (Fashion-MNIST, CIFAR-10, MNIST), tres arquitecturas (CNN superficial, CNN profunda, MLP) y cuatro tamaños de conjunto de entrenamiento, con cinco ejecuciones independientes por configuración. Los detectores basados en TDA logran una tasa de detección del 100% en las 8 configuraciones, activándose en las épocas 18-28 en arquitecturas CNN — 30 a 55 épocas antes del early stopping.",
 				"publicationDate": "2026-02",
 				"journal": "Investigación independiente",
-				"topics": ["Análisis topológico de datos", "Aprendizaje profundo", "Detección de sobreajuste"],
+				"topics": [
+					"Análisis topológico de datos",
+					"Aprendizaje profundo",
+					"Detección de sobreajuste"
+				],
 				"featured": true,
 				"pdfUrl": "/papers/TDA.pdf",
 				"codeUrl": "https://github.com/DenisChpt/tda_synaplex"
+			},
+			{
+				"id": 2,
+				"title": "Introducción al Deep Learning: De los Fundamentos Matemáticos a las Redes Neuronales",
+				"authors": [
+					"Denis Chaput"
+				],
+				"abstract": "Un curso completo de matemáticas aplicadas que construye progresivamente la comprensión matemática del deep learning. Partiendo de una neurona única que realiza clasificación binaria, el curso se generaliza a redes de tamaño arbitrario antes de abordar arquitecturas más avanzadas (convoluciones, RNNs, Transformers). El deep learning se basa en tres pilares fundamentales: modelización (construir una función paramétrica), optimización (encontrar los mejores parámetros mediante descenso de gradiente) y generalización (asegurar que el modelo funcione con datos nuevos). Los 17 capítulos proporcionan demostraciones matemáticas rigurosas, algoritmos completos y ejemplos numéricos que cubren funciones de costo, retropropagación, vectorización, normalización por lotes, optimizadores avanzados (Adam, AdamW), técnicas de regularización, CNNs, LSTMs, GRUs, mecanismos de atención y la arquitectura Transformer completa.",
+				"publicationDate": "2026-03",
+				"journal": "Material de curso independiente",
+				"topics": [
+					"Deep Learning",
+					"Matemáticas aplicadas",
+					"Redes neuronales"
+				],
+				"featured": true,
+				"pdfUrl": "/papers/DeepLearning.pdf",
+				"codeUrl": "https://github.com/DenisChpt/placeholder"
 			}
 		]
 	}
