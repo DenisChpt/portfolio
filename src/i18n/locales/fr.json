@@ -111,9 +111,21 @@
 			},
 			{
 				"id": 5,
+				"title": "Synaplex - Moteur TDA pour Réseaux de Neurones",
+				"description": "Moteur d'Analyse Topologique des Données haute performance pour réseaux de neurones, écrit en Rust avec des bindings Python. Algorithmes optimisés pour le calcul d'homologie persistante et l'analyse de réseaux de neurones.",
+				"longDescription": "Synaplex est un moteur d'Analyse Topologique des Données (TDA) haute performance conçu pour l'analyse des réseaux de neurones. Écrit en Rust avec des bindings Python via PyO3, il fournit des algorithmes optimisés pour le calcul d'homologie persistante par cohomologie, la construction de complexes simpliciaux de Vietoris-Rips, et l'analyse topologique des réseaux de neurones (espaces d'activation, matrices de poids, paysages de perte). Le système met l'accent sur l'efficacité grâce à l'encodage combinatoire, le traitement parallèle avec Rayon, et des algorithmes optimisés évitant la complexité inutile."
+			},
+			{
+				"id": 6,
 				"title": "Portfolio Personnel",
 				"description": "Site portfolio moderne développé avec Vue 3 et TypeScript. Design responsive, animations fluides et support multilingue.",
 				"longDescription": "Portfolio personnel développé avec les dernières technologies web. Utilise Vue 3 avec Composition API, TypeScript pour le typage fort, et Pinia pour la gestion d'état. Le design est entièrement responsive avec Tailwind CSS, inclut des animations personnalisées et support multilingue (i18n) pour 6 langues. Optimisé pour les performances avec lazy loading et code splitting."
+			},
+			{
+				"id": 7,
+				"title": "Introduction au Deep Learning - Fondements Mathématiques",
+				"description": "Cours complet de 168 pages en mathématiques appliquées couvrant le deep learning du neurone unique aux Transformers. Démonstrations mathématiques rigoureuses, algorithmes complets et exemples numériques.",
+				"longDescription": "Un cours complet de mathématiques appliquées construisant progressivement la compréhension mathématique du deep learning. En partant d'un neurone unique effectuant de la classification binaire, il généralise à des réseaux de taille arbitraire puis aux architectures avancées. Les 17 chapitres couvrent : fondements du neurone et activation sigmoïde, fonctions de coût probabilistes, descente de gradient et rétropropagation, vectorisation, réseaux multi-couches, classification multi-classes avec softmax, fonctions d'activation, initialisation des paramètres (Glorot/He), normalisation par lot (batch normalization), optimiseurs avancés (SGD momentum, Adam, AdamW), régularisation (L1/L2, dropout, arrêt précoce, augmentation de données), réseaux convolutifs (CNN), réseaux récurrents (RNN, LSTM, GRU), et mécanismes d'attention avec Transformers."
 			}
 		]
 	},
@@ -179,6 +191,18 @@
 				"featured": true,
 				"pdfUrl": "/papers/TDA.pdf",
 				"codeUrl": "https://github.com/DenisChpt/tda_synaplex"
+			},
+			{
+				"id": 2,
+				"title": "Introduction au Deep Learning : Des Fondements Mathématiques aux Réseaux de Neurones",
+				"authors": ["Denis Chaput"],
+				"abstract": "Un cours complet de mathématiques appliquées construisant progressivement la compréhension mathématique du deep learning. En partant d'un neurone unique effectuant de la classification binaire, le cours généralise à des réseaux de taille arbitraire avant d'aborder des architectures plus avancées (convolutions, RNN, transformers). Le deep learning repose sur trois piliers fondamentaux : la modélisation (construire une fonction paramétrique), l'optimisation (trouver les meilleurs paramètres via la descente de gradient) et la généralisation (s'assurer que le modèle fonctionne sur de nouvelles données). Les 17 chapitres fournissent des démonstrations mathématiques rigoureuses, des algorithmes complets et des exemples numériques couvrant les fonctions de coût, la rétropropagation, la vectorisation, la normalisation par lot, les optimiseurs avancés (Adam, AdamW), les techniques de régularisation, les CNN, les LSTM, GRU, les mécanismes d'attention et l'architecture Transformer complète.",
+				"publicationDate": "2026-03",
+				"journal": "Cours indépendant",
+				"topics": ["Deep Learning", "Mathématiques appliquées", "Réseaux de neurones"],
+				"featured": true,
+				"pdfUrl": "/papers/DeepLearning.pdf",
+				"codeUrl": "https://github.com/DenisChpt/placeholder"
 			}
 		]
 	}

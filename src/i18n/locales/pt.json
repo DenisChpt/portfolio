@@ -111,9 +111,21 @@
 			},
 			{
 				"id": 5,
+				"title": "Synaplex - Motor TDA para Redes Neurais",
+				"description": "Motor de Análise Topológica de Dados de alta performance para redes neurais, escrito em Rust com bindings Python. Algoritmos otimizados para cálculo de homologia persistente e análise de redes neurais.",
+				"longDescription": "Synaplex é um motor de Análise Topológica de Dados (TDA) de alta performance projetado para analisar redes neurais. Escrito em Rust com bindings Python via PyO3, fornece algoritmos otimizados para cálculo de homologia persistente por coomologia, construção de complexos simpliciais de Vietoris-Rips e análise topológica de redes neurais (espaços de ativação, matrizes de pesos, paisagens de perda). O sistema enfatiza eficiência através de codificação combinatória, processamento paralelo com Rayon e algoritmos otimizados que evitam complexidade desnecessária."
+			},
+			{
+				"id": 6,
 				"title": "Portfólio Pessoal",
 				"description": "Site portfólio moderno desenvolvido com Vue 3 e TypeScript. Design responsivo, animações fluidas e suporte multilíngue.",
 				"longDescription": "Portfólio pessoal desenvolvido com as mais recentes tecnologias web. Usa Vue 3 com Composition API, TypeScript para tipagem forte e Pinia para gerenciamento de estado. O design é totalmente responsivo com Tailwind CSS, inclui animações personalizadas e suporte multilíngue (i18n) para 6 idiomas. Otimizado para performance com lazy loading e code splitting."
+			},
+			{
+				"id": 7,
+				"title": "Introdução ao Deep Learning - Fundamentos Matemáticos",
+				"description": "Curso completo de 168 páginas em matemática aplicada cobrindo deep learning do neurônio único aos Transformers. Demonstrações matemáticas rigorosas, algoritmos completos e exemplos numéricos.",
+				"longDescription": "Um curso completo de matemática aplicada construindo progressivamente a compreensão matemática do deep learning. Partindo de um neurônio único realizando classificação binária, generaliza para redes de tamanho arbitrário e arquiteturas avançadas. Os 17 capítulos cobrem: fundamentos do neurônio e ativação sigmoide, funções de custo probabilísticas, descida de gradiente e retropropagação, vetorização, redes multicamadas, classificação multiclasse com softmax, funções de ativação, inicialização de parâmetros (Glorot/He), normalização em lote, otimizadores avançados (SGD momentum, Adam, AdamW), regularização (L1/L2, dropout, parada antecipada, aumento de dados), redes convolucionais (CNN), redes recorrentes (RNN, LSTM, GRU) e mecanismos de atenção com Transformers."
 			}
 		]
 	},
@@ -179,6 +191,18 @@
 				"featured": true,
 				"pdfUrl": "/papers/TDA.pdf",
 				"codeUrl": "https://github.com/DenisChpt/tda_synaplex"
+			},
+			{
+				"id": 2,
+				"title": "Introdução ao Deep Learning: Dos Fundamentos Matemáticos às Redes Neurais",
+				"authors": ["Denis Chaput"],
+				"abstract": "Um curso completo de matemática aplicada construindo progressivamente a compreensão matemática do deep learning. Partindo de um neurônio único realizando classificação binária, o curso generaliza para redes de tamanho arbitrário antes de abordar arquiteturas mais avançadas (convoluções, RNNs, Transformers). O deep learning se baseia em três pilares fundamentais: modelagem (construir uma função paramétrica), otimização (encontrar os melhores parâmetros via descida de gradiente) e generalização (garantir que o modelo funcione com novos dados). Os 17 capítulos fornecem demonstrações matemáticas rigorosas, algoritmos completos e exemplos numéricos cobrindo funções de custo, retropropagação, vetorização, normalização em lote, otimizadores avançados (Adam, AdamW), técnicas de regularização, CNNs, LSTMs, GRUs, mecanismos de atenção e a arquitetura Transformer completa.",
+				"publicationDate": "2026-03",
+				"journal": "Material de curso independente",
+				"topics": ["Deep Learning", "Matemática aplicada", "Redes neurais"],
+				"featured": true,
+				"pdfUrl": "/papers/DeepLearning.pdf",
+				"codeUrl": "https://github.com/DenisChpt/placeholder"
 			}
 		]
 	}
