@@ -33,7 +33,7 @@ export const PROJECTS_METADATA: ProjectMetadata[] = [
 	},
 	{
 		id: 2,
-		tech: ['Rust', 'C++', 'Python', 'Maths'],
+		tech: ['Rust', 'Python', 'Maths'],
 		image: '/images/RiemannOpt_logo.png',
 		gallery: [
 			'https://via.placeholder.com/800x600',
