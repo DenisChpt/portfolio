@@ -10,16 +10,15 @@
 		font-family: var(--font-sans);
 		min-height: 100vh;
 		min-height: -webkit-fill-available;
-		overscroll-behavior-y: none;
 	}
 
 	#app {
 		background: transparent !important;
+		overflow-x: hidden;
 	}
 
 	html {
 		scroll-behavior: smooth;
-		height: -webkit-fill-available;
 	}
 
 	::-webkit-scrollbar {
