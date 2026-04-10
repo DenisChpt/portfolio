@@ -471,15 +471,15 @@ watch(
 						<!-- Ultra modern card design -->
 						<div class="relative h-full">
 							<!-- Glow effect that follows mouse -->
-							<div class="absolute -inset-0.5 bg-gradient-to-r from-indigo-500 via-purple-500 to-pink-500 rounded-2xl opacity-0 group-hover:opacity-75 blur transition-all duration-500 bg-size-200 animate-gradient"></div>
-							
+							<div class="absolute -inset-0.5 bg-gradient-to-r from-indigo-500 via-purple-500 to-pink-500 rounded-2xl opacity-0 group-hover:opacity-75 blur transition-all duration-500 bg-size-200 animate-gradient will-change-[opacity]"></div>
+
 							<!-- Main card -->
-							<div class="relative h-full bg-gray-900/90 backdrop-blur-xl rounded-2xl border border-gray-800 overflow-hidden transition-all duration-500 group-hover:border-transparent group-hover:-translate-y-1 flex flex-col">
+							<div class="relative h-full bg-gray-900/90 backdrop-blur-xl rounded-2xl border border-gray-800 overflow-hidden transition-all duration-500 group-hover:border-transparent group-hover:-translate-y-1 flex flex-col will-change-transform">
 								
 								<!-- Gradient overlay that animates -->
 																
 								<!-- Image section with parallax effect -->
-								<div class="relative h-48 overflow-hidden bg-gray-900/20">
+								<div class="relative h-48 overflow-hidden bg-gray-900">
 									<!-- Animated gradient background -->
 																		
 									<!-- Project image with advanced effects -->
@@ -488,7 +488,7 @@ watch(
 										:alt="project.title"
 										loading="lazy"
 										decoding="async"
-										class="w-full h-full object-cover transition-all duration-700 group-hover:scale-110 group-hover:rotate-1"
+										class="w-full h-full object-cover transition-all duration-700 group-hover:scale-110 group-hover:rotate-1 [backface-visibility:hidden]"
 									/>
 									
 									<!-- Dark gradient overlay -->
@@ -506,7 +506,7 @@ watch(
 								</div>
 								
 								<!-- Content section with glassmorphism -->
-								<div class="relative p-6 flex-1 flex flex-col z-10">
+								<div class="relative p-6 flex-1 flex flex-col z-10 bg-gray-900/90 -mt-px">
 									<!-- Title with gradient on hover -->
 									<h3 class="text-xl font-bold text-white mb-2 transition-all duration-300 group-hover:text-transparent group-hover:bg-clip-text group-hover:bg-gradient-to-r group-hover:from-indigo-400 group-hover:via-purple-400 group-hover:to-pink-400">
 										{{ project.title }}
@@ -781,5 +781,10 @@ video::-webkit-media-controls-panel {
 	width: 100%;
 	height: 100%;
 	object-fit: contain;
+}
+
+/* Fix Chrome rendering artifacts with blur + backdrop-filter + transform */
+.project-card {
+	isolation: isolate;
 }
 </style>
