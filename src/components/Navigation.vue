@@ -61,7 +61,8 @@ watch(
 			<div class="flex justify-between h-14">
 				<div class="flex items-center">
 					<div class="shrink-0 flex items-center">
-						<a href="/" @click="handlePortfolioClick" class="group text-xl font-bold relative cursor-pointer">
+						<a href="/" @click="handlePortfolioClick" class="group text-xl font-bold relative cursor-pointer flex items-center gap-2">
+							<img src="/Website_logo.png" alt="Logo" class="h-7 w-7 object-contain" />
 							<span
 								class="text-transparent bg-clip-text bg-linear-to-r from-indigo-400 to-purple-400 group-hover:from-purple-400 group-hover:to-pink-400 transition-all duration-500"
 							>
