@@ -1,5 +1,5 @@
 <script setup lang="ts">
-import { ref, onMounted, watch, nextTick } from 'vue'
+import { ref, computed, onMounted, watch, nextTick } from 'vue'
 import { useI18n } from 'vue-i18n'
 import { useRoute, useRouter } from 'vue-router'
 import { gsap } from 'gsap'
@@ -27,31 +27,32 @@ const isFiltering = ref(false)
 const modalMode = ref<'card' | 'video'>('card')
 const videoRef = ref<HTMLVideoElement>()
 
-// Color mapping for technologies - vibrant and distinct colors
-const techColors: Record<string, string> = {
-	'Python': 'bg-yellow-500/20 text-yellow-300 border-yellow-500/40',
-	'JavaScript': 'bg-amber-500/20 text-amber-300 border-amber-500/40',
-	'TypeScript': 'bg-blue-500/20 text-blue-300 border-blue-500/40',
-	'React': 'bg-cyan-500/20 text-cyan-300 border-cyan-500/40',
-	'Vue.js': 'bg-emerald-500/20 text-emerald-300 border-emerald-500/40',
-	'Node.js': 'bg-green-500/20 text-green-300 border-green-500/40',
-	'Docker': 'bg-sky-500/20 text-sky-300 border-sky-500/40',
-	'Kubernetes': 'bg-indigo-500/20 text-indigo-300 border-indigo-500/40',
-	'Jenkins': 'bg-red-500/20 text-red-300 border-red-500/40',
-	'GitLab CI': 'bg-orange-500/20 text-orange-300 border-orange-500/40',
-	'CMake': 'bg-purple-500/20 text-purple-300 border-purple-500/40',
-	'C++': 'bg-rose-500/20 text-rose-300 border-rose-500/40',
-	'Rust': 'bg-amber-600/20 text-amber-400 border-amber-600/40',
-	'Linux': 'bg-slate-500/20 text-slate-300 border-slate-500/40',
-	'Git': 'bg-red-600/20 text-red-400 border-red-600/40',
-	'AWS': 'bg-orange-600/20 text-orange-400 border-orange-600/40',
-	'Maths': 'bg-violet-500/20 text-violet-300 border-violet-500/40',
-	'OpenGL': 'bg-teal-500/20 text-teal-300 border-teal-500/40',
-	'default': 'bg-gray-500/20 text-gray-300 border-gray-500/40'
+// Generate a color style for tech filter buttons based on position in the list
+// Perceptually uniform spectrum using OKLCH
+// Lightness and chroma tuned for dark background readability
+function getFilterStyle(index: number, total: number): Record<string, string> {
+	const t = total <= 1 ? 0 : index / (total - 1)
+	// OKLCH hue: 265 (blue) → 0 (pink), going through cyan/green/yellow/red
+	const hue = (265 - t * 290 + 360) % 360
+	return {
+		backgroundColor: `oklch(55% 0.15 ${hue} / 0.25)`,
+		color: `oklch(80% 0.14 ${hue})`,
+		borderColor: `oklch(55% 0.15 ${hue} / 0.5)`,
+	}
 }
 
-const getTechColor = (tech: string): string => {
-	return techColors[tech] || techColors['default']
+// Map each tech to its filter color (computed from allTechnologies order)
+const techColorMap = computed(() => {
+	const techs = projectsStore.allTechnologies
+	const map: Record<string, Record<string, string>> = {}
+	techs.forEach((tech, i) => {
+		map[tech] = getFilterStyle(i, techs.length)
+	})
+	return map
+})
+
+function getTechStyle(tech: string): Record<string, string> {
+	return techColorMap.value[tech] || getFilterStyle(0, 1)
 }
 
 // Color mapping for project status
@@ -163,7 +164,7 @@ const animateFilteredProjects = () => {
 
 		// Animation consistent with the initial animation
 		// Use exactly the same values to avoid offsets
-		gsap.fromTo(projectCards, 
+		gsap.fromTo(projectCards,
 			{
 				opacity: 0,
 				y: 20,
@@ -267,7 +268,7 @@ const closeProject = () => {
 			ease: 'power2.in',
 		})
 	}
-	
+
 	if (projectDetailsRef.value) {
 		gsap.to(projectDetailsRef.value, {
 			y: '50%',
@@ -327,7 +328,7 @@ onMounted(() => {
 		// And launch the animation after content is rendered
 		setTimeout(() => {
 			animateProjects()
-			
+
 			// Check if we need to open a specific project
 			if (route.query.project) {
 				const projectId = Number(route.query.project)
@@ -361,7 +362,7 @@ watch(
 		<!-- Animated background -->
 		<div class="fixed inset-0 -z-10">
 					</div>
-		
+
 		<div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
 			<div v-if="!contentReady" class="w-full h-full"></div>
 
@@ -423,10 +424,10 @@ watch(
 							:key="tech"
 							@click="handleTechFilter(tech)"
 							class="px-3 sm:px-4 py-2 min-h-[40px] text-xs sm:text-sm rounded-full border transition-all duration-300"
+							:style="getFilterStyle(projectsStore.allTechnologies.indexOf(tech), projectsStore.allTechnologies.length)"
 							:class="[
-								getTechColor(tech),
-								selectedTechs.has(tech) 
-									? 'ring-2 ring-white/50 shadow-lg transform scale-105' 
+								selectedTechs.has(tech)
+									? 'ring-2 ring-white/50 shadow-lg transform scale-105'
 									: 'hover:scale-105'
 							]"
 						>
@@ -475,13 +476,13 @@ watch(
 
 							<!-- Main card -->
 							<div class="relative h-full bg-gray-900/90 backdrop-blur-xl rounded-2xl border border-gray-800 overflow-hidden transition-all duration-500 group-hover:border-transparent group-hover:-translate-y-1 flex flex-col will-change-transform">
-								
+
 								<!-- Gradient overlay that animates -->
-																
+
 								<!-- Image section with parallax effect -->
 								<div class="relative h-48 overflow-hidden bg-gray-900">
 									<!-- Animated gradient background -->
-																		
+
 									<!-- Project image with advanced effects -->
 									<img
 										:src="project.image"
@@ -490,11 +491,11 @@ watch(
 										decoding="async"
 										class="w-full h-full object-cover transition-all duration-700 group-hover:scale-110 group-hover:rotate-1 [backface-visibility:hidden]"
 									/>
-									
+
 									<!-- Dark gradient overlay -->
 									<div class="absolute inset-0 bg-gradient-to-t from-gray-900 via-gray-900/40 to-transparent"></div>
-									
-									
+
+
 									<!-- Hover indicator - chevron centered at bottom -->
 									<div class="absolute bottom-0 left-1/2 transform -translate-x-1/2 translate-y-full group-hover:translate-y-0 transition-transform duration-500 z-20">
 										<div class="p-2 bg-white/10 backdrop-blur-md rounded-full">
@@ -504,29 +505,29 @@ watch(
 										</div>
 									</div>
 								</div>
-								
+
 								<!-- Content section with glassmorphism -->
 								<div class="relative p-6 flex-1 flex flex-col z-10 bg-gray-900/90 -mt-px">
 									<!-- Title with gradient on hover -->
 									<h3 class="text-xl font-bold text-white mb-2 transition-all duration-300 group-hover:text-transparent group-hover:bg-clip-text group-hover:bg-gradient-to-r group-hover:from-indigo-400 group-hover:via-purple-400 group-hover:to-pink-400">
 										{{ project.title }}
 									</h3>
-									
+
 									<!-- Animated underline -->
 									<div class="h-0.5 w-0 group-hover:w-16 bg-gradient-to-r from-indigo-500 to-purple-500 transition-all duration-500 mb-3"></div>
-									
+
 									<!-- Description -->
 									<p class="text-gray-400 text-sm mb-4 line-clamp-2 flex-1 group-hover:text-gray-300 transition-colors duration-300">
 										{{ project.description }}
 									</p>
-									
+
 									<!-- Tech stack with consistent colors -->
 									<div class="flex flex-wrap gap-2 mb-4">
 										<span
 											v-for="tech in project.tech.slice(0, 3)"
 											:key="tech"
 											class="tech-badge px-3 py-1 text-xs rounded-full border backdrop-blur-sm transition-all duration-300 hover:scale-105"
-											:class="getTechColor(tech)"
+											:style="getTechStyle(tech)"
 										>
 											{{ tech }}
 										</span>
@@ -534,15 +535,15 @@ watch(
 											+{{ project.tech.length - 3 }}
 										</span>
 									</div>
-									
+
 									<!-- Interactive footer -->
 									<div class="flex items-center justify-between pt-4 border-t border-gray-800 group-hover:border-gray-700 transition-colors duration-300">
 										<div class="flex items-center space-x-2">
-											<div 
+											<div
 												class="w-2 h-2 rounded-full animate-pulse"
 												:class="getStatusColor(project.status).dot"
 											></div>
-											<span 
+											<span
 												class="text-xs"
 												:class="getStatusColor(project.status).text"
 											>
@@ -574,10 +575,10 @@ watch(
 			>
 				<!-- Glassmorphism background -->
 				<div class="absolute inset-0 bg-gray-900/90 backdrop-blur-xl"></div>
-				
+
 				<!-- Border glow effect -->
 				<div class="absolute inset-0 rounded-3xl border border-gray-700/30"></div>
-				
+
 				<!-- Video View -->
 				<div v-if="modalMode === 'video' && projectsStore.selectedProject?.liveUrl && /\.(mp4|webm|ogg|mov)$/i.test(projectsStore.selectedProject.liveUrl)" class="relative z-10 h-full">
 					<!-- Video Header with controls -->
@@ -652,7 +653,7 @@ watch(
 					<div class="grid grid-cols-1 lg:grid-cols-2 gap-6 sm:gap-8 mb-6 sm:mb-8">
 						<!-- Left column - Image and tech -->
 						<div class="space-y-6">
-							<div 
+							<div
 								class="relative rounded-2xl overflow-hidden"
 								@mousemove="handleMouseMove"
 								@mouseleave="handleMouseLeave"
@@ -667,7 +668,7 @@ watch(
 								/>
 								<div class="absolute inset-0 bg-gradient-to-t from-gray-900/30 via-transparent to-transparent pointer-events-none"></div>
 							</div>
-							
+
 							<!-- Tech stack with consistent colors -->
 							<div>
 								<h3 class="text-sm font-semibold text-indigo-300 mb-3 uppercase tracking-wider">{{ t('projects.technologiesUsed') }}</h3>
@@ -676,22 +677,22 @@ watch(
 										v-for="tech in projectsStore.selectedProject.tech"
 										:key="tech"
 										class="px-4 py-2 text-sm rounded-full border backdrop-blur-sm transition-all duration-300 hover:scale-105 transform"
-										:class="getTechColor(tech)"
+										:style="getTechStyle(tech)"
 									>
 										{{ tech }}
 									</span>
 								</div>
 							</div>
-							
+
 							<!-- {{ t('projects.projectStatus') }} -->
 							<div>
 								<h3 class="text-sm font-semibold text-purple-300 mb-3 uppercase tracking-wider">{{ t('projects.projectStatus') }}</h3>
 								<div class="flex items-center space-x-3">
-									<div 
+									<div
 										class="w-3 h-3 rounded-full animate-pulse"
 										:class="getStatusColor(projectsStore.selectedProject.status).dot"
 									></div>
-									<span 
+									<span
 										class="text-base font-medium"
 										:class="getStatusColor(projectsStore.selectedProject.status).text"
 									>
