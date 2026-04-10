@@ -44,7 +44,6 @@ export const useProjectsStore = defineStore('projects', () => {
 				longDescription: projectText.longDescription || '',
 				tech: metadata.tech,
 				image: metadata.image,
-				gallery: metadata.gallery,
 				sourceUrl: metadata.sourceUrl,
 				liveUrl: metadata.liveUrl,
 				featured: metadata.featured,

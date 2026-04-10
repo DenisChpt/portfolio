@@ -360,10 +360,7 @@ watch(
 	<div class="min-h-screen pt-24 sm:pt-32 pb-16">
 		<!-- Animated background -->
 		<div class="fixed inset-0 -z-10">
-			<div class="absolute inset-0 bg-gradient-to-br from-gray-900 via-indigo-900/10 to-gray-900"></div>
-			<div class="absolute top-40 left-10 sm:left-20 w-64 sm:w-96 h-64 sm:h-96 bg-indigo-500/5 rounded-full blur-3xl animate-pulse"></div>
-			<div class="absolute bottom-40 right-10 sm:right-20 w-64 sm:w-96 h-64 sm:h-96 bg-purple-500/5 rounded-full blur-3xl animate-pulse [animation-delay:1000ms]"></div>
-		</div>
+					</div>
 		
 		<div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
 			<div v-if="!contentReady" class="w-full h-full"></div>
@@ -480,13 +477,11 @@ watch(
 							<div class="relative h-full bg-gray-900/90 backdrop-blur-xl rounded-2xl border border-gray-800 overflow-hidden transition-all duration-500 group-hover:border-transparent group-hover:-translate-y-1 flex flex-col">
 								
 								<!-- Gradient overlay that animates -->
-								<div class="absolute inset-0 bg-gradient-to-br from-indigo-500/5 via-purple-500/5 to-pink-500/5 opacity-0 group-hover:opacity-100 transition-opacity duration-700"></div>
-								
+																
 								<!-- Image section with parallax effect -->
-								<div class="relative h-48 overflow-hidden bg-gradient-to-br from-indigo-900/20 to-purple-900/20">
+								<div class="relative h-48 overflow-hidden bg-gray-900/20">
 									<!-- Animated gradient background -->
-									<div class="absolute inset-0 bg-gradient-to-r from-indigo-500/20 via-purple-500/20 to-pink-500/20 animate-gradient-shift"></div>
-									
+																		
 									<!-- Project image with advanced effects -->
 									<img
 										:src="project.image"
@@ -579,10 +574,9 @@ watch(
 			>
 				<!-- Glassmorphism background -->
 				<div class="absolute inset-0 bg-gray-900/90 backdrop-blur-xl"></div>
-				<div class="absolute inset-0 bg-gradient-to-br from-indigo-500/10 via-purple-500/5 to-pink-500/10"></div>
 				
 				<!-- Border glow effect -->
-				<div class="absolute inset-0 rounded-3xl border border-indigo-500/20"></div>
+				<div class="absolute inset-0 rounded-3xl border border-gray-700/30"></div>
 				
 				<!-- Video View -->
 				<div v-if="modalMode === 'video' && projectsStore.selectedProject?.liveUrl && /\.(mp4|webm|ogg|mov)$/i.test(projectsStore.selectedProject.liveUrl)" class="relative z-10 h-full">

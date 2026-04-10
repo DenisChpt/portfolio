@@ -86,6 +86,12 @@
 		},
 		"items": [
 			{
+				"id": 8,
+				"title": "Fluxion - GPU-PDE-Löser",
+				"description": "GPU-first PDE-Löser in Rust mit allokationsfreiem Hot Path und automatischer Backend-Auswahl. Unterstützt CUDA, ROCm, wgpu und CPU-Backends mit fortgeschrittenen impliziten/expliziten Lösern.",
+				"longDescription": "Fluxion ist ein hochperformanter PDE-Löser in Rust, der für GPU-first-Berechnung konzipiert wurde. Er verfügt über einen allokationsfreien Hot Path mit Enum-Dispatch für maximale Leistung. Der Löser unterstützt mehrere Backends (CUDA, ROCm, wgpu über WGSL-Compute-Shader und CPU über faer+rayon) mit automatischer Fallback-Kette. Er umfasst explizite Zeitschrittverfahren (Forward Euler, RK2/RK4, SSP), implizite Löser (Crank-Nicolson, BDF, IMEX), Krylov-Lineargleichungslöser (CG, BiCGSTAB, GMRES) und Mehrgitter-Vorkonditionierung. GPU-Kernel verarbeiten Stencil-Operationen, Reduktionen mit Kahan-Summation und fusionierte Rechenoperationen."
+			},
+			{
 				"id": 1,
 				"title": "Modulare CI/CD-Produktionskette",
 				"description": "Neue modulare Software-Produktionskette, die die veraltete Lösung ersetzt. Python-Architektur ermöglicht parallele Kompilierung, inkrementelle Produktion und verbesserte Autonomie von CI-Tools.",

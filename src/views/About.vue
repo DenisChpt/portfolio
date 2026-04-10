@@ -59,10 +59,7 @@ const education = computed((): EducationItem[] => {
 	<div class="min-h-screen pt-24 sm:pt-32 pb-16">
 		<!-- Animated background -->
 		<div class="fixed inset-0 -z-10">
-			<div class="absolute inset-0 bg-gradient-to-br from-gray-900 via-indigo-900/10 to-gray-900"></div>
-			<div class="absolute top-32 right-10 sm:right-20 w-64 sm:w-96 h-64 sm:h-96 bg-purple-500/5 rounded-full blur-3xl animate-pulse"></div>
-			<div class="absolute bottom-32 left-10 sm:left-20 w-64 sm:w-96 h-64 sm:h-96 bg-indigo-500/5 rounded-full blur-3xl animate-pulse [animation-delay:1000ms]"></div>
-		</div>
+					</div>
 
 		<div class="about-window max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
 			<!-- Header -->

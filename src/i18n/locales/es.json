@@ -86,6 +86,12 @@
 		},
 		"items": [
 			{
+				"id": 8,
+				"title": "Fluxion - Solucionador GPU para EDP",
+				"description": "Solucionador de EDP GPU-first en Rust con ruta crítica sin asignaciones y selección automática de backend. Soporta backends CUDA, ROCm, wgpu y CPU con solucionadores implícitos/explícitos avanzados.",
+				"longDescription": "Fluxion es un solucionador de ecuaciones en derivadas parciales de alto rendimiento escrito en Rust, diseñado para cálculo GPU-first. Cuenta con una ruta crítica sin asignaciones con dispatch por enum para máximo rendimiento. El solucionador soporta múltiples backends (CUDA, ROCm, wgpu vía shaders de cómputo WGSL, y CPU vía faer+rayon) con cadena de respaldo automática. Incluye métodos de paso temporal explícitos (Euler adelante, RK2/RK4, SSP), solucionadores implícitos (Crank-Nicolson, BDF, IMEX), solucionadores lineales de Krylov (CG, BiCGSTAB, GMRES) y precondicionamiento multigrid. Los kernels GPU manejan operaciones de stencil, reducciones con suma de Kahan y operaciones de cómputo fusionadas."
+			},
+			{
 				"id": 1,
 				"title": "Cadena de Producción CI/CD Modular",
 				"description": "Nueva cadena de producción de software modular reemplazando la solución legada. Arquitectura Python que permite compilación paralela, producción incremental e independencia de herramientas de integración continua.",

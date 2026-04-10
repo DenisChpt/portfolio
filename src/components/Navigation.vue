@@ -54,16 +54,16 @@ watch(
 		:class="[
 			isScrolled
 				? 'py-2 bg-gray-900/80 backdrop-blur-xl shadow-2xl border-indigo-500/10'
-				: 'py-4 bg-gradient-to-b from-gray-900/50 to-transparent backdrop-blur-sm border-transparent',
+				: 'py-4 bg-linear-to-b from-gray-900/50 to-transparent backdrop-blur-sm border-transparent',
 		]"
 	>
 		<div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
 			<div class="flex justify-between h-14">
 				<div class="flex items-center">
-					<div class="flex-shrink-0 flex items-center">
+					<div class="shrink-0 flex items-center">
 						<a href="/" @click="handlePortfolioClick" class="group text-xl font-bold relative cursor-pointer">
 							<span
-								class="text-transparent bg-clip-text bg-gradient-to-r from-indigo-400 to-purple-400 group-hover:from-purple-400 group-hover:to-pink-400 transition-all duration-500"
+								class="text-transparent bg-clip-text bg-linear-to-r from-indigo-400 to-purple-400 group-hover:from-purple-400 group-hover:to-pink-400 transition-all duration-500"
 							>
 								Portfolio
 							</span>
@@ -83,11 +83,11 @@ watch(
 							<span class="relative z-10">{{ t(`nav.${r}`) }}</span>
 							<div
 								v-if="currentSection === r"
-								class="absolute inset-0 bg-gradient-to-r from-indigo-500/20 to-purple-500/20 rounded-lg blur-sm"
+								class="absolute inset-0 bg-linear-to-r from-indigo-500/20 to-purple-500/20 rounded-lg blur-sm"
 							></div>
 							<div
 								v-if="currentSection === r"
-								class="absolute inset-0 bg-gradient-to-r from-indigo-500/10 to-purple-500/10 rounded-lg"
+								class="absolute inset-0 bg-linear-to-r from-indigo-500/10 to-purple-500/10 rounded-lg"
 							></div>
 						</router-link>
 					</div>
@@ -101,7 +101,7 @@ watch(
 				<div class="flex items-center sm:hidden">
 					<button
 						@click="toggleMenu"
-						class="inline-flex items-center justify-center p-3 min-w-[48px] min-h-[48px] rounded-md text-gray-400 hover:text-indigo-400 hover:bg-indigo-500/10 active:bg-indigo-500/20 transition-all duration-200"
+						class="inline-flex items-center justify-center p-3 min-w-12 min-h-12 rounded-md text-gray-400 hover:text-indigo-400 hover:bg-indigo-500/10 active:bg-indigo-500/20 transition-all duration-200"
 						:aria-label="isMenuOpen ? 'Close menu' : 'Open menu'"
 						:aria-expanded="isMenuOpen"
 					>
@@ -141,7 +141,7 @@ watch(
 					v-for="r in ['home', 'about', 'projects', 'research', 'contact']"
 					:key="r"
 					:to="{ name: r }"
-					class="mobile-nav-link block pl-4 pr-4 py-4 min-h-[56px] text-lg font-medium transition-all duration-300 flex items-center"
+					class="mobile-nav-link pl-4 pr-4 py-4 min-h-14 text-lg font-medium transition-all duration-300 flex items-center"
 					:class="{
 						'text-indigo-400 bg-indigo-900/30 border-l-4 border-indigo-500': currentSection === r,
 						'text-gray-300 hover:bg-indigo-900/20 hover:text-indigo-400 active:bg-indigo-900/30 border-l-4 border-transparent':

@@ -86,6 +86,12 @@
 		},
 		"items": [
 			{
+				"id": 8,
+				"title": "Fluxion - Solveur GPU pour EDP",
+				"description": "Solveur d'EDP GPU-first en Rust avec hot path zero-allocation et sélection automatique de backend. Supporte les backends CUDA, ROCm, wgpu et CPU avec des solveurs implicites/explicites avancés.",
+				"longDescription": "Fluxion est un solveur d'équations aux dérivées partielles haute performance écrit en Rust, conçu pour le calcul GPU-first. Il dispose d'un hot path zero-allocation avec enum dispatch pour des performances maximales. Le solveur supporte plusieurs backends (CUDA, ROCm, wgpu via compute shaders WGSL, et CPU via faer+rayon) avec une fallback chain automatique. Il inclut des méthodes de time-stepping explicites (Forward Euler, RK2/RK4, SSP), des solveurs implicites (Crank-Nicolson, BDF, IMEX), des solveurs linéaires de Krylov (CG, BiCGSTAB, GMRES) et un préconditionnement multigrid. Les kernels GPU gèrent les opérations de stencil, les réductions avec sommation de Kahan et les opérations de calcul fusionnées."
+			},
+			{
 				"id": 1,
 				"title": "Chaîne de Production CI/CD Modulaire",
 				"description": "Nouvelle chaîne de production logicielle modulaire pour environnement industriel. Architecture Python permettant compilation parallèle et production incrémentale.",
@@ -93,9 +99,9 @@
 			},
 			{
 				"id": 2,
-				"title": "RiemannOpt - Librairie d'Optimisation Riemannienne",
-				"description": "Librairie Rust haute performance pour l'optimisation sur variétés riemanniennes. Implémentation d'algorithmes de descente de gradient géodésique et rétraction pour l'apprentissage automatique.",
-				"longDescription": "RiemannOpt est une librairie d'optimisation développée en Rust, spécialisée dans les méthodes d'optimisation sur variétés riemanniennes. Elle implémente des algorithmes de pointe comme la descente de gradient riemannien, les méthodes de rétraction et le transport parallèle. La librairie offre des performances exceptionnelles grâce à Rust et trouve des applications en apprentissage automatique, vision par ordinateur et traitement du signal. Elle inclut des optimisations pour les variétés de Grassmann, Stiefel et les matrices SPD."
+				"title": "RiemannOpt - Bibliothèque d'Optimisation Riemannienne",
+				"description": "Bibliothèque Rust haute performance pour l'optimisation sur variétés riemanniennes. Implémentation d'algorithmes de descente de gradient géodésique et rétraction pour l'apprentissage automatique.",
+				"longDescription": "RiemannOpt est une bibliothèque d'optimisation développée en Rust, spécialisée dans les méthodes d'optimisation sur variétés riemanniennes. Elle implémente des algorithmes de pointe comme la descente de gradient riemannien, les méthodes de rétraction et le transport parallèle. La bibliothèque offre des performances exceptionnelles grâce à Rust et trouve des applications en apprentissage automatique, vision par ordinateur et traitement du signal. Elle inclut des optimisations pour les variétés de Grassmann, Stiefel et les matrices SPD."
 			},
 			{
 				"id": 3,

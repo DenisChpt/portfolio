@@ -159,10 +159,7 @@ const switchToCard = () => {
 	<div class="min-h-screen pt-24 sm:pt-32 pb-16">
 		<!-- Animated background -->
 		<div class="fixed inset-0 -z-10">
-			<div class="absolute inset-0 bg-gradient-to-br from-gray-900 via-indigo-900/10 to-gray-900"></div>
-			<div class="absolute top-48 left-10 sm:left-32 w-64 sm:w-96 h-64 sm:h-96 bg-purple-500/5 rounded-full blur-3xl animate-pulse"></div>
-			<div class="absolute bottom-48 right-10 sm:right-32 w-64 sm:w-96 h-64 sm:h-96 bg-indigo-500/5 rounded-full blur-3xl animate-pulse [animation-delay:1000ms]"></div>
-		</div>
+					</div>
 
 		<div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
 			<div class="research-section">
@@ -336,8 +333,8 @@ const switchToCard = () => {
 			>
 				<!-- Glassmorphism background -->
 				<div class="absolute inset-0 bg-gray-900/90 backdrop-blur-xl"></div>
-				<div class="absolute inset-0 bg-gradient-to-br from-indigo-500/10 via-purple-500/5 to-pink-500/10"></div>
-				<div class="absolute inset-0 sm:rounded-3xl border border-indigo-500/20"></div>
+				
+				<div class="absolute inset-0 sm:rounded-3xl border border-gray-700/30"></div>
 
 				<!-- PDF Viewer Mode -->
 				<div v-if="modalMode === 'pdf' && selectedPaper.pdfUrl" class="relative z-10 h-screen sm:h-[95vh] flex flex-col">

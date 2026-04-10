@@ -7,8 +7,7 @@ export interface Project {
 	longDescription: string
 	tech: string[]
 	image: string
-	gallery: string[]
-	liveUrl?: string
+liveUrl?: string
 	sourceUrl?: string
 	featured?: boolean
 	status?: ProjectStatus

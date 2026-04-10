@@ -142,7 +142,7 @@ function simulateProgress() {
 	// Animate progress from 0 to 100
 	mainTimeline.to(progress, {
 		value: 100,
-		duration: 3,
+		duration: 1.5,
 		ease: 'power2.out',
 		onUpdate: () => {
 			// Update circle during progress
@@ -400,10 +400,7 @@ onBeforeUnmount(() => {
 
 <style scoped>
 .loader-container {
-	background: linear-gradient(135deg,
-		rgb(17, 24, 39) 0%,
-		rgba(99, 102, 241, 0.05) 50%,
-		rgb(17, 24, 39) 100%);
+	background: transparent;
 	color: #bcbcbc;
 }
 

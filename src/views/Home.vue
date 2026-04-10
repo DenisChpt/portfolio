@@ -16,13 +16,7 @@ const featuredProjects = computed(() => projectsStore.featuredProjects)
 <template>
 	<div class="min-h-screen flex items-center justify-center relative overflow-hidden overflow-x-hidden">
 		<!-- Animated gradient background -->
-		<div class="absolute inset-0 bg-gradient-to-br from-gray-900 via-indigo-900/20 to-gray-900"></div>
-		<div class="absolute inset-0">
-			<div class="absolute top-20 left-10 w-48 sm:w-72 h-48 sm:h-72 bg-indigo-500/10 rounded-full blur-3xl animate-pulse"></div>
-			<div class="absolute bottom-20 right-10 w-64 sm:w-96 h-64 sm:h-96 bg-purple-500/10 rounded-full blur-3xl animate-pulse [animation-delay:1000ms]"></div>
-			<div class="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[20rem] sm:w-[30rem] lg:w-[40rem] h-[20rem] sm:h-[30rem] lg:h-[40rem] bg-blue-500/5 rounded-full blur-3xl animate-pulse [animation-delay:2000ms]"></div>
-		</div>
-
+		
 		<div class="home-content relative z-10 max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8 w-full">
 			<div class="text-center mb-16 pt-20">
 				<!-- Hero Section with better typography -->
@@ -63,8 +57,7 @@ const featuredProjects = computed(() => projectsStore.featuredProjects)
 							<div class="relative bg-gray-800/30 backdrop-blur-sm rounded-2xl border border-gray-700/50 overflow-hidden transition-all duration-500 hover:border-indigo-500/50 hover:shadow-2xl hover:shadow-indigo-500/10 hover:-translate-y-2 flex flex-col w-full h-full">
 								<!-- Project Image with overlay -->
 								<div class="relative h-48 overflow-hidden flex-shrink-0">
-									<div class="absolute inset-0 bg-gradient-to-br from-indigo-500/20 to-purple-500/20"></div>
-									<img
+																		<img
 										:src="project.image"
 										:alt="project.title"
 										loading="lazy"

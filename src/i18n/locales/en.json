@@ -86,6 +86,12 @@
 		},
 		"items": [
 			{
+				"id": 8,
+				"title": "Fluxion - GPU PDE Solver",
+				"description": "GPU-first PDE solver in Rust with zero-allocation hot path and automatic backend selection. Supports CUDA, ROCm, wgpu and CPU backends with advanced implicit/explicit solvers.",
+				"longDescription": "Fluxion is a high-performance PDE solver written in Rust, designed for GPU-first computation. It features a zero-allocation hot path with enum dispatch for maximum performance. The solver supports multiple backends (CUDA, ROCm, wgpu via WGSL compute shaders, and CPU via faer+rayon) with automatic fallback chain selection. It includes explicit time-stepping methods (Forward Euler, RK2/RK4, SSP), implicit solvers (Crank-Nicolson, BDF, IMEX), Krylov linear solvers (CG, BiCGSTAB, GMRES) and multigrid preconditioning. GPU kernels handle stencil operations, reductions with Kahan summation, and fused compute operations."
+			},
+			{
 				"id": 1,
 				"title": "Modular CI/CD Production Chain",
 				"description": "New modular software production chain for industrial environment. Python architecture enabling parallel compilation and incremental production.",
