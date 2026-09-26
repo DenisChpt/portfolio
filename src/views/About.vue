@@ -7,7 +7,7 @@ import { PROGRAMMING_SKILLS, type ProgrammingSkill } from '@/constants/experienc
 const { t, tm } = useI18n()
 
 // Use our animation composable
-usePageAnimation('.about-window', 0.2)
+usePageAnimation('.about-window')
 
 // Get programming skills
 const programmingSkills = PROGRAMMING_SKILLS
@@ -110,7 +110,7 @@ const education = computed((): EducationItem[] => {
 								<div class="grid grid-cols-1 lg:grid-cols-2 gap-8">
 									<!-- Left side content (Profile and Skills for first two items) -->
 									<div class="lg:pr-8">
-										<div v-if="index === 0" class="relative bg-gray-800/30 backdrop-blur-sm rounded-2xl border border-gray-700/50 p-6 lg:ml-auto lg:max-w-md description-card hover:bg-gray-800/50 hover:border-indigo-500/50 hover:shadow-2xl hover:shadow-indigo-500/10 hover:-translate-y-1 transition-all duration-300 overflow-hidden">
+										<div v-if="index === 0" class="relative bg-gray-800/30 rounded-2xl border border-gray-700/50 p-6 lg:ml-auto lg:max-w-md description-card hover:bg-gray-800/50 hover:border-indigo-500/50 hover:shadow-2xl hover:shadow-indigo-500/10 hover:-translate-y-1 transition-all duration-300 overflow-hidden">
 											<h2 class="text-xl font-bold text-transparent bg-clip-text bg-gradient-to-r from-indigo-400 to-purple-400 mb-4">
 												{{ t('about.profile') }}
 											</h2>
@@ -141,7 +141,7 @@ const education = computed((): EducationItem[] => {
 											</div>
 										</div>
 
-										<div v-else-if="index === 1" class="relative bg-gray-800/30 backdrop-blur-sm rounded-2xl border border-gray-700/50 p-6 lg:ml-auto lg:max-w-md description-card hover:bg-gray-800/50 hover:border-indigo-500/50 hover:shadow-2xl hover:shadow-indigo-500/10 hover:-translate-y-1 transition-all duration-300 overflow-hidden">
+										<div v-else-if="index === 1" class="relative bg-gray-800/30 rounded-2xl border border-gray-700/50 p-6 lg:ml-auto lg:max-w-md description-card hover:bg-gray-800/50 hover:border-indigo-500/50 hover:shadow-2xl hover:shadow-indigo-500/10 hover:-translate-y-1 transition-all duration-300 overflow-hidden">
 											<h2 class="text-xl font-bold text-transparent bg-clip-text bg-gradient-to-r from-indigo-400 to-purple-400 mb-6">
 												{{ t('about.programmingLanguages') }}
 											</h2>
@@ -152,7 +152,7 @@ const education = computed((): EducationItem[] => {
 														{{ skill.name }}
 													</span>
 													<span 
-														:class="`px-4 py-1.5 text-sm font-bold rounded-full bg-gradient-to-r ${getSkillLevelColor(skill.level)} border backdrop-blur-sm text-white shadow-lg`"
+														:class="`px-4 py-1.5 text-sm font-bold rounded-full bg-gradient-to-r ${getSkillLevelColor(skill.level)} border text-white shadow-lg`"
 														class="transform group-hover:scale-110 group-hover:shadow-xl transition-all duration-300"
 													>
 														{{ t(`about.skillLevels.${skill.level}`) }}
@@ -166,7 +166,7 @@ const education = computed((): EducationItem[] => {
 
 									<!-- Right side content (Experience cards) -->
 									<div class="lg:pl-8">
-										<div class="relative bg-gray-800/30 backdrop-blur-sm rounded-xl border border-gray-700/50 p-6 lg:max-w-md experience-card hover:bg-gray-800/50 hover:border-indigo-500/50 hover:shadow-2xl hover:shadow-indigo-500/10 hover:-translate-y-1 transition-all duration-300 overflow-hidden">
+										<div class="relative bg-gray-800/30 rounded-xl border border-gray-700/50 p-6 lg:max-w-md experience-card hover:bg-gray-800/50 hover:border-indigo-500/50 hover:shadow-2xl hover:shadow-indigo-500/10 hover:-translate-y-1 transition-all duration-300 overflow-hidden">
 											<div class="flex flex-wrap items-start justify-between mb-3">
 												<div>
 													<h3 class="text-xl font-bold text-white">{{ exp.role }}</h3>
@@ -198,7 +198,7 @@ const education = computed((): EducationItem[] => {
 								:key="edu.institution"
 								:class="index % 2 === 0 ? 'lg:pr-8' : 'lg:pl-8'"
 							>
-								<div class="bg-gray-800/30 backdrop-blur-sm rounded-xl border border-gray-700/50 p-6 hover:border-indigo-500/30 transition-all duration-300 group lg:max-w-md" :class="index % 2 === 0 ? 'lg:ml-auto' : ''">
+								<div class="bg-gray-800/30 rounded-xl border border-gray-700/50 p-6 hover:border-indigo-500/30 transition-all duration-300 group lg:max-w-md" :class="index % 2 === 0 ? 'lg:ml-auto' : ''">
 									<div class="mb-4">
 										<div class="p-3 bg-gradient-to-br from-indigo-500/20 to-purple-500/20 rounded-lg inline-block mb-3">
 											<svg class="w-6 h-6 text-indigo-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">

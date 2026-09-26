@@ -1,12 +1,12 @@
 import { onMounted, type Ref } from 'vue'
 import { gsap } from 'gsap'
 
-export function usePageAnimation(selector: string, delay = 0.2) {
+export function usePageAnimation(selector: string, delay = 0) {
 	onMounted(() => {
 		gsap.from(selector, {
-			y: 50,
+			y: 40,
 			opacity: 0,
-			duration: 1,
+			duration: 0.7,
 			ease: 'expo.out',
 			delay,
 			force3D: true,

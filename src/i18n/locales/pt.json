@@ -3,7 +3,6 @@
 		"home": "Início",
 		"about": "Sobre",
 		"projects": "Projetos",
-		"research": "Pesquisa",
 		"contact": "Contato"
 	},
 	"home": {
@@ -126,12 +125,6 @@
 				"title": "Portfólio Pessoal",
 				"description": "Site portfólio moderno desenvolvido com Vue 3 e TypeScript. Design responsivo, animações fluidas e suporte multilíngue.",
 				"longDescription": "Portfólio pessoal desenvolvido com as mais recentes tecnologias web. Usa Vue 3 com Composition API, TypeScript para tipagem forte e Pinia para gerenciamento de estado. O design é totalmente responsivo com Tailwind CSS, inclui animações personalizadas e suporte multilíngue (i18n) para 6 idiomas. Otimizado para performance com lazy loading e code splitting."
-			},
-			{
-				"id": 7,
-				"title": "Introdução ao Deep Learning - Fundamentos Matemáticos",
-				"description": "Curso completo de 168 páginas em matemática aplicada cobrindo deep learning do neurônio único aos Transformers. Demonstrações matemáticas rigorosas, algoritmos completos e exemplos numéricos.",
-				"longDescription": "Um curso completo de matemática aplicada construindo progressivamente a compreensão matemática do deep learning. Partindo de um neurônio único realizando classificação binária, generaliza para redes de tamanho arbitrário e arquiteturas avançadas. Os 17 capítulos cobrem: fundamentos do neurônio e ativação sigmoide, funções de custo probabilísticas, descida de gradiente e retropropagação, vetorização, redes multicamadas, classificação multiclasse com softmax, funções de ativação, inicialização de parâmetros (Glorot/He), normalização em lote, otimizadores avançados (SGD momentum, Adam, AdamW), regularização (L1/L2, dropout, parada antecipada, aumento de dados), redes convolucionais (CNN), redes recorrentes (RNN, LSTM, GRU) e mecanismos de atenção com Transformers."
 			}
 		]
 	},
@@ -166,50 +159,5 @@
 	},
 	"footer": {
 		"allRightsReserved": "Todos os direitos reservados."
-	},
-	"research": {
-		"title": "Publicações e Pesquisa",
-		"description": "Meu trabalho de pesquisa independente e publicações acadêmicas.",
-		"searchPlaceholder": "Buscar publicações...",
-		"sortByDate": "Ordenar por data",
-		"sortByCitations": "Ordenar por citações",
-		"allTopics": "Todos os tópicos",
-		"featured": "Destaque",
-		"citations": "citações",
-		"downloadPdf": "Baixar PDF",
-		"viewPdf": "Ver PDF",
-		"viewCode": "Ver código",
-		"close": "Fechar",
-		"abstract": "Resumo",
-		"publicationInfo": "Informações da publicação",
-		"noResults": "Nenhuma publicação encontrada.",
-		"notAvailableTitle": "Publicações em Breve",
-		"notAvailableMessage": "Os artigos de pesquisa ainda não estão disponíveis. Serão publicados em breve.",
-		"papers": [
-			{
-				"id": 1,
-				"title": "Detecção precoce de overfitting via análise de homologia persistente de ativações de redes neurais profundas",
-				"authors": ["Denis Chaput"],
-				"abstract": "O overfitting constitui um desafio fundamental no aprendizado profundo. Os métodos clássicos de detecção dependem do monitoramento da perda de validação, frequentemente um indicador atrasado. Este trabalho propõe uma abordagem baseada em Análise Topológica de Dados (TDA) para detectar sinais precoces de overfitting, calculando a homologia persistente das ativações internas de redes neurais. O estudo abrange três conjuntos de dados (Fashion-MNIST, CIFAR-10, MNIST), três arquiteturas (CNN rasa, CNN profunda, MLP) e quatro tamanhos de conjunto de treinamento, com cinco execuções independentes por configuração. Os detectores baseados em TDA alcançam uma taxa de detecção de 100% em todas as 8 configurações, disparando nas épocas 18-28 em arquiteturas CNN — 30 a 55 épocas antes do early stopping.",
-				"publicationDate": "2026-02",
-				"journal": "Pesquisa independente",
-				"topics": ["Análise topológica de dados", "Aprendizado profundo", "Detecção de overfitting"],
-				"featured": true,
-				"pdfUrl": "/papers/TDA.pdf",
-				"codeUrl": "https://github.com/DenisChpt/tda_synaplex"
-			},
-			{
-				"id": 2,
-				"title": "Introdução ao Deep Learning: Dos Fundamentos Matemáticos às Redes Neurais",
-				"authors": ["Denis Chaput"],
-				"abstract": "Um curso completo de matemática aplicada construindo progressivamente a compreensão matemática do deep learning. Partindo de um neurônio único realizando classificação binária, o curso generaliza para redes de tamanho arbitrário antes de abordar arquiteturas mais avançadas (convoluções, RNNs, Transformers). O deep learning se baseia em três pilares fundamentais: modelagem (construir uma função paramétrica), otimização (encontrar os melhores parâmetros via descida de gradiente) e generalização (garantir que o modelo funcione com novos dados). Os 17 capítulos fornecem demonstrações matemáticas rigorosas, algoritmos completos e exemplos numéricos cobrindo funções de custo, retropropagação, vetorização, normalização em lote, otimizadores avançados (Adam, AdamW), técnicas de regularização, CNNs, LSTMs, GRUs, mecanismos de atenção e a arquitetura Transformer completa.",
-				"publicationDate": "2026-03",
-				"journal": "Material de curso independente",
-				"topics": ["Deep Learning", "Matemática aplicada", "Redes neurais"],
-				"featured": true,
-				"pdfUrl": "/papers/DeepLearning.pdf",
-				"codeUrl": "https://github.com/DenisChpt/placeholder"
-			}
-		]
 	}
 }

@@ -2,7 +2,7 @@ import { defineStore } from 'pinia'
 import { ref, computed } from 'vue'
 import { useI18n } from 'vue-i18n'
 import type { Project, ProjectI18nItem } from '@/types/project'
-import { PROJECTS_METADATA } from '@/constants/projects'
+import { PROJECTS_METADATA, HIDDEN_FILTER_TECHS } from '@/constants/projects'
 import { STORAGE_KEYS } from '@/constants/app.constants'
 
 const getSavedFilterTechs = (): string[] => {
@@ -83,11 +83,13 @@ export const useProjectsStore = defineStore('projects', () => {
 		return projects.value.filter((project) => project.featured)
 	})
 
+	// Technologies offered as filters
 	const allTechnologies = (() => {
 		const techSet = new Set<string>()
 		PROJECTS_METADATA.forEach((project) => {
 			project.tech.forEach((tech) => techSet.add(tech))
 		})
+		HIDDEN_FILTER_TECHS.forEach((tech) => techSet.delete(tech))
 		return Array.from(techSet).sort()
 	})()
 
@@ -114,6 +116,11 @@ export const useProjectsStore = defineStore('projects', () => {
 		searchQuery.value = ''
 		sessionStorage.removeItem(STORAGE_KEYS.PROJECT_FILTERS)
 		sessionStorage.removeItem(STORAGE_KEYS.PROJECT_SEARCH)
+	}
+
+	// Drop saved filters that no longer exist, otherwise they would hide every project with no button to unselect them
+	if (filterTechs.value.some((tech) => !allTechnologies.includes(tech))) {
+		setFilterTechs(filterTechs.value.filter((tech) => allTechnologies.includes(tech)))
 	}
 
 	return {

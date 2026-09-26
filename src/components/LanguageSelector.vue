@@ -1,6 +1,7 @@
 <script setup lang="ts">
 import { ref, watch, onBeforeUnmount } from 'vue'
 import { useI18n } from 'vue-i18n'
+import { setLocale, prefetchLocales } from '@/i18n'
 
 const { locale } = useI18n()
 const isOpen = ref(false)
@@ -15,8 +16,8 @@ const languages = [
 ]
 
 const changeLanguage = (langCode: string) => {
-	locale.value = langCode
 	isOpen.value = false
+	setLocale(langCode)
 }
 
 const getCurrentLanguage = () => {
@@ -50,6 +51,7 @@ onBeforeUnmount(() => {
 	<div class="relative">
 		<button
 			@click.stop="isOpen = !isOpen"
+			@pointerenter="prefetchLocales"
 			class="lang-selector flex items-center space-x-2 p-2 rounded-md text-gray-300 hover:text-indigo-400 transition-all duration-200 border border-transparent hover:border-indigo-500/20 hover:bg-indigo-500/10"
 		>
 			<span class="text-2xl">{{ getCurrentLanguage().flag }}</span>

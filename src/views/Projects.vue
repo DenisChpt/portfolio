@@ -1,11 +1,12 @@
 <script setup lang="ts">
-import { ref, computed, onMounted, watch, nextTick } from 'vue'
+import { ref, computed, onMounted, onBeforeUnmount, watch, nextTick } from 'vue'
 import { useI18n } from 'vue-i18n'
 import { useRoute, useRouter } from 'vue-router'
 import { gsap } from 'gsap'
 import { useProjectsStore } from '@/stores/projectsStore'
 import type { Project } from '@/types/project'
 import Button from '@/components/Button.vue'
+import { isBackgroundPaused } from '@/composables/useBackgroundAnimation'
 const { t } = useI18n()
 const projectsStore = useProjectsStore()
 const route = useRoute()
@@ -15,7 +16,7 @@ const router = useRouter()
 const headerRef = ref(null)
 const filtersRef = ref(null)
 
-// Variable to control initial visibility
+// Set once mounted, so the filter watcher does not animate before the intro animation ran
 const contentReady = ref(false)
 
 // Search and filters - initialize from store to maintain state
@@ -51,8 +52,15 @@ const techColorMap = computed(() => {
 	return map
 })
 
+// Neutral look for technologies that have no filter (and so no spectrum color)
+const NEUTRAL_TECH_STYLE: Record<string, string> = {
+	backgroundColor: 'oklch(55% 0 0 / 0.2)',
+	color: 'oklch(80% 0 0)',
+	borderColor: 'oklch(55% 0 0 / 0.5)',
+}
+
 function getTechStyle(tech: string): Record<string, string> {
-	return techColorMap.value[tech] || getFilterStyle(0, 1)
+	return techColorMap.value[tech] || NEUTRAL_TECH_STYLE
 }
 
 // Color mapping for project status
@@ -81,12 +89,14 @@ const handleMouseMove = (event: MouseEvent) => {
 
 	const clientX = event.clientX
 	const clientY = event.clientY
+	// Measure the wrapper: the image's own rect changes as it tilts, which made the effect jitter
+	const wrapper = event.currentTarget as HTMLElement
 
 	tiltRAF = requestAnimationFrame(() => {
 		tiltRAF = null
 		if (!projectImageRef.value) return
 
-		const rect = projectImageRef.value.getBoundingClientRect()
+		const rect = wrapper.getBoundingClientRect()
 		const x = clientX - rect.left
 		const y = clientY - rect.top
 
@@ -297,10 +307,10 @@ const animateProjects = () => {
 	const tl = gsap.timeline({ defaults: { ease: 'power2.out' } })
 
 	// Title and description
-	tl.fromTo(headerRef.value, { y: 30, opacity: 0 }, { y: 0, opacity: 1, duration: 0.6 }, 0.2)
+	tl.fromTo(headerRef.value, { y: 30, opacity: 0 }, { y: 0, opacity: 1, duration: 0.5 }, 0)
 
 	// Filters
-	tl.fromTo(filtersRef.value, { y: 20, opacity: 0 }, { y: 0, opacity: 1, duration: 0.5 }, 0.3)
+	tl.fromTo(filtersRef.value, { y: 20, opacity: 0 }, { y: 0, opacity: 1, duration: 0.4 }, 0.08)
 
 	// Projects grid - without scale to avoid layout problems
 	tl.fromTo(
@@ -309,38 +319,40 @@ const animateProjects = () => {
 		{
 			y: 0,
 			opacity: 1,
-			duration: 0.5,
-			stagger: 0.08,
+			duration: 0.4,
+			stagger: 0.05,
 		},
-		0.4
+		0.15
 	)
 }
 
+// Freeze the animated background while the modal (full-screen backdrop blur) is open
+watch(
+	() => projectsStore.selectedProject !== null,
+	(isOpen) => {
+		isBackgroundPaused.value = isOpen
+	},
+	{ immediate: true }
+)
+
 onMounted(() => {
-	// Hide content initially
-	contentReady.value = false
+	// Elements start hidden through inline opacity, so animate straight away
+	contentReady.value = true
+	animateProjects()
 
-	// Use a timeout to ensure DOM is ready and everything is hidden
-	setTimeout(() => {
-		// Now we can make the content visible
-		contentReady.value = true
+	// Open a specific project when coming from a deep link (e.g. featured projects on Home)
+	if (route.query.project) {
+		const projectId = Number(route.query.project)
+		if (!isNaN(projectId)) {
+			openProject(projectId)
+		}
+	}
+})
 
-		// And launch the animation after content is rendered
-		setTimeout(() => {
-			animateProjects()
-
-			// Check if we need to open a specific project
-			if (route.query.project) {
-				const projectId = Number(route.query.project)
-				if (!isNaN(projectId)) {
-					// Wait for initial animation to finish before opening the project
-					setTimeout(() => {
-						openProject(projectId)
-					}, 1500) // Delay to let the page animation finish
-				}
-			}
-		}, 50) // Small delay to ensure opacity transition is complete
-	}, 50)
+onBeforeUnmount(() => {
+	if (tiltRAF) cancelAnimationFrame(tiltRAF)
+	if (searchTimeout) clearTimeout(searchTimeout)
+	isBackgroundPaused.value = false
 })
 
 // Watch for changes in filtered projects (shallow comparison via length + ids)
@@ -358,16 +370,14 @@ watch(
 </script>
 
 <template>
-	<div class="min-h-screen pt-24 sm:pt-32 pb-16">
+	<div class="min-h-screen pt-24 sm:pt-32 pb-16" :class="{ 'modal-open': projectsStore.selectedProject }">
 		<!-- Animated background -->
 		<div class="fixed inset-0 -z-10">
 					</div>
 
 		<div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-			<div v-if="!contentReady" class="w-full h-full"></div>
-
 			<!-- Main content -->
-			<div v-else>
+			<div>
 				<div ref="headerRef" class="text-center mb-8 sm:mb-12" :style="{ opacity: 0 }">
 					<h1 class="text-4xl sm:text-5xl md:text-6xl lg:text-7xl font-bold mb-4 sm:mb-6 px-4">
 						<span class="text-transparent bg-clip-text bg-gradient-to-r from-indigo-400 via-purple-400 to-pink-400">
@@ -424,7 +434,7 @@ watch(
 							:key="tech"
 							@click="handleTechFilter(tech)"
 							class="px-3 sm:px-4 py-2 min-h-[40px] text-xs sm:text-sm rounded-full border transition-all duration-300"
-							:style="getFilterStyle(projectsStore.allTechnologies.indexOf(tech), projectsStore.allTechnologies.length)"
+							:style="getTechStyle(tech)"
 							:class="[
 								selectedTechs.has(tech)
 									? 'ring-2 ring-white/50 shadow-lg transform scale-105'
@@ -472,10 +482,10 @@ watch(
 						<!-- Ultra modern card design -->
 						<div class="relative h-full">
 							<!-- Glow effect that follows mouse -->
-							<div class="absolute -inset-0.5 bg-gradient-to-r from-indigo-500 via-purple-500 to-pink-500 rounded-2xl opacity-0 group-hover:opacity-75 blur transition-all duration-500 bg-size-200 animate-gradient will-change-[opacity]"></div>
+							<div class="absolute -inset-0.5 bg-gradient-to-r from-indigo-500 via-purple-500 to-pink-500 rounded-2xl opacity-0 group-hover:opacity-75 blur transition-opacity duration-500 bg-size-200 group-hover:animate-gradient"></div>
 
 							<!-- Main card -->
-							<div class="relative h-full bg-gray-900/90 backdrop-blur-xl rounded-2xl border border-gray-800 overflow-hidden transition-all duration-500 group-hover:border-transparent group-hover:-translate-y-1 flex flex-col will-change-transform">
+							<div class="relative h-full bg-gray-900/90 rounded-2xl border border-gray-800 overflow-hidden transition-all duration-500 group-hover:border-transparent group-hover:-translate-y-1 flex flex-col">
 
 								<!-- Gradient overlay that animates -->
 
@@ -498,7 +508,7 @@ watch(
 
 									<!-- Hover indicator - chevron centered at bottom -->
 									<div class="absolute bottom-0 left-1/2 transform -translate-x-1/2 translate-y-full group-hover:translate-y-0 transition-transform duration-500 z-20">
-										<div class="p-2 bg-white/10 backdrop-blur-md rounded-full">
+										<div class="p-2 bg-white/10 rounded-full">
 											<svg xmlns="http://www.w3.org/2000/svg" class="h-4 w-4 text-white" fill="none" viewBox="0 0 24 24" stroke="currentColor">
 												<path stroke-linecap="round" stroke-linejoin="round" stroke-width="3" d="M19 9l-7 7-7-7" />
 											</svg>
@@ -514,7 +524,7 @@ watch(
 									</h3>
 
 									<!-- Animated underline -->
-									<div class="h-0.5 w-0 group-hover:w-16 bg-gradient-to-r from-indigo-500 to-purple-500 transition-all duration-500 mb-3"></div>
+									<div class="h-0.5 w-16 scale-x-0 origin-left group-hover:scale-x-100 bg-gradient-to-r from-indigo-500 to-purple-500 transition-transform duration-500 mb-3"></div>
 
 									<!-- Description -->
 									<p class="text-gray-400 text-sm mb-4 line-clamp-2 flex-1 group-hover:text-gray-300 transition-colors duration-300">
@@ -526,7 +536,7 @@ watch(
 										<span
 											v-for="tech in project.tech.slice(0, 3)"
 											:key="tech"
-											class="tech-badge px-3 py-1 text-xs rounded-full border backdrop-blur-sm transition-all duration-300 hover:scale-105"
+											class="tech-badge px-3 py-1 text-xs rounded-full border transition-all duration-300 hover:scale-105"
 											:style="getTechStyle(tech)"
 										>
 											{{ tech }}
@@ -550,7 +560,7 @@ watch(
 												{{ t(`projects.status.${project.status || 'active'}`) }}
 											</span>
 										</div>
-										<div class="px-3 py-1 bg-black/30 backdrop-blur-sm rounded-full border border-white/10 group-hover:bg-indigo-500/20 group-hover:border-indigo-400/30 transition-all duration-300">
+										<div class="px-3 py-1 bg-black/30 rounded-full border border-white/10 group-hover:bg-indigo-500/20 group-hover:border-indigo-400/30 transition-all duration-300">
 											<span class="text-xs font-mono text-white/70 group-hover:text-indigo-300">#{{ String(index + 1).padStart(2, '0') }}</span>
 										</div>
 									</div>
@@ -567,14 +577,20 @@ watch(
 			v-if="projectsStore.selectedProject"
 			class="fixed inset-0 z-50 flex items-center justify-center p-0 sm:p-4"
 		>
-			<div ref="modalBackdropRef" class="absolute inset-0 bg-black/60 backdrop-blur-md" @click="closeProject"></div>
+			<!-- The blur is dropped while the video plays: every video frame would force it to be recomputed -->
+			<div
+				ref="modalBackdropRef"
+				class="absolute inset-0"
+				:class="modalMode === 'video' ? 'bg-black/85' : 'bg-black/60 backdrop-blur-md'"
+				@click="closeProject"
+			></div>
 
 			<div
 				ref="projectDetailsRef"
 				class="relative max-w-5xl w-full mx-auto h-screen sm:h-auto sm:max-h-[90vh] overflow-hidden sm:rounded-3xl"
 			>
-				<!-- Glassmorphism background -->
-				<div class="absolute inset-0 bg-gray-900/90 backdrop-blur-xl"></div>
+				<!-- Background (no backdrop blur: invisible under 90% opacity, and costly) -->
+				<div class="absolute inset-0 bg-gray-900/90"></div>
 
 				<!-- Border glow effect -->
 				<div class="absolute inset-0 rounded-3xl border border-gray-700/30"></div>
@@ -587,7 +603,7 @@ watch(
 							<!-- Back to card button (icon only) -->
 							<button
 								@click="switchToCard"
-								class="p-2 bg-black/50 backdrop-blur-sm rounded-full text-white hover:bg-white/20 transition-all duration-300"
+								class="p-2 bg-black/50 rounded-full text-white hover:bg-white/20 transition-all duration-300"
 								aria-label="Back to details"
 							>
 								<svg class="w-5 h-5" fill="none" viewBox="0 0 24 24" stroke="currentColor">
@@ -598,7 +614,7 @@ watch(
 							<!-- Close button -->
 							<button
 								@click="closeProject"
-								class="p-2 bg-black/50 backdrop-blur-sm rounded-full text-white hover:bg-red-500/50 transition-all duration-300"
+								class="p-2 bg-black/50 rounded-full text-white hover:bg-red-500/50 transition-all duration-300"
 								aria-label="Close"
 							>
 								<svg class="w-5 h-5" fill="none" viewBox="0 0 24 24" stroke="currentColor">
@@ -676,7 +692,7 @@ watch(
 									<span
 										v-for="tech in projectsStore.selectedProject.tech"
 										:key="tech"
-										class="px-4 py-2 text-sm rounded-full border backdrop-blur-sm transition-all duration-300 hover:scale-105 transform"
+										class="px-4 py-2 text-sm rounded-full border transition-all duration-300 hover:scale-105 transform"
 										:style="getTechStyle(tech)"
 									>
 										{{ tech }}
@@ -688,8 +704,9 @@ watch(
 							<div>
 								<h3 class="text-sm font-semibold text-purple-300 mb-3 uppercase tracking-wider">{{ t('projects.projectStatus') }}</h3>
 								<div class="flex items-center space-x-3">
+									<!-- Static on purpose: any animation here forces the modal's backdrop blur to be recomputed every frame -->
 									<div
-										class="w-3 h-3 rounded-full animate-pulse"
+										class="w-3 h-3 rounded-full"
 										:class="getStatusColor(projectsStore.selectedProject.status).dot"
 									></div>
 									<span
@@ -750,7 +767,7 @@ watch(
 							:href="projectsStore.selectedProject.sourceUrl"
 							target="_blank"
 							rel="noopener noreferrer"
-							class="group inline-flex items-center px-6 py-3 rounded-full border-2 border-gray-600 text-gray-300 font-medium transition-all duration-300 hover:border-indigo-500 hover:text-indigo-300 hover:scale-105 hover:shadow-lg hover:shadow-indigo-500/10 backdrop-blur-sm"
+							class="group inline-flex items-center px-6 py-3 rounded-full border-2 border-gray-600 text-gray-300 font-medium transition-all duration-300 hover:border-indigo-500 hover:text-indigo-300 hover:scale-105 hover:shadow-lg hover:shadow-indigo-500/10"
 						>
 							<svg
 								xmlns="http://www.w3.org/2000/svg"
@@ -782,6 +799,11 @@ video::-webkit-media-controls-panel {
 	width: 100%;
 	height: 100%;
 	object-fit: contain;
+}
+
+/* Anything animating behind the modal's backdrop blur forces it to be recomputed every frame */
+.modal-open .project-card .animate-pulse {
+	animation: none;
 }
 
 /* Fix Chrome rendering artifacts with blur + backdrop-filter + transform */

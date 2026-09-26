@@ -1,9 +1,6 @@
 <script setup lang="ts">
 import { ref, onMounted, onBeforeUnmount, computed } from 'vue'
-import { useRouter } from 'vue-router'
 import { gsap } from 'gsap'
-
-const router = useRouter()
 
 // Refs for DOM elements
 const loaderContainer = ref<HTMLDivElement>()
@@ -115,7 +112,7 @@ function initializeLoader() {
 	gsap.fromTo(
 		progressContainer.value,
 		{ scale: 0.8, opacity: 0 },
-		{ scale: 1, opacity: 1, duration: 1.5, ease: 'power2.out' }
+		{ scale: 1, opacity: 1, duration: 0.6, ease: 'power2.out' }
 	)
 
 	// Rotation animation
@@ -142,7 +139,7 @@ function simulateProgress() {
 	// Animate progress from 0 to 100
 	mainTimeline.to(progress, {
 		value: 100,
-		duration: 1.5,
+		duration: 0.9,
 		ease: 'power2.out',
 		onUpdate: () => {
 			// Update circle during progress
@@ -170,7 +167,7 @@ function onLoadingComplete() {
 	gsap.to(progressTextInner.value, {
 		opacity: 0,
 		y: -20,
-		duration: 0.5,
+		duration: 0.3,
 		ease: 'power2.in',
 		onComplete: () => {
 			// Update circle to final state with gaps
@@ -180,7 +177,7 @@ function onLoadingComplete() {
 			gsap.to(progressCircle.value, {
 				strokeDasharray: values.array,
 				strokeDashoffset: values.offset,
-				duration: 0.8,
+				duration: 0.5,
 				ease: 'power2.inOut',
 				onComplete: () => {
 					// Show CTA
@@ -192,7 +189,7 @@ function onLoadingComplete() {
 						gsap.fromTo(
 							ctaText,
 							{ opacity: 0, y: 20 },
-							{ opacity: 1, y: 0, duration: 0.8, ease: 'power2.out' }
+							{ opacity: 1, y: 0, duration: 0.5, ease: 'power2.out' }
 						)
 					}
 				}
@@ -283,31 +280,28 @@ function handleEnter() {
 	ctaActive.value = false
 	progress.value = -1 // Set to -1 to completely hide progress text
 
-	// Exit animation - faster
+	// Exit animation, then reveal whatever page was requested (deep links included)
 	gsap.timeline()
 		.to(progressContainer.value, {
 			scale: 1.3,
 			opacity: 0,
-			duration: 0.5,
+			duration: 0.35,
 			ease: 'power2.in'
 		})
 		.to(loaderContainer.value, {
 			opacity: 0,
-			duration: 0.5,
+			duration: 0.35,
 			ease: 'power2.in',
 			onComplete: () => {
 				loading.value = false
 				emit('loading-complete')
-				router.push('/')
 			}
-		}, '-=0.3')
+		}, '-=0.2')
 }
 
 // Lifecycle
 onMounted(() => {
-	setTimeout(() => {
-		initializeLoader()
-	}, 100)
+	initializeLoader()
 })
 
 onBeforeUnmount(() => {

@@ -54,7 +54,7 @@ const { form, isLoading, isSuccess, handleSubmit } = useFormSubmit<ContactForm>(
 	}
 )
 
-usePageAnimation('.contact-window', 0.2)
+usePageAnimation('.contact-window')
 </script>
 
 <template>
@@ -80,7 +80,7 @@ usePageAnimation('.contact-window', 0.2)
 			<div class="grid grid-cols-1 lg:grid-cols-2 gap-8 lg:gap-12">
 				<!-- Contact Info -->
 				<div class="space-y-8">
-					<div class="bg-gray-800/30 backdrop-blur-sm rounded-2xl border border-gray-700/50 p-6 sm:p-8">
+					<div class="bg-gray-800/30 rounded-2xl border border-gray-700/50 p-6 sm:p-8">
 						<h2 class="text-2xl font-bold text-transparent bg-clip-text bg-linear-to-r from-indigo-400 to-purple-400 mb-6">
 							{{ t('contact.getInTouchTitle') }}
 						</h2>
@@ -114,7 +114,7 @@ usePageAnimation('.contact-window', 0.2)
 					</div>
 
 					<!-- Social Links -->
-					<div class="bg-gray-800/30 backdrop-blur-sm rounded-2xl border border-gray-700/50 p-6 sm:p-8">
+					<div class="bg-gray-800/30 rounded-2xl border border-gray-700/50 p-6 sm:p-8">
 						<h2 class="text-2xl font-bold text-transparent bg-clip-text bg-linear-to-r from-indigo-400 to-purple-400 mb-6">
 							{{ t('contact.connectWithMe') }}
 						</h2>
@@ -148,7 +148,7 @@ usePageAnimation('.contact-window', 0.2)
 				</div>
 
 				<!-- Contact Form -->
-				<div class="bg-gray-800/30 backdrop-blur-sm rounded-2xl border border-gray-700/50 p-8">
+				<div class="bg-gray-800/30 rounded-2xl border border-gray-700/50 p-8">
 					<h2 class="text-2xl font-bold text-transparent bg-clip-text bg-linear-to-r from-indigo-400 to-purple-400 mb-6">
 						{{ t('contact.sendMessageTitle') }}
 					</h2>

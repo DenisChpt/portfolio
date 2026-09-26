@@ -8,7 +8,6 @@ A modern, responsive portfolio website highlighting the projects I’ve worked o
 - **Responsive Design**: Optimized for all devices and screen sizes
 - **Interactive Animations**: Smooth GSAP-powered animations and particle effects
 - **Project Showcase**: Dynamic filtering and detailed project presentations
-- **Research Section**: Academic publications and research work display (configurable via i18n)
 
 ## Technologies
 
@@ -30,8 +29,8 @@ A modern, responsive portfolio website highlighting the projects I’ve worked o
 ## Getting Started
 
 ### Prerequisites
-- Node.js 22.x or higher
-- npm 10.x or higher
+- Node.js 24.x (LTS, same version as the Vercel deployment)
+- npm 12.x or higher
 
 ### Installation
 

@@ -41,6 +41,7 @@ export const STORAGE_KEYS = {
 	THEME: 'portfolio-theme',
 	PROJECT_FILTERS: 'projectFilterTechs',
 	PROJECT_SEARCH: 'projectSearchQuery',
+	INTRO_SEEN: 'portfolio-intro-seen',
 } as const
 
 export const EXTERNAL_URLS = {

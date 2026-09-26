@@ -14,13 +14,18 @@ sourceUrl?: string
 }
 
 /**
+ * Technologies that stay on project cards but are not offered as filters
+ */
+export const HIDDEN_FILTER_TECHS: string[] = ['OpenGL']
+
+/**
  * Project metadata - text content comes from i18n
  */
 export const PROJECTS_METADATA: ProjectMetadata[] = [
 	{
 		id: 8,
 		tech: ['Rust', 'C++', 'Maths'],
-		image: '/images/Fluxion_logo.png',
+		image: '/images/Fluxion_logo.webp',
 		sourceUrl: 'https://github.com/DenisChpt/fluxion',
 		featured: true,
 		status: 'in-progress',
@@ -28,7 +33,7 @@ export const PROJECTS_METADATA: ProjectMetadata[] = [
 	{
 		id: 5,
 		tech: ['Rust', 'Python', 'Maths'],
-		image: '/images/Synaplex_logo.png',
+		image: '/images/Synaplex_logo.webp',
 		sourceUrl: 'https://github.com/DenisChpt/synaplex',
 		featured: true,
 		status: 'active',
@@ -36,44 +41,36 @@ export const PROJECTS_METADATA: ProjectMetadata[] = [
 	{
 		id: 2,
 		tech: ['Rust', 'Python', 'Maths'],
-		image: '/images/RiemannOpt_logo.png',
+		image: '/images/RiemannOpt_logo.webp',
 		sourceUrl: 'https://github.com/DenisChpt/RiemannOpt',
-		featured: true,
-		status: 'active',
-	},
-	{
-		id: 7,
-		tech: ['LaTeX', 'Python', 'Maths'],
-		image: '/images/DeepLearning_logo.png',
-		sourceUrl: 'https://github.com/DenisChpt/placeholder',
 		featured: true,
 		status: 'active',
 	},
 	{
 		id: 4,
 		tech: ['Python', 'Docker', 'GitLab CI'],
-		image: '/images/Thales_logo.png',
+		image: '/images/Thales_logo.webp',
 		status: 'completed',
 	},
 	{
 		id: 1,
 		tech: ['Python', 'Jenkins', 'GitLab CI'],
-		image: '/images/Thales_logo.png',
+		image: '/images/Thales_logo.webp',
 		status: 'completed',
 	},
 	{
 		id: 3,
 		tech: ['C++', 'OpenGL'],
-		image: '/images/MinePP_logo.png',
+		image: '/images/MinePP_logo.webp',
 		sourceUrl: 'https://github.com/DenisChpt/MinePP',
 		status: 'archived',
 	},
 	{
 		id: 6,
 		tech: ['Vue.js', 'TypeScript'],
-		image: '/images/Portfolio_logo.png',
+		image: '/images/Portfolio_logo.webp',
 		sourceUrl: 'https://github.com/DenisChpt/portfolio',
-		liveUrl: '/videos/portfolio.mov',  // Video demo of the portfolio
+		liveUrl: '/videos/portfolio.mp4',  // Video demo of the portfolio
 		status: 'active',
 	},
 ]

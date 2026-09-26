@@ -3,7 +3,6 @@
 		"home": "Accueil",
 		"about": "À propos",
 		"projects": "Projets",
-		"research": "Recherche",
 		"contact": "Contact"
 	},
 	"home": {
@@ -126,12 +125,6 @@
 				"title": "Portfolio Personnel",
 				"description": "Site portfolio moderne développé avec Vue 3 et TypeScript. Design responsive, animations fluides et support multilingue.",
 				"longDescription": "Portfolio personnel développé avec les dernières technologies web. Utilise Vue 3 avec Composition API, TypeScript pour le typage fort, et Pinia pour la gestion d'état. Le design est entièrement responsive avec Tailwind CSS, inclut des animations personnalisées et support multilingue (i18n) pour 6 langues. Optimisé pour les performances avec lazy loading et code splitting."
-			},
-			{
-				"id": 7,
-				"title": "Introduction au Deep Learning - Fondements Mathématiques",
-				"description": "Cours complet de 168 pages en mathématiques appliquées couvrant le deep learning du neurone unique aux Transformers. Démonstrations mathématiques rigoureuses, algorithmes complets et exemples numériques.",
-				"longDescription": "Un cours complet de mathématiques appliquées construisant progressivement la compréhension mathématique du deep learning. En partant d'un neurone unique effectuant de la classification binaire, il généralise à des réseaux de taille arbitraire puis aux architectures avancées. Les 17 chapitres couvrent : fondements du neurone et activation sigmoïde, fonctions de coût probabilistes, descente de gradient et rétropropagation, vectorisation, réseaux multi-couches, classification multi-classes avec softmax, fonctions d'activation, initialisation des paramètres (Glorot/He), normalisation par lot (batch normalization), optimiseurs avancés (SGD momentum, Adam, AdamW), régularisation (L1/L2, dropout, arrêt précoce, augmentation de données), réseaux convolutifs (CNN), réseaux récurrents (RNN, LSTM, GRU), et mécanismes d'attention avec Transformers."
 			}
 		]
 	},
@@ -166,50 +159,5 @@
 	},
 	"footer": {
 		"allRightsReserved": "Tous droits réservés."
-	},
-	"research": {
-		"title": "Publications & Recherche",
-		"description": "Mes travaux de recherche indépendants et publications académiques.",
-		"searchPlaceholder": "Rechercher des publications...",
-		"sortByDate": "Trier par date",
-		"sortByCitations": "Trier par citations",
-		"allTopics": "Tous les sujets",
-		"featured": "En vedette",
-		"citations": "citations",
-		"downloadPdf": "Télécharger PDF",
-		"viewPdf": "Voir le PDF",
-		"viewCode": "Voir le code",
-		"close": "Fermer",
-		"abstract": "Résumé",
-		"publicationInfo": "Informations de publication",
-		"noResults": "Aucune publication trouvée.",
-		"notAvailableTitle": "Publications à venir",
-		"notAvailableMessage": "Les papiers de recherche ne sont pas encore disponibles. Ils seront publiés prochainement.",
-		"papers": [
-			{
-				"id": 1,
-				"title": "Détection précoce du surapprentissage par analyse de l'homologie persistante des activations de réseaux de neurones profonds",
-				"authors": ["Denis Chaput"],
-				"abstract": "Le surapprentissage constitue un défi fondamental en apprentissage profond. Les méthodes classiques de détection reposent sur la surveillance de la perte de validation, souvent un indicateur retardé. Ce travail propose une approche basée sur l'Analyse Topologique des Données (TDA) pour détecter les premiers signes de surapprentissage en calculant l'homologie persistante des activations internes des réseaux de neurones. L'étude couvre trois jeux de données (Fashion-MNIST, CIFAR-10, MNIST), trois architectures (CNN peu profond, CNN profond, MLP) et quatre tailles d'ensemble d'entraînement, avec cinq exécutions indépendantes par configuration. Les détecteurs basés sur la TDA atteignent un taux de détection de 100% sur les 8 configurations, se déclenchant aux époques 18-28 sur les architectures CNN — 30 à 55 époques avant l'arrêt précoce. Un motif reproductible en trois phases (compression, stabilisation, fragmentation) est identifié dans les invariants topologiques.",
-				"publicationDate": "2026-02",
-				"journal": "Recherche indépendante",
-				"topics": ["Analyse topologique des données", "Apprentissage profond", "Détection du surapprentissage"],
-				"featured": true,
-				"pdfUrl": "/papers/TDA.pdf",
-				"codeUrl": "https://github.com/DenisChpt/tda_synaplex"
-			},
-			{
-				"id": 2,
-				"title": "Introduction au Deep Learning : Des Fondements Mathématiques aux Réseaux de Neurones",
-				"authors": ["Denis Chaput"],
-				"abstract": "Un cours complet de mathématiques appliquées construisant progressivement la compréhension mathématique du deep learning. En partant d'un neurone unique effectuant de la classification binaire, le cours généralise à des réseaux de taille arbitraire avant d'aborder des architectures plus avancées (convolutions, RNN, transformers). Le deep learning repose sur trois piliers fondamentaux : la modélisation (construire une fonction paramétrique), l'optimisation (trouver les meilleurs paramètres via la descente de gradient) et la généralisation (s'assurer que le modèle fonctionne sur de nouvelles données). Les 17 chapitres fournissent des démonstrations mathématiques rigoureuses, des algorithmes complets et des exemples numériques couvrant les fonctions de coût, la rétropropagation, la vectorisation, la normalisation par lot, les optimiseurs avancés (Adam, AdamW), les techniques de régularisation, les CNN, les LSTM, GRU, les mécanismes d'attention et l'architecture Transformer complète.",
-				"publicationDate": "2026-03",
-				"journal": "Cours indépendant",
-				"topics": ["Deep Learning", "Mathématiques appliquées", "Réseaux de neurones"],
-				"featured": true,
-				"pdfUrl": "/papers/DeepLearning.pdf",
-				"codeUrl": "https://github.com/DenisChpt/placeholder"
-			}
-		]
 	}
 }

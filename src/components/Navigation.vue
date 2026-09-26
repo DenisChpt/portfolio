@@ -10,6 +10,7 @@ const isMenuOpen = ref(false)
 const isScrolled = ref(false)
 
 const currentSection = computed(() => route.name as string)
+const navItems = ['home', 'about', 'projects', 'contact'] as const
 
 const toggleMenu = () => {
 	isMenuOpen.value = !isMenuOpen.value
@@ -18,13 +19,6 @@ const toggleMenu = () => {
 const closeMenu = () => {
 	isMenuOpen.value = false
 }
-
-const handlePortfolioClick = (event: Event) => {
-	event.preventDefault()
-	// Use location.href for a full page reload that works in production
-	window.location.href = window.location.origin
-}
-
 
 const handleScroll = () => {
 	// Use a smaller threshold for faster transition
@@ -50,7 +44,7 @@ watch(
 
 <template>
 	<nav
-		class="fixed w-full z-50 transition-all duration-700 ease-out border-b"
+		class="fixed w-full z-50 transition-[padding,background-color,border-color,box-shadow] duration-500 ease-out border-b"
 		:class="[
 			isScrolled
 				? 'py-2 bg-gray-900/80 backdrop-blur-xl shadow-2xl border-indigo-500/10'
@@ -61,18 +55,18 @@ watch(
 			<div class="flex justify-between h-14">
 				<div class="flex items-center">
 					<div class="shrink-0 flex items-center">
-						<a href="/" @click="handlePortfolioClick" class="group text-xl font-bold relative cursor-pointer flex items-center gap-2">
-							<img src="/Website_logo.png" alt="Logo" class="h-7 w-7 object-contain" />
+						<router-link to="/" class="group text-xl font-bold relative cursor-pointer flex items-center gap-2">
+							<img src="/logo.webp" alt="Logo" width="28" height="28" decoding="async" class="h-7 w-7 object-contain" />
 							<span
 								class="text-transparent bg-clip-text bg-linear-to-r from-indigo-400 to-purple-400 group-hover:from-purple-400 group-hover:to-pink-400 transition-all duration-500"
 							>
 								Portfolio
 							</span>
-						</a>
+						</router-link>
 					</div>
 					<div class="hidden sm:ml-10 sm:flex sm:space-x-8">
 						<router-link
-							v-for="r in ['home', 'about', 'projects', 'research', 'contact']"
+							v-for="r in navItems"
 							:key="r"
 							:to="{ name: r }"
 							class="nav-link group relative inline-flex items-center px-4 py-2 text-xl font-medium transition-all duration-300"
@@ -139,7 +133,7 @@ watch(
 				class="pt-4 pb-4 space-y-2 border-t border-indigo-500/20 bg-gray-900/95 backdrop-blur-xl shadow-2xl"
 			>
 				<router-link
-					v-for="r in ['home', 'about', 'projects', 'research', 'contact']"
+					v-for="r in navItems"
 					:key="r"
 					:to="{ name: r }"
 					class="mobile-nav-link pl-4 pr-4 py-4 min-h-14 text-lg font-medium transition-all duration-300 flex items-center"
@@ -162,14 +156,6 @@ watch(
 </template>
 
 <style scoped>
-/* Smooth transition for the nav bar */
-nav {
-	will-change: transform, background-color, backdrop-filter;
-	transform: translateZ(0);
-	-webkit-backface-visibility: hidden;
-	backface-visibility: hidden;
-}
-
 .nav-link {
 	position: relative;
 }

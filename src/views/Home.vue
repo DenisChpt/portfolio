@@ -7,7 +7,7 @@ const { t } = useI18n()
 const projectsStore = useProjectsStore()
 
 // Use our animation composable
-usePageAnimation('.home-content', 0.4)
+usePageAnimation('.home-content', 0.1)
 
 // Get featured projects from the store - use computed to be reactive to language changes
 const featuredProjects = computed(() => projectsStore.featuredProjects)
@@ -54,7 +54,7 @@ const featuredProjects = computed(() => projectsStore.featuredProjects)
 						:style="{ animationDelay: `${index * 0.1}s` }"
 					>
 						<router-link :to="{ name: 'projects', query: { project: project.id } }" class="flex w-full h-full">
-							<div class="relative bg-gray-800/30 backdrop-blur-sm rounded-2xl border border-gray-700/50 overflow-hidden transition-all duration-500 hover:border-indigo-500/50 hover:shadow-2xl hover:shadow-indigo-500/10 hover:-translate-y-2 flex flex-col w-full h-full will-change-transform">
+							<div class="relative bg-gray-800/30 rounded-2xl border border-gray-700/50 overflow-hidden transition-all duration-500 hover:border-indigo-500/50 hover:shadow-2xl hover:shadow-indigo-500/10 hover:-translate-y-2 flex flex-col w-full h-full">
 								<!-- Project Image with overlay -->
 								<div class="relative h-48 overflow-hidden flex-shrink-0">
 																		<img
@@ -88,7 +88,7 @@ const featuredProjects = computed(() => projectsStore.featuredProjects)
 										<span
 											v-for="tech in project.tech.slice(0, 3)"
 											:key="tech"
-											class="px-3 py-1 text-xs bg-indigo-500/10 text-indigo-300 rounded-full border border-indigo-500/20 backdrop-blur-sm"
+											class="px-3 py-1 text-xs bg-indigo-500/10 text-indigo-300 rounded-full border border-indigo-500/20"
 										>
 											{{ tech }}
 										</span>
@@ -142,7 +142,7 @@ const featuredProjects = computed(() => projectsStore.featuredProjects)
 
 					<router-link
 						to="/contact"
-						class="group inline-flex items-center justify-center px-6 sm:px-8 py-4 min-h-[56px] rounded-full border-2 border-gray-600 text-gray-300 font-medium transition-all duration-300 hover:border-indigo-500 hover:text-indigo-300 hover:scale-105 hover:shadow-lg hover:shadow-indigo-500/10 backdrop-blur-sm w-full sm:w-auto"
+						class="group inline-flex items-center justify-center px-6 sm:px-8 py-4 min-h-[56px] rounded-full border-2 border-gray-600 text-gray-300 font-medium transition-all duration-300 hover:border-indigo-500 hover:text-indigo-300 hover:scale-105 hover:shadow-lg hover:shadow-indigo-500/10 w-full sm:w-auto"
 					>
 						<span class="flex items-center">
 							{{ t('home.contactMe') }}
